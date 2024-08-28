@@ -1,0 +1,58 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button default-href="/"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Registrarse</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="flex items-center h-[80%] flex-col">
+    <ion-input
+      class="w-[80%] m-auto"
+      type="text"
+      fill="solid"
+      label="Nombre"
+      labelPlacement="floating"
+      helperText="Ingresa un minimo de 4 caracteres"
+      errorText="Correo Incorrecto"
+      ngModel
+      email
+    ></ion-input>
+    <ion-input
+      class="w-[80%] m-auto"
+      type="email"
+      fill="solid"
+      label="Correo"
+      labelPlacement="floating"
+      helperText="Ingresa un correo valido"
+      errorText="Correo Incorrecto"
+      ngModel
+      email
+    ></ion-input>
+    <ion-input
+      class="w-[80%] m-auto"
+      type="password"
+      fill="solid"
+      label="Contraseña"
+      labelPlacement="floating"
+      helperText="Ingresa minimo de 8 caracteres"
+      errorText="Contraseña Incorrecta"
+      ngModel
+      email
+    ></ion-input>
+    <ion-input
+      class="w-[80%] m-auto"
+      type="password"
+      fill="solid"
+      label="Repite la contraseña"
+      labelPlacement="floating"
+      helperText="Asegurate que las contraseñas sean correctas"
+      errorText="Contraseña Incorrecta"
+      ngModel
+      email
+    ></ion-input>
+  </div>
+  <ion-button color="success" class="float-end mr-5">Registrarse</ion-button>
+</ion-content>

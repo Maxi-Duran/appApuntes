@@ -3,14 +3,22 @@
     ><ion-buttons slot="start">
       <ion-back-button default-href="/"></ion-back-button>
     </ion-buttons>
-    <ion-title class="text-2xl">Iniciar Sesion</ion-title>
+    <ion-title>Iniciar Sesion</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content class="text-center">
   <div class="flex flex-col justify-center items-center h-[80%] gap-5">
-    <ion-button class="w-[80%] h-14">Correo</ion-button>
+    <ion-button class="w-[80%] h-14" routerLink="/login-email"
+      >Correo</ion-button
+    >
+
     <ion-button class="w-[80%] h-14">Google</ion-button>
   </div>
-  <div><p class="font-mono">Primera vez en nuestra app? Registrate!</p></div>
+  <div>
+    <p class="font-mono">
+      Primera vez en nuestra app?
+      <a routerLink="/register" class="text-red-500">Registrate!</a>
+    </p>
+  </div>
 </ion-content>

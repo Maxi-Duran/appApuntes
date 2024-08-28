@@ -17,6 +17,27 @@ const routes: Routes = [
     loadChildren: () =>
       import('../app/pages/login/login.module').then((m) => m.LoginPageModule),
   },
+  {
+    path: 'register',
+    loadChildren: () =>
+      import('../app/pages/register/register.module').then(
+        (m) => m.RegisterPageModule
+      ),
+  },
+  {
+    path: 'login-email',
+    loadChildren: () =>
+      import('../app/pages/login-email/login-email.module').then(
+        (m) => m.LoginEmailPageModule
+      ),
+  },
+  {
+    path: 'login-password',
+    loadChildren: () =>
+      import('../app/pages/login-password/login-password.module').then(
+        (m) => m.LoginPasswordPageModule
+      ),
+  },
 ];
 
 @NgModule({
