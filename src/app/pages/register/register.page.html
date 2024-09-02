@@ -8,7 +8,7 @@
 </ion-header>
 
 <ion-content>
-  <div class="flex items-center h-[80%] flex-col">
+  <form class="flex items-center h-[80%] flex-col">
     <ion-input
       class="w-[80%] m-auto"
       type="text"
@@ -16,9 +16,12 @@
       label="Nombre"
       labelPlacement="floating"
       helperText="Ingresa un minimo de 4 caracteres"
-      errorText="Correo Incorrecto"
+      errorText="Minimo de 4 caracteres"
       ngModel
-      email
+      name="name"
+      required
+      minlength="4"
+      [(ngModel)]="register.user"
     ></ion-input>
     <ion-input
       class="w-[80%] m-auto"
@@ -29,6 +32,9 @@
       helperText="Ingresa un correo valido"
       errorText="Correo Incorrecto"
       ngModel
+      name="email"
+      required
+      [(ngModel)]="register.email"
       email
     ></ion-input>
     <ion-input
@@ -38,9 +44,18 @@
       label="Contraseña"
       labelPlacement="floating"
       helperText="Ingresa minimo de 8 caracteres"
-      errorText="Contraseña Incorrecta"
+      errorText="Minimo de 8 caracteres"
       ngModel
-      email
+      name="password"
+      required
+      minlength="8"
+      [(ngModel)]="register.password"
+      ><ion-button fill="clear" slot="end" aria-label="Show/hide">
+        <ion-icon
+          slot="icon-only"
+          name="eye"
+          aria-hidden="true"
+        ></ion-icon> </ion-button
     ></ion-input>
     <ion-input
       class="w-[80%] m-auto"
@@ -49,10 +64,19 @@
       label="Repite la contraseña"
       labelPlacement="floating"
       helperText="Asegurate que las contraseñas sean correctas"
-      errorText="Contraseña Incorrecta"
+      errorText="Las contraseñas no coinciden"
       ngModel
-      email
+      name="repeatpassword"
+      [(ngModel)]="register.repeatpassword"
+      ><ion-button fill="clear" slot="end" aria-label="Show/hide">
+        <ion-icon
+          slot="icon-only"
+          name="eye"
+          aria-hidden="true"
+        ></ion-icon> </ion-button
     ></ion-input>
-  </div>
-  <ion-button color="success" class="float-end mr-5">Registrarse</ion-button>
+  </form>
+  <ion-button color="success" class="float-end mr-5" (click)="onSubmit()"
+    >Registrarse</ion-button
+  >
 </ion-content>
