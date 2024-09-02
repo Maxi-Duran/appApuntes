@@ -29,6 +29,7 @@
     "@capacitor/status-bar": "6.0.1",
     "@ionic/angular": "^7.8.6",
     "@ionic/core": "^7.8.6",
+    "@material/web": "^2.1.0",
     "ionicons": "^7.0.0",
     "ngx-tailwind": "^4.0.0",
     "rxjs": "~7.8.0",

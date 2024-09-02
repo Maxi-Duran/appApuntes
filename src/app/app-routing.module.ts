@@ -38,6 +38,13 @@ const routes: Routes = [
         (m) => m.LoginPasswordPageModule
       ),
   },
+  {
+    path: 'welcome',
+    loadChildren: () =>
+      import('../app/pages/welcome/welcome.module').then(
+        (m) => m.WelcomePageModule
+      ),
+  },
 ];
 
 @NgModule({
