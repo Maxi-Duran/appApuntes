@@ -16,7 +16,10 @@ export class RegisterPage implements OnInit {
   errorMessage: string = '';
 
   constructor(public router: Router, public toastController: ToastController) {}
-
+  showPassword: boolean = false;
+  onChangeVisibility() {
+    this.showPassword = !this.showPassword;
+  }
   ngOnInit() {}
 
   onSubmit() {

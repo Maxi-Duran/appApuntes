@@ -6,10 +6,11 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./login-password.page.scss'],
 })
 export class LoginPasswordPage implements OnInit {
-
-  constructor() { }
-
-  ngOnInit() {
+  constructor() {}
+  showPassword: boolean = false;
+  onChangeVisibility() {
+    this.showPassword = !this.showPassword;
   }
 
+  ngOnInit() {}
 }

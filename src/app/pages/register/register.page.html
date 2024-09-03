@@ -39,7 +39,7 @@
     ></ion-input>
     <ion-input
       class="w-[80%] m-auto"
-      type="password"
+      [type]="showPassword ? 'text' : 'password'"
       fill="solid"
       label="Contraseña"
       labelPlacement="floating"
@@ -50,7 +50,12 @@
       required
       minlength="8"
       [(ngModel)]="register.password"
-      ><ion-button fill="clear" slot="end" aria-label="Show/hide">
+      ><ion-button
+        fill="clear"
+        slot="end"
+        aria-label="Show/hide"
+        (click)="onChangeVisibility()"
+      >
         <ion-icon
           slot="icon-only"
           name="eye"
@@ -59,7 +64,7 @@
     ></ion-input>
     <ion-input
       class="w-[80%] m-auto"
-      type="password"
+      [type]="showPassword ? 'text' : 'password'"
       fill="solid"
       label="Repite la contraseña"
       labelPlacement="floating"
@@ -68,13 +73,8 @@
       ngModel
       name="repeatpassword"
       [(ngModel)]="register.repeatpassword"
-      ><ion-button fill="clear" slot="end" aria-label="Show/hide">
-        <ion-icon
-          slot="icon-only"
-          name="eye"
-          aria-hidden="true"
-        ></ion-icon> </ion-button
-    ></ion-input>
+    >
+    </ion-input>
   </form>
   <ion-button color="success" class="float-end mr-5" (click)="onSubmit()"
     >Registrarse</ion-button

@@ -52,6 +52,20 @@ const routes: Routes = [
         (m) => m.ConfirmNamePageModule
       ),
   },
+  {
+    path: 'restore-password',
+    loadChildren: () =>
+      import('../app/pages/restore-password/restore-password.module').then(
+        (m) => m.RestorePasswordPageModule
+      ),
+  },
+  {
+    path: 'home-2',
+    loadChildren: () =>
+      import('../app/pages/home-2/home-2.module').then(
+        (m) => m.Home2PageModule
+      ),
+  },
 ];
 
 @NgModule({
