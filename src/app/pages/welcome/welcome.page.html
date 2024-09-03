@@ -7,10 +7,19 @@
 </ion-header>
 
 <ion-content class="">
-  <h1 class="text-3xl">Bienvenido a nuestra App</h1>
+  <div class="flex items-center justify-center h-[80%] gap-24 flex-col">
+    <h1 class="text-3xl">Bienvenido a nuestra App</h1>
 
-  <ion-avatar class="w-52 m-auto">
-    <img alt="" src="assets/img/cat.jpg" class="w-52" />
-  </ion-avatar>
-  <h1 class="text-3xl">Empezemos con tu foto de perfil</h1>
+    <img
+      class="rounded-full w-72 h-72"
+      alt="Silhouette of a person's head"
+      src="assets/img/cat.jpg"
+    />
+
+    <h1 class="text-3xl">Empezemos con tu foto de perfil</h1>
+  </div>
+  <div class="flex justify-center gap-10">
+    <ion-button>Subir Imagen</ion-button>
+    <ion-button routerLink="/confirm-name">Saltar</ion-button>
+  </div>
 </ion-content>

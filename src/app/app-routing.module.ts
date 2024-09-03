@@ -45,6 +45,13 @@ const routes: Routes = [
         (m) => m.WelcomePageModule
       ),
   },
+  {
+    path: 'confirm-name',
+    loadChildren: () =>
+      import('../app/pages/confirm-name/confirm-name.module').then(
+        (m) => m.ConfirmNamePageModule
+      ),
+  },
 ];
 
 @NgModule({
