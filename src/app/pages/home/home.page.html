@@ -1,7 +1,8 @@
 <ion-content class="">
   <swiper-container class="h-[100%]" [pagination]="true">
     <swiper-slide
-      #swiper1
+      #swiperSlide
+      (click)="play()"
       class="flex items-center justify-center flex-col text-2xl"
       >Organiza tus Apuntes!
       <ion-img class="w-56" src="assets/img/apuntes.jpg"></ion-img
