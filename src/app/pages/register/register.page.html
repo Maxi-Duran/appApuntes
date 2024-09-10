@@ -76,7 +76,11 @@
     >
     </ion-input>
   </form>
-  <ion-button color="success" class="float-end mr-5" (click)="onSubmit()"
-    >Registrarse</ion-button
+  <button
+    class="float-end mr-5 bg-emerald-400 h-16 rounded-2xl w-36 text-lg ion-activatable ripple-parent rounded-rectangle"
+    (click)="onSubmit()"
   >
+    <ion-ripple-effect></ion-ripple-effect>
+    Registrarse
+  </button>
 </ion-content>

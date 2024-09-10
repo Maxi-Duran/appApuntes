@@ -1,6 +1,6 @@
 <ion-header> </ion-header>
 
-<ion-content [fullscreen]="true">
+<ion-content>
   <div class="flex gap-2 items-center w-[90%] m-auto h-[20%]">
     <ion-avatar class="w-20">
       <img
@@ -9,18 +9,57 @@
         src="https://ionicframework.com/docs/img/demos/avatar.svg"
       />
     </ion-avatar>
-    <h2 class="">Maximiliano Duran</h2>
+    <h2 class="text-3xl mt-3">Maximiliano Duran</h2>
   </div>
-  <div class="flex items-center m-auto h-[10%] w-[90%]">
-    <h2>Resumen de tareas</h2>
+  <div class="flex items-center m-auto h-[5%] w-[90%]">
+    <h2 class="text-3xl">Resumen de tareas</h2>
+  </div>
+  <div
+    class="flex justify-center items-center w-[90%] h-[8%] m-auto text-center mt-5Ñ"
+  >
+    <div
+      class="w-[50%] border-r-2 bg-slate-100 h-full border-black font-mono text-2xl flex items-center justify-center"
+    >
+      30 Tareas Completadas
+    </div>
+    <div
+      class="w-[50%] h-full text-2xl bg-slate-100 font-mono flex items-center justify-center"
+    >
+      20 Tareas Pendientes
+    </div>
+  </div>
+  <div class="w-[90%] m-auto mt-5">
+    <app-chart></app-chart>
+  </div>
+  <div class="w-[90%] m-auto text-center mt-10">
+    <h1 class="text-2xl font-sans">Expiracion de tareas mas cercanas</h1>
+    <ion-list
+      lines="none"
+      class="w-[90%] m-auto h-[80%] flex flex-col items-center"
+    >
+      <ion-item class="flex w-[80%]" *ngFor="let item of data">
+        <span class="w-[50%]">{{ item.task }}</span>
+        <ion-label class="w-[50%] text-right">{{ item.date }}</ion-label>
+      </ion-item>
+    </ion-list>
   </div>
 </ion-content>
 
-<ion-tabs>
-  <ion-tab-bar class="border-t-[1px] border-black h-16x">
-    <ion-tab-button class="text-lg"> Inicio </ion-tab-button>
-    <ion-tab-button class="text-lg"> Tareas </ion-tab-button>
-    <ion-tab-button class="text-lg"> Apuntes </ion-tab-button>
-    <ion-tab-button class="text-lg"> Calendario </ion-tab-button>
-  </ion-tab-bar>
-</ion-tabs>
+<ion-footer class="flex items-center h-20">
+  <ion-tabs class="">
+    <ion-tab-bar class="border-t-[1px] border-black h-20">
+      <ion-tab-button class="text-lg" routerLink="/home-2">
+        Inicio
+      </ion-tab-button>
+      <ion-tab-button class="text-lg" routerLink="/task">
+        Tareas
+      </ion-tab-button>
+      <ion-tab-button class="text-lg" routerLink="/notes">
+        Apuntes
+      </ion-tab-button>
+      <ion-tab-button class="text-lg" routerLink="/calendar">
+        Calendario
+      </ion-tab-button>
+    </ion-tab-bar>
+  </ion-tabs>
+</ion-footer>

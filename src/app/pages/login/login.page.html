@@ -8,14 +8,24 @@
 </ion-header>
 
 <ion-content class="text-center">
-  <div class="flex flex-col justify-center items-center h-[80%] gap-5">
-    <ion-button class="w-[80%] h-14" routerLink="/login-email"
-      >Correo</ion-button
+  <div
+    class="flex flex-col justify-center items-center h-[80%] gap-5 text-white font-bold"
+  >
+    <button
+      class="w-[80%] h-16 bg-indigo-400 rounded-2xl text-2xl ion-activatable ripple-parent rounded-rectangle"
+      routerLink="/login-email"
     >
+      <ion-ripple-effect></ion-ripple-effect>
+      Correo
+    </button>
 
-    <ion-button class="w-[80%] h-14">Google</ion-button>
+    <button
+      class="w-[80%] h-16 bg-indigo-400 rounded-2xl text-2xl ion-activatable ripple-parent rounded-rectangle"
+    >
+      <ion-ripple-effect></ion-ripple-effect> Google
+    </button>
   </div>
-  <div>
+  <div class="text-lg">
     <p class="font-mono">
       Primera vez en nuestra app?
       <a routerLink="/register" class="text-red-500">Registrate!</a>

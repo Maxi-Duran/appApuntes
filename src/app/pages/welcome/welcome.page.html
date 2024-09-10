@@ -1,11 +1,3 @@
-<ion-header
-  ><ion-toolbar
-    ><ion-buttons slot="start">
-      <ion-back-button default-href="/"></ion-back-button>
-    </ion-buttons>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content class="">
   <div class="flex items-center justify-center h-[80%] gap-24 flex-col">
     <h1 class="text-3xl">Bienvenido a nuestra App</h1>
@@ -19,7 +11,16 @@
     <h1 class="text-2xl">Empezemos con tu foto de perfil</h1>
   </div>
   <div class="flex justify-center gap-10">
-    <ion-button>Subir Imagen</ion-button>
-    <ion-button routerLink="/confirm-name">Saltar</ion-button>
+    <button
+      class="bg-indigo-400 rounded-2xl h-12 w-32 text-lg ion-activatable ripple-parent rounded-rectangle"
+    >
+      <ion-ripple-effect></ion-ripple-effect> Subir Imagen
+    </button>
+    <button
+      class="bg-indigo-400 rounded-2xl h-12 w-32 text-lg ion-activatable ripple-parent rounded-rectangle"
+      routerLink="/confirm-name"
+    >
+      <ion-ripple-effect></ion-ripple-effect> Saltar
+    </button>
   </div>
 </ion-content>

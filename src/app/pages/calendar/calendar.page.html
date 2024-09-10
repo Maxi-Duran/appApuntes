@@ -1,0 +1,24 @@
+<ion-content [fullscreen]="true" class="">
+  <div class="flex items-center m-auto h-full">
+    <ion-datetime
+      presentation="date"
+      locale="es-ES"
+      class="m-auto bg-purple-200"
+    ></ion-datetime>
+  </div>
+</ion-content>
+
+<ion-footer class="flex items-center h-20">
+  <ion-tabs class="">
+    <ion-tab-bar class="border-t-[1px] border-black h-20">
+      <ion-tab-button class="text-lg" routerLink="/home-2">
+        Inicio
+      </ion-tab-button>
+      <ion-tab-button class="text-lg"> Tareas </ion-tab-button>
+      <ion-tab-button class="text-lg"> Apuntes </ion-tab-button>
+      <ion-tab-button class="text-lg" routerLink="/calendar">
+        Calendario
+      </ion-tab-button>
+    </ion-tab-bar>
+  </ion-tabs>
+</ion-footer>

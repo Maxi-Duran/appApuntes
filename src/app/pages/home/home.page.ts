@@ -27,11 +27,17 @@ export class HomePage implements AfterViewInit {
         .create()
         .addElement(slide.nativeElement)
         .duration(1500)
+        .iterations(Infinity)
         .fromTo('transform', 'translateX(0px)', 'translateX(-100px)')
-        .fromTo('opacity', '1', '0.2');
+        .fromTo('opacity', '1', '0.2')
+        .keyframes([
+          { offset: 0, transform: 'rotate(0deg)' },
+          { offset: 0.25, transform: 'rotate(-5deg)' },
+          { offset: 0.5, transform: 'rotate(5deg)' },
+          { offset: 0.75, transform: 'rotate(-5deg)' },
+          { offset: 1, transform: 'rotate(0deg)' },
+        ]);
+      this.animation.play();
     });
-  }
-  play() {
-    this.animation.play();
   }
 }

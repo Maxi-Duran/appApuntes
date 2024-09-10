@@ -66,6 +66,30 @@ const routes: Routes = [
         (m) => m.Home2PageModule
       ),
   },
+  {
+    path: 'calendar',
+    loadChildren: () =>
+      import('../app/pages/calendar/calendar.module').then(
+        (m) => m.CalendarPageModule
+      ),
+  },
+  {
+    path: 'task',
+    loadChildren: () =>
+      import('../app/pages/task/task.module').then((m) => m.TaskPageModule),
+  },
+  {
+    path: 'notes',
+    loadChildren: () =>
+      import('../app/pages/notes/notes.module').then((m) => m.NotesPageModule),
+  },
+  {
+    path: 'new-task',
+    loadChildren: () =>
+      import('../app/pages/new-task/new-task.module').then(
+        (m) => m.NewTaskPageModule
+      ),
+  },
 ];
 
 @NgModule({
