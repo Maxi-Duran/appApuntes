@@ -1,27 +1,38 @@
 <ion-content class="">
   <swiper-container class="h-[100%]" [pagination]="true">
-    <swiper-slide
-      #swiperSlide
-      (click)="play()"
-      class="flex items-center justify-center flex-col text-2xl"
-      >Organiza tus Apuntes!
-      <ion-img class="w-56" src="assets/img/apuntes.jpg"></ion-img
+    <swiper-slide class="flex items-center justify-center flex-col">
+      <p class="text-2xl font-montserrat mb-10">Organiza tus Apuntes!</p>
+      <ion-img #swiperSlide class="w-64" src="assets/img/apuntes.jpg"></ion-img
     ></swiper-slide>
-    <swiper-slide class="flex items-center justify-center flex-col text-2xl"
-      ><ion-img class="w-56" src="assets/img/tareas.jpg"></ion-img> Mantente al
-      dia con tus tareas!
+    <swiper-slide
+      class="flex items-center justify-center flex-col text-2xl font-montserrat"
+      ><ion-img #swiperSlide class="w-64" src="assets/img/tareas.jpg"></ion-img>
+      <p class="text-2xl font-montserrat mb-10">Organiza tus Apuntes!</p>
     </swiper-slide>
 
-    <swiper-slide class="flex items-center justify-center"
-      >Organizemos tu calendario!
+    <swiper-slide
+      class="flex items-center justify-center flex-col text-2xl font-montserrat"
+    >
+      <p class="text-2xl font-montserrat mb-10">Organizemos tu calendario</p>
+      <ion-img
+        #swiperSlide
+        class="w-96"
+        src="assets/img/calendario.jpg"
+      ></ion-img>
     </swiper-slide>
   </swiper-container>
 </ion-content>
 <ion-footer class="bg-white flex">
-  <button class="w-[50%] h-16 text-[15px] text-black" routerLink="/register">
+  <button
+    class="w-[50%] h-16 text-[15px] font-montserrat text-black"
+    routerLink="/register"
+  >
     Registrarse
   </button>
-  <button class="w-[50%] h-16 text-[15px] text-black" routerLink="/login">
+  <button
+    class="w-[50%] h-16 text-[15px] text-black font-montserrat"
+    routerLink="/login"
+  >
     Iniciar Sesion
   </button>
 </ion-footer>

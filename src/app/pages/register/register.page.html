@@ -3,14 +3,14 @@
     <ion-buttons slot="start">
       <ion-back-button default-href="/"></ion-back-button>
     </ion-buttons>
-    <ion-title>Registrarse</ion-title>
+    <ion-title class="font-montserrat">Registrarse</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
   <form class="flex items-center h-[80%] flex-col">
     <ion-input
-      class="w-[80%] m-auto"
+      class="w-[80%] m-auto font-montserrat"
       type="text"
       fill="solid"
       label="Nombre"
@@ -24,7 +24,7 @@
       [(ngModel)]="register.user"
     ></ion-input>
     <ion-input
-      class="w-[80%] m-auto"
+      class="w-[80%] m-auto font-montserrat"
       type="email"
       fill="solid"
       label="Correo"
@@ -38,7 +38,7 @@
       email
     ></ion-input>
     <ion-input
-      class="w-[80%] m-auto"
+      class="w-[80%] m-auto font-montserrat"
       [type]="showPassword ? 'text' : 'password'"
       fill="solid"
       label="Contraseña"
@@ -63,7 +63,7 @@
         ></ion-icon> </ion-button
     ></ion-input>
     <ion-input
-      class="w-[80%] m-auto"
+      class="w-[80%] m-auto font-montserrat"
       [type]="showPassword ? 'text' : 'password'"
       fill="solid"
       label="Repite la contraseña"
@@ -76,7 +76,11 @@
     >
     </ion-input>
   </form>
-  <ion-button color="success" class="float-end mr-5" (click)="onSubmit()"
-    >Registrarse</ion-button
+  <button
+    class="float-end mr-5 bg-emerald-400 h-12 rounded-2xl w-32 text-md ion-activatable ripple-parent rounded-rectangle font-montserrat"
+    (click)="onSubmit()"
   >
+    <ion-ripple-effect></ion-ripple-effect>
+    Registrarse
+  </button>
 </ion-content>

@@ -1,0 +1,40 @@
+<ion-content>
+  <div class="mt-20 w-[90%] m-auto font-montserrat">
+    <h1 class="text-3xl">Apuntes</h1>
+    <button
+      shape="round"
+      size="small"
+      class="mt-5 bg-indigo-400 h-10 w-44 rounded-2xl text-white"
+    >
+      Agregar Asignatura
+    </button>
+  </div>
+  <div
+    class="w-[90%] flex flex-col gap-5 rounded-2xl m-auto text-center mt-10 ion-activatable ripple-parent rounded-rectangle font-montserrat"
+    *ngFor="let item of data"
+  >
+    <ion-ripple-effect></ion-ripple-effect>
+    <button class="bg-slate-200 rounded-2xl text-xl h-16" shape="large">
+      {{item.task}}
+    </button>
+  </div>
+</ion-content>
+
+<ion-footer class="flex items-center h-16 font-montserrat">
+  <ion-tabs class="">
+    <ion-tab-bar class="border-t-[1px] border-black h-20">
+      <ion-tab-button class="text-lg" routerLink="/home-2">
+        Inicio
+      </ion-tab-button>
+      <ion-tab-button class="text-lg" routerLink="/task">
+        Tareas
+      </ion-tab-button>
+      <ion-tab-button class="text-lg" routerLink="/notes">
+        Apuntes
+      </ion-tab-button>
+      <ion-tab-button class="text-lg" routerLink="/calendar">
+        Calendario
+      </ion-tab-button>
+    </ion-tab-bar>
+  </ion-tabs>
+</ion-footer>
