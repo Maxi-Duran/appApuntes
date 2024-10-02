@@ -1,36 +1,32 @@
 <ion-content>
-  <div class="mt-20 w-[90%] m-auto">
-    <h1 class="text-5xl font-semibold">Tareas</h1>
+  <div class="mt-20 w-[90%] m-auto font-montserrat">
+    <h1 class="text-3xl">Tareas</h1>
     <button
       shape="round"
       size="small"
-      class="mt-5 bg-indigo-400 h-10 w-40 rounded-2xl"
-      routerLink="/new-task"
+      class="mt-5 bg-indigo-400 h-10 w-40 rounded-2xl text-white"
+      (click)="guardarEnBD()"
     >
       Agregar Tareas
     </button>
   </div>
-  <div class="mt-10">
+  <div
+    class="mt-10"
+    *ngFor=" let item of asignatura.__zone_symbol__value
+  "
+  >
     <ion-list class="flex flex-col gap-10">
-      <ion-item class="text-start"
+      <ion-item class="text-start font-montserrat"
         ><ion-checkbox class="mr-32" labelPlacement="end"
-          >Label at the End</ion-checkbox
-        ><button class="ml-10 bg-indigo-400 h-8 w-44 rounded-2xl">
-          Modificar
-        </button></ion-item
-      >
-      <ion-item class="text-start"
-        ><ion-checkbox class="mr-32" labelPlacement="end"
-          >Label at the End</ion-checkbox
-        ><button class="ml-10 bg-indigo-400 h-8 w-44 rounded-2xl">
-          Modificar
-        </button></ion-item
+          >{{ item.strNombre }}a</ion-checkbox
+        ></ion-item
       >
     </ion-list>
   </div>
-</ion-content>
+  <ion-input label="Default input" [(ngModel)]="nombre"></ion-input
+></ion-content>
 
-<ion-footer class="flex items-center h-20">
+<ion-footer class="flex items-center h-16 font-montserrat">
   <ion-tabs class="">
     <ion-tab-bar class="border-t-[1px] border-black h-20">
       <ion-tab-button class="text-lg" routerLink="/home-2">

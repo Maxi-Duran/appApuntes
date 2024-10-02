@@ -83,13 +83,6 @@ const routes: Routes = [
     loadChildren: () =>
       import('../app/pages/notes/notes.module').then((m) => m.NotesPageModule),
   },
-  {
-    path: 'new-task',
-    loadChildren: () =>
-      import('../app/pages/new-task/new-task.module').then(
-        (m) => m.NewTaskPageModule
-      ),
-  },
 ];
 
 @NgModule({
