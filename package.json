@@ -30,6 +30,8 @@
     "@capacitor/status-bar": "6.0.1",
     "@ionic/angular": "^7.8.6",
     "@ionic/core": "^7.8.6",
+    "chart.js": "^4.4.4",
+    "chartjs": "^0.3.24",
     "ionicons": "^7.0.0",
     "ngx-tailwind": "^4.0.0",
     "rxjs": "~7.8.0",
