@@ -1,12 +1,17 @@
 <ion-header> </ion-header>
 
 <ion-content>
-  <div class="flex gap-2 items-center w-[90%] m-auto h-[20%] font-montserrat">
+  <ion-icon
+    name="settings-outline"
+    class="float-end mr-5 mt-5"
+    size="large"
+  ></ion-icon>
+  <div class="flex gap-2 items-center w-[90%] m-auto h-[5%] font-montserrat">
     <img class="rounded-full w-24 h-24" src="assets/img/cat.jpg" />
 
     <h2 class="text-2xl mt-3">Maximiliano Duran</h2>
   </div>
-  <div class="flex items-center m-auto h-[5%] w-[90%] font-montserrat">
+  <div class="flex items-center m-auto mt-10 h-[5%] w-[90%] font-montserrat">
     <h2 class="text-3xl">Resumen de tareas</h2>
   </div>
   <div
@@ -44,16 +49,16 @@
   <ion-tabs class="">
     <ion-tab-bar class="border-t-[1px] border-black h-20">
       <ion-tab-button class="text-lg" routerLink="/home-2">
-        Inicio
+        <ion-icon name="home-outline"></ion-icon>
       </ion-tab-button>
       <ion-tab-button class="text-lg" routerLink="/task">
-        Tareas
+        <ion-icon name="book-outline"></ion-icon>
       </ion-tab-button>
       <ion-tab-button class="text-lg" routerLink="/notes">
-        Apuntes
+        <ion-icon name="pencil-outline"></ion-icon>
       </ion-tab-button>
       <ion-tab-button class="text-lg" routerLink="/calendar">
-        Calendario
+        <ion-icon name="calendar-number-outline"></ion-icon>
       </ion-tab-button>
     </ion-tab-bar>
   </ion-tabs>

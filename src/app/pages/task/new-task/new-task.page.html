@@ -1,0 +1,37 @@
+<ion-header
+  ><ion-toolbar
+    ><ion-buttons slot="start">
+      <ion-back-button default-href="/"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Nueva Tarea</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <form class="flex flex-col gap-10 justify-center items-center h-[80%]">
+    <mat-form-field class="example-form-field">
+      <mat-label>Nombre</mat-label>
+      <input matInput type="text" />
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label></mat-label>
+      <input matInput [matDatepicker]="picker" />
+      <mat-hint>MM/DD/YYYY</mat-hint>
+      <mat-datepicker-toggle
+        matIconSuffix
+        [for]="picker"
+      ></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Choose an option</mat-label>
+      <mat-select [disabled]="disableSelect.value">
+        <mat-option value="option1">Option 1</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </form>
+  <button class="float-end mr-5 rounded-2xl bg-emerald-400 h-12 w-40">
+    Crear nueva Tarea
+  </button>
+</ion-content>

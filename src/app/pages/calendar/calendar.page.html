@@ -1,11 +1,8 @@
 <ion-content [fullscreen]="true" class="">
-  <div class="flex items-center m-auto h-full">
-    <ion-datetime
-      presentation="date"
-      locale="es-ES"
-      class="m-auto bg-purple-200"
-    ></ion-datetime>
-  </div>
+  <mat-card class="demo-inline-calendar-card w-[90%] m-auto bg-blue-500">
+    <mat-calendar [(selected)]="selected"></mat-calendar>
+  </mat-card>
+  <p>Selected date: {{selected}}</p>
 </ion-content>
 
 <ion-footer class="flex items-center h-16 font-montserrat">

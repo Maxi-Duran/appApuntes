@@ -27,14 +27,14 @@ const routes: Routes = [
   {
     path: 'login-email',
     loadChildren: () =>
-      import('../app/pages/login-email/login-email.module').then(
+      import('./pages/login/login-email/login-email.module').then(
         (m) => m.LoginEmailPageModule
       ),
   },
   {
     path: 'login-password',
     loadChildren: () =>
-      import('../app/pages/login-password/login-password.module').then(
+      import('./pages/login/login-password/login-password.module').then(
         (m) => m.LoginPasswordPageModule
       ),
   },
@@ -48,7 +48,7 @@ const routes: Routes = [
   {
     path: 'confirm-name',
     loadChildren: () =>
-      import('../app/pages/confirm-name/confirm-name.module').then(
+      import('./pages/welcome/confirm-name/confirm-name.module').then(
         (m) => m.ConfirmNamePageModule
       ),
   },
@@ -82,6 +82,13 @@ const routes: Routes = [
     path: 'notes',
     loadChildren: () =>
       import('../app/pages/notes/notes.module').then((m) => m.NotesPageModule),
+  },
+  {
+    path: 'new-task',
+    loadChildren: () =>
+      import('../app/pages/task/new-task/new-task.module').then(
+        (m) => m.NewTaskPageModule
+      ),
   },
 ];
 
