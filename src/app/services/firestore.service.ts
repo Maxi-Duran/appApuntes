@@ -11,8 +11,9 @@ import { Observable } from 'rxjs';
 export class FirestoreService {
   constructor(private firestore: AngularFirestore) {}
 
-  createTask() {
-    this.firestore.collection('Tasks').add;
+  createTask(data: any, path: string, id: string) {
+    const collection = this.firestore.collection(path);
+    return collection.doc(id).set(data);
   }
 
   getTask(): Observable<any[]> {
