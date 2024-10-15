@@ -18,7 +18,8 @@ export class TaskPage implements OnInit {
 
   // Método para navegar a la página de actualización de tarea
   navigateToUpdateTask(id: string) {
-    this.router.navigate(['/update-task', id]); // Navegar a la página de actualización con el ID de la tarea
+    this.router.navigate(['/update-task', id]);
+    console.log('aa'); // Navegar a la página de actualización con el ID de la tarea
   }
 
   // Método para obtener las tareas

@@ -5,17 +5,53 @@
       shape="round"
       size="small"
       class="mt-5 bg-indigo-400 h-10 w-44 rounded-2xl text-white"
+      routerLink="/new-asignature"
     >
       Agregar Asignatura
     </button>
   </div>
   <div
     class="w-[90%] flex flex-col gap-5 rounded-2xl m-auto text-center mt-10 ion-activatable ripple-parent rounded-rectangle font-montserrat"
-    *ngFor="let item of data"
+    *ngFor="let note of notes"
   >
     <ion-ripple-effect></ion-ripple-effect>
-    <button class="bg-slate-200 rounded-2xl text-xl h-16" shape="large">
-      {{item.task}}
+    <button
+      class="bg-slate-200 rounded-2xl text-xl h-16 flex items-center justify-between px-4"
+      shape="large"
+    >
+      {{note.name}}
+      <mat-card-actions align="end">
+        <ion-button
+          class="w-16"
+          fill="clear"
+          (click)="navigateToUpdateNotes(note.id)"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <polyline points="3 7 5 7 21 7" fill="none" stroke="#000" />
+            <path
+              d="M18.5,7l-1,14H6.5L5.5,7M8,7l.5-3.5h7L16,7"
+              fill="none"
+              stroke="#000"
+            />
+            <line
+              x1="13.5"
+              y1="16.5"
+              x2="13.5"
+              y2="11.5"
+              fill="none"
+              stroke="#000"
+            />
+            <line
+              x1="10.5"
+              y1="16.5"
+              x2="10.5"
+              y2="11.5"
+              fill="none"
+              stroke="#000"
+            />
+          </svg>
+        </ion-button>
+      </mat-card-actions>
     </button>
   </div>
 </ion-content>

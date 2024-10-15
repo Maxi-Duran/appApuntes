@@ -99,11 +99,28 @@ const routes: Routes = [
       ),
   },
   {
-    path: 'update-task/:id', // Asegúrate de que el path sea correcto
+    path: 'update-task/:id',
     loadChildren: () =>
       import('./pages/task/update-task/update-task.module').then(
         (m) => m.UpdateTaskPageModule
       ),
+  },
+  {
+    path: 'new-asignature',
+    loadChildren: () =>
+      import('./pages/notes/new-asignature/new-asignature.module').then(
+        (m) => m.NewAsignaturePageModule
+      ),
+  },
+  {
+    path: 'text',
+    loadChildren: () =>
+      import('./pages/notes/text/text.module').then((m) => m.TextPageModule),
+  },
+  {
+    path: 'text/:id',
+    loadChildren: () =>
+      import('./pages/notes/text/text.module').then((m) => m.TextPageModule),
   },
 ];
 

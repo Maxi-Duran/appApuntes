@@ -1,0 +1,20 @@
+<ion-header
+  ><ion-toolbar
+    ><ion-buttons slot="start">
+      <ion-back-button default-href="/"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Texto</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <form class="flex flex-col gap-10 justify-center items-center h-[80%]">
+    <h1></h1>
+    <textarea name="note.name" name="noteName"></textarea>
+    <button
+      class="float-end mr-5 rounded-2xl bg-emerald-400 h-12 w-40"
+      [routerLink]="['/text', note.id]"
+    >
+      Guardar
+    </button>
+  </form>
+</ion-content>
