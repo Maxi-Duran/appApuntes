@@ -1,40 +1,37 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+
+import { IonicModule } from '@ionic/angular';
+
+import { UpdateTaskPageRoutingModule } from './update-task-routing.module';
+
+import { UpdateTaskPage } from './update-task.page';
 
 import { MatMenuModule } from '@angular/material/menu';
-
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { MatSelectModule } from '@angular/material/select';
 
 import { MatCheckboxModule } from '@angular/material/checkbox';
-import { IonicModule } from '@ionic/angular';
 
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 
-import { NewTaskPageRoutingModule } from './new-task-routing.module';
-
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { provideNativeDateAdapter } from '@angular/material/core';
-import { NewTaskPage } from './new-task.page';
-provideNativeDateAdapter;
+
 @NgModule({
-  providers: [provideNativeDateAdapter()],
   imports: [
     MatCheckboxModule,
     FormsModule,
-    ReactiveFormsModule,
-
+    UpdateTaskPageRoutingModule,
     MatSelectModule,
 
     MatMenuModule,
     CommonModule,
 
     IonicModule,
-    NewTaskPageRoutingModule,
 
     MatDatepickerModule,
     MatFormFieldModule,
@@ -43,6 +40,6 @@ provideNativeDateAdapter;
     MatButtonModule,
     MatIconModule,
   ],
-  declarations: [NewTaskPage],
+  declarations: [UpdateTaskPage],
 })
-export class NewTaskPageModule {}
+export class UpdateTaskPageModule {}

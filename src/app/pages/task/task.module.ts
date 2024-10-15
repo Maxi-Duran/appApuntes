@@ -14,7 +14,7 @@ import { TaskPage } from './task.page';
   imports: [
     CommonModule,
     FormsModule,
-    IonicModule,
+    IonicModule.forRoot(),
     TaskPageRoutingModule,
     MatIconModule,
     MatCardModule,

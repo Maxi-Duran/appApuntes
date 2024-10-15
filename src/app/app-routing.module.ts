@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import { UpdateTaskPageModule } from './pages/task/update-task/update-task.module';
 
 const routes: Routes = [
   {
@@ -88,6 +89,20 @@ const routes: Routes = [
     loadChildren: () =>
       import('../app/pages/task/new-task/new-task.module').then(
         (m) => m.NewTaskPageModule
+      ),
+  },
+  {
+    path: 'update-task',
+    loadChildren: () =>
+      import('./pages/task/update-task/update-task.module').then(
+        (m) => m.UpdateTaskPageModule
+      ),
+  },
+  {
+    path: 'update-task/:id', // Asegúrate de que el path sea correcto
+    loadChildren: () =>
+      import('./pages/task/update-task/update-task.module').then(
+        (m) => m.UpdateTaskPageModule
       ),
   },
 ];

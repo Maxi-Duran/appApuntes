@@ -14,30 +14,14 @@
     </mat-form-field>
 
     <mat-form-field>
-      <mat-label></mat-label>
-      <input
-        matInput
-        [matDatepicker]="picker"
-        [(ngModel)]="task.endDate"
-        name="taskDate"
-      />
-      <mat-hint>MM/DD/YYYY</mat-hint>
-      <mat-datepicker-toggle
-        matIconSuffix
-        [for]="picker"
-      ></mat-datepicker-toggle>
-      <mat-datepicker #picker></mat-datepicker>
-    </mat-form-field>
-
-    <mat-form-field>
       <mat-label>Choose an option</mat-label>
-      <mat-select [disabled]="disableSelect.value">
+      <mat-select>
         <mat-option value="option1">Option 1</mat-option>
       </mat-select>
     </mat-form-field>
     <button
       class="float-end mr-5 rounded-2xl bg-emerald-400 h-12 w-40"
-      (click)="createTask()"
+      (click)="updateTask()"
     >
       Crear nueva Tarea
     </button>

@@ -13,10 +13,21 @@ export class FirestoreService {
 
   createTask(data: any, path: string, id: string) {
     const collection = this.firestore.collection(path);
+
     return collection.doc(id).set(data);
   }
 
   getTask(): Observable<any[]> {
     return this.firestore.collection('Tasks').valueChanges();
+  }
+  deleteTask(id: string): Promise<void> {
+    return this.firestore.collection('Tasks').doc(id).delete();
+  }
+  getTaskById(id: string): Observable<any> {
+    return this.firestore.collection('Tasks').doc(id).valueChanges();
+  }
+
+  updateTask(id: string, data: any) {
+    return this.firestore.collection('Tasks').doc(id).update(data);
   }
 }
