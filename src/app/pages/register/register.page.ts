@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, NavigationExtras } from '@angular/router';
 import { ToastController } from '@ionic/angular';
+import { FirestoreService } from 'src/app/services/firestore.service';
 @Component({
   selector: 'app-register',
   templateUrl: './register.page.html',
@@ -12,15 +13,58 @@ export class RegisterPage implements OnInit {
     email: '',
     password: '',
     repeatpassword: '',
+    image: '',
+    tasks: '',
+    asignature: '',
   };
   errorMessage: string = '';
 
-  constructor(public router: Router, public toastController: ToastController) {}
+  constructor(
+    public router: Router,
+    public toastController: ToastController,
+    private fireservice: FirestoreService
+  ) {}
+
   showPassword: boolean = false;
   onChangeVisibility() {
     this.showPassword = !this.showPassword;
   }
   ngOnInit() {}
+  signup() {
+    this.fireservice
+      .signup({ email: this.register.email, password: this.register.password })
+      .then((res) => {
+        if (res && res.user && res.user.uid) {
+          let data = {
+            email: this.register.email, // Asegúrate de usar 'this.register.email'
+            password: this.register.password, // Asegúrate de usar 'this.register.password'
+            name: this.register.user,
+            uid: res.user.uid,
+            image: this.register.image,
+            tasks: this.register.task,
+            asignature: this.register.asignature,
+          };
+
+          this.fireservice
+            .saveDetails(data)
+            .then(() => {
+              alert('Account Created!');
+            })
+            .catch((err) => {
+              console.error('Error saving user details:', err);
+            });
+        } else {
+          console.error('Error: User object is null or undefined', res);
+          alert('Error creating account. Please try again.');
+        }
+      })
+      .catch((err) => {
+        console.error('Error during signup:', err);
+        alert(
+          'Error creating account. Please check your details and try again.'
+        );
+      });
+  }
 
   onSubmit() {
     let navigationExtras: NavigationExtras = {

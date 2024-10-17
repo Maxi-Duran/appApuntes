@@ -8,20 +8,8 @@ import { FirestoreService } from 'src/app/services/firestore.service';
 })
 export class NotesPage implements OnInit {
   notes: any[] = [];
+  userId: string = '';
   constructor(private firestore: FirestoreService, private router: Router) {}
 
-  ngOnInit() {
-    this.getNotes();
-  }
-
-  getNotes() {
-    this.firestore.getAsignature().subscribe((res) => {
-      this.notes = res;
-      console.log(this.notes);
-    });
-  }
-  navigateToUpdateNotes(id: string) {
-    this.router.navigate(['/text', id]);
-    console.log('aa');
-  }
+  ngOnInit() {}
 }

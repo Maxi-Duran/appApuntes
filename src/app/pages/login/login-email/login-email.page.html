@@ -22,13 +22,38 @@
     labelPlacement="floating"
     helperText=""
     errorText="Correo Incorrecto"
-    ngModel
+    [(ngModel)]="data.email"
     email
   ></ion-input>
+  <ion-input
+    class=""
+    [type]="showPassword ? 'text' : 'password'"
+    fill="solid"
+    label="Contraseña"
+    labelPlacement="floating"
+    helperText=""
+    errorText="Contraseña Incorrecta"
+    [(ngModel)]="data.password"
+    ><ion-button
+      fill="clear"
+      slot="end"
+      aria-label="Show/hide"
+      (click)="onChangeVisibility()"
+    >
+      <ion-icon
+        slot="icon-only"
+        name="eye"
+        aria-hidden="true"
+      ></ion-icon> </ion-button
+  ></ion-input>
+  <a routerLink="/restore-password" class="text-purple-400 font-montserrat"
+    >¿Has olvidado tu contraseña?</a
+  >
   <button
+    (click)="login()"
     color="success"
     class="float-end mr-5 bg-indigo-400 text-white h-10 mt-3 rounded-2xl w-32 text-md ion-activatable ripple-parent rounded-rectangle font-montserrat"
-    routerLink="/login-password"
+    routerLink="/welcome"
   >
     <ion-ripple-effect></ion-ripple-effect>
     Siguiente

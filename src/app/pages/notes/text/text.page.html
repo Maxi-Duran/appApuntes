@@ -9,11 +9,13 @@
 <ion-content>
   <form class="flex flex-col gap-10 justify-center items-center h-[80%]">
     <h1></h1>
-    <textarea name="note.name" name="noteName"></textarea>
-    <button
-      class="float-end mr-5 rounded-2xl bg-emerald-400 h-12 w-40"
-      [routerLink]="['/text', note.id]"
-    >
+    <textarea
+      [(ngModel)]="note.text"
+      class="bg-white"
+      name="noteText"
+    ></textarea>
+
+    <button class="float-end mr-5 rounded-2xl bg-emerald-400 h-12 w-40">
       Guardar
     </button>
   </form>

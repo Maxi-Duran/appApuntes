@@ -18,27 +18,5 @@ export class TextPage implements OnInit {
     private firestore: FirestoreService
   ) {}
 
-  ngOnInit() {
-    const getAsignature = this.route.snapshot.paramMap.get('id'); // Obtener el ID de la tarea
-    if (getAsignature) {
-      this.getNote(getAsignature);
-    }
-  }
-
-  getNote(id: string) {
-    this.firestore.getAsignatureById(id).subscribe((note) => {
-      this.note = note;
-    });
-  }
-
-  updateText() {
-    const data = {
-      name: this.note.name,
-      asignatura: this.note.asignatura,
-      endDate: this.note.endDate,
-    };
-    this.firestore.updateText(this.note.id, data).then(() => {
-      console.log('Tarea actualizada');
-    });
-  }
+  ngOnInit() {}
 }

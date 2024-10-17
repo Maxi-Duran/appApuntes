@@ -10,7 +10,7 @@
   <form class="flex flex-col gap-10 justify-center items-center h-[80%]">
     <mat-form-field class="example-form-field">
       <mat-label>Nombre</mat-label>
-      <input matInput type="text" />
+      <input [(ngModel)]="note.name" name="noteName" matInput type="text" />
     </mat-form-field>
     <button class="float-end mr-5 rounded-2xl bg-emerald-400 h-12 w-40">
       Crear nueva Asignatura

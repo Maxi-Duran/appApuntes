@@ -32,13 +32,7 @@ const routes: Routes = [
         (m) => m.LoginEmailPageModule
       ),
   },
-  {
-    path: 'login-password',
-    loadChildren: () =>
-      import('./pages/login/login-password/login-password.module').then(
-        (m) => m.LoginPasswordPageModule
-      ),
-  },
+
   {
     path: 'welcome',
     loadChildren: () =>
