@@ -21,4 +21,21 @@ export class NewTaskPage implements OnInit {
   ) {}
 
   ngOnInit() {}
+
+  createTask() {
+    console.log('agregando');
+    const id = this.firestore.createId(); // Genera un ID único automáticamente
+    const data = {
+      id: id,
+      name: this.task.name,
+      completed: false,
+      asignatura: this.task.asignatura,
+      endDate: this.task.endDate, // Usa la fecha seleccionada
+    };
+
+    this.firestoreget.createTask(data, id).then(() => {
+      console.log('Tarea creada con éxito');
+      // Aquí puedes agregar lógica adicional, como limpiar el formulario
+    });
+  }
 }

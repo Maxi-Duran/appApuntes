@@ -23,4 +23,12 @@ export class TaskPage implements OnInit {
       console.log('hola');
     });
   }
+
+  deleteTask(id: string) {
+    console.log('eliminando');
+    this.firestore.deleteTask(id).then(() => {
+      console.log('eliminado');
+      this.getTasks();
+    });
+  }
 }

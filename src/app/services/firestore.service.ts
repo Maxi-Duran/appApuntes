@@ -31,16 +31,19 @@ export class FirestoreService {
   }
 
   // TAREAS
-  async createTask(data: any, id: string) {
-    const user = await this.auth.currentUser;
+  createTask(data: any, id: string) {
+    const user = firebase.auth().currentUser;
     if (user) {
       const userId = user.uid;
+
       return this.firestore
         .collection('users')
         .doc(userId)
         .collection('Tasks')
         .doc(id)
         .set(data);
+    } else {
+      return Promise.reject('Usuario no autenticado');
     }
   }
 
@@ -60,8 +63,9 @@ export class FirestoreService {
     }
   }
 
-  async deleteTask(id: string): Promise<void> {
-    const user = await this.auth.currentUser;
+  deleteTask(id: string) {
+    const user = firebase.auth().currentUser;
+
     if (user) {
       const userId = user.uid;
       return this.firestore
@@ -70,6 +74,8 @@ export class FirestoreService {
         .collection('Tasks')
         .doc(id)
         .delete();
+    } else {
+      return Promise.reject('id no encontrado');
     }
   }
 

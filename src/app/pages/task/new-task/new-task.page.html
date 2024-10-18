@@ -37,7 +37,10 @@
         </mat-option>
       </mat-select>
     </mat-form-field>
-    <button class="float-end mr-5 rounded-2xl bg-emerald-400 h-12 w-40">
+    <button
+      (click)="createTask()"
+      class="float-end mr-5 rounded-2xl bg-emerald-400 h-12 w-40"
+    >
       Crear nueva Tarea
     </button>
   </form>
