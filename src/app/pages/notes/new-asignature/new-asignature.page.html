@@ -12,7 +12,19 @@
       <mat-label>Nombre</mat-label>
       <input [(ngModel)]="note.name" name="noteName" matInput type="text" />
     </mat-form-field>
-    <button class="float-end mr-5 rounded-2xl bg-emerald-400 h-12 w-40">
+    <mat-form-field class="example-form-field">
+      <mat-label>Profesor</mat-label>
+      <input
+        [(ngModel)]="note.teacher"
+        name="noteTeacher"
+        matInput
+        type="text"
+      />
+    </mat-form-field>
+    <button
+      class="float-end mr-5 rounded-2xl bg-emerald-400 h-12 w-40"
+      (click)="createNotes()"
+    >
       Crear nueva Asignatura
     </button>
   </form>

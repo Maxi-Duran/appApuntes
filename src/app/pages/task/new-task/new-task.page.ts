@@ -20,7 +20,15 @@ export class NewTaskPage implements OnInit {
     private firestoreget: FirestoreService
   ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.getNotes();
+  }
+  getNotes() {
+    this.firestoreget.getNotes().subscribe((res) => {
+      this.notes = res; // Guardar las tareas en la variable
+      console.log(this.notes);
+    });
+  }
 
   createTask() {
     console.log('agregando');

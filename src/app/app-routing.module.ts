@@ -40,13 +40,7 @@ const routes: Routes = [
         (m) => m.WelcomePageModule
       ),
   },
-  {
-    path: 'confirm-name',
-    loadChildren: () =>
-      import('./pages/welcome/confirm-name/confirm-name.module').then(
-        (m) => m.ConfirmNamePageModule
-      ),
-  },
+
   {
     path: 'restore-password',
     loadChildren: () =>

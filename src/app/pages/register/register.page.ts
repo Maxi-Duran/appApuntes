@@ -14,8 +14,6 @@ export class RegisterPage implements OnInit {
     password: '',
     repeatpassword: '',
     image: '',
-    tasks: '',
-    asignature: '',
   };
   errorMessage: string = '';
 
@@ -36,13 +34,11 @@ export class RegisterPage implements OnInit {
       .then((res) => {
         if (res && res.user && res.user.uid) {
           let data = {
-            email: this.register.email, // Asegúrate de usar 'this.register.email'
-            password: this.register.password, // Asegúrate de usar 'this.register.password'
+            email: this.register.email,
+            password: this.register.password,
             name: this.register.user,
             uid: res.user.uid,
             image: this.register.image,
-            tasks: this.register.task,
-            asignature: this.register.asignature,
           };
 
           this.fireservice
@@ -105,7 +101,7 @@ export class RegisterPage implements OnInit {
       return;
     }
 
-    this.router.navigate(['/login'], navigationExtras);
+    this.router.navigate(['/welcome'], navigationExtras);
   }
 
   async presentToast(

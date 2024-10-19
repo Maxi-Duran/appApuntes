@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { AngularFireAuth } from '@angular/fire/compat/auth'; // Importar el servicio de autenticación
 import { FormControl } from '@angular/forms';
-
+import { FirestoreService } from 'src/app/services/firestore.service';
 @Component({
   selector: 'app-new-asignature',
   templateUrl: './new-asignature.page.html',
@@ -13,48 +13,31 @@ export class NewAsignaturePage implements OnInit {
   note: any = {
     name: '',
     text: '',
+    teacher: '',
   };
   userId: string = ''; // Variable para almacenar el uid del usuario
 
   constructor(
     private firestore: AngularFirestore,
-    private auth: AngularFireAuth // Servicio de autenticación
+
+    private firestoreget: FirestoreService
   ) {}
 
-  ngOnInit() {
-    // Obtener el uid del usuario logueado
-    this.auth.currentUser.then((user) => {
-      if (user) {
-        this.userId = user.uid;
-      }
-    });
-  }
+  ngOnInit() {}
 
-  createNote() {
-    if (!this.userId) {
-      console.error('No se puede crear la asignatura. Usuario no autenticado.');
-      return;
-    }
-
-    console.log('Agregando asignatura');
-    const id = this.firestore.createId();
+  createNotes() {
+    console.log('agregando');
+    const id = this.firestore.createId(); // Genera un ID único automáticamente
     const data = {
       id: id,
       name: this.note.name,
       text: this.note.text,
-      userId: this.userId, // Asociar la asignatura al usuario logueado
+      teacher: this.note.teacher,
     };
-    const path = `Notes/`;
 
-    this.firestore
-      .collection(path)
-      .doc(id)
-      .set(data)
-      .then(() => {
-        console.log('Asignatura creada con ID:', id);
-      })
-      .catch((error) => {
-        console.error('Error al crear la asignatura', error);
-      });
+    this.firestoreget.createNote(data, id).then(() => {
+      console.log('Tarea creada con éxito');
+      // Aquí puedes agregar lógica adicional, como limpiar el formulario
+    });
   }
 }

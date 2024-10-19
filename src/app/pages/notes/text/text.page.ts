@@ -11,6 +11,7 @@ export class TextPage implements OnInit {
   note: any = {
     name: '',
     text: '',
+    teacher: '',
   };
 
   constructor(
@@ -18,5 +19,26 @@ export class TextPage implements OnInit {
     private firestore: FirestoreService
   ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    const noteId = this.route.snapshot.paramMap.get('id');
+    if (noteId) {
+      this.getNote(noteId);
+    }
+  }
+
+  getNote(id: string) {
+    this.firestore.getNoteById(id).subscribe((note) => {
+      this.note = note;
+    });
+  }
+
+  updateNote() {
+    const data = {
+      name: this.note.name,
+      text: this.note.text,
+      teacher: this.note.teacher,
+    };
+    this.firestore.updateNote(this.note.id, data);
+    console.log('actualizando');
+  }
 }

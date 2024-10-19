@@ -22,7 +22,7 @@
     >
       {{note.name}}
       <mat-card-actions align="end">
-        <ion-button class="w-16" fill="clear">
+        <ion-button class="w-16" fill="clear" (click)="deleteNote(note.id)">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
             <polyline points="3 7 5 7 21 7" fill="none" stroke="#000" />
             <path

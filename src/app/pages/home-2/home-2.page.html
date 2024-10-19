@@ -1,15 +1,25 @@
+<ion-menu side="end" contentId="main-content">
+  <ion-header>
+    <ion-toolbar>
+      <ion-title>Configuracion</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content class="ion-padding"
+    ><button (click)="logoutUser()">Cerrar sesion</button></ion-content
+  >
+</ion-menu>
+
 <ion-header> </ion-header>
 
-<ion-content>
-  <ion-icon
-    name="settings-outline"
-    class="float-end mr-5 mt-5"
-    size="large"
-  ></ion-icon>
-  <div class="flex gap-2 items-center w-[90%] m-auto h-[5%] font-montserrat">
-    <img class="rounded-full w-24 h-24" src="assets/img/cat.jpg" />
+<ion-content id="main-content">
+  <button class="float-end mr-5 mt-5" expand="block" (click)="openMenu()">
+    <ion-icon name="settings-outline" size="large"></ion-icon>
+  </button>
 
-    <h2 class="text-2xl mt-3">Maximiliano Duran</h2>
+  <div class="flex gap-2 items-center w-[90%] m-auto h-[5%] font-montserrat">
+    <img class="rounded-full w-24 h-24" src="" />
+
+    <h2 class="text-2xl mt-3">{{ users.name }}</h2>
   </div>
   <div class="flex items-center m-auto mt-10 h-[5%] w-[90%] font-montserrat">
     <h2 class="text-3xl">Resumen de tareas</h2>
@@ -20,7 +30,7 @@
     <div
       class="w-[50%] border-r-2 bg-slate-100 h-full border-black text-2xl flex items-center justify-center font-montserrat"
     >
-      30 Tareas Completadas
+      33 Tareas Completadas
     </div>
     <div
       class="w-[50%] h-full text-2xl bg-slate-100 flex items-center justify-center font-montserrat"
@@ -32,7 +42,7 @@
     <app-chart></app-chart>
   </div>
   <div class="w-[90%] m-auto text-center mt-10">
-    <h1 class="text-2xl font-montserrat">Expiracion de tareas mas cercanas</h1>
+    <h1 class="text-2xl font-montserrat">Expiración de tareas más cercanas</h1>
     <ion-list
       lines="none"
       class="w-[90%] m-auto h-[80%] flex flex-col items-center font-montserrat"

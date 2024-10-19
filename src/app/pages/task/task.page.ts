@@ -31,4 +31,8 @@ export class TaskPage implements OnInit {
       this.getTasks();
     });
   }
+  navigateToUpdateTask(id: string) {
+    this.router.navigate(['/update-task', id]);
+    console.log('navegando');
+  }
 }
