@@ -30,12 +30,12 @@
     <div
       class="w-[50%] border-r-2 bg-slate-100 h-full border-black text-2xl flex items-center justify-center font-montserrat"
     >
-      33 Tareas Completadas
+      {{completedTasks.length}} Tareas Completadas
     </div>
     <div
       class="w-[50%] h-full text-2xl bg-slate-100 flex items-center justify-center font-montserrat"
     >
-      20 Tareas Pendientes
+      {{pendingTasks.length}} Tareas Pendientes
     </div>
   </div>
   <div class="w-[90%] m-auto mt-5">
@@ -47,9 +47,9 @@
       lines="none"
       class="w-[90%] m-auto h-[80%] flex flex-col items-center font-montserrat"
     >
-      <ion-item class="flex w-[80%] font-montserrat" *ngFor="let item of data">
-        <span class="w-[50%]">{{ item.task }}</span>
-        <ion-label class="w-[50%] text-right">{{ item.date }}</ion-label>
+      <ion-item class="flex w-[80%] font-montserrat">
+        <span class="w-[50%]">a</span>
+        <ion-label class="w-[50%] text-right">a</ion-label>
       </ion-item>
     </ion-list>
   </div>

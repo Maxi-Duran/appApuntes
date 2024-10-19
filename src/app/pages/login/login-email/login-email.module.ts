@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
-
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { LoginEmailPageRoutingModule } from './login-email-routing.module';
 
 import { LoginEmailPage } from './login-email.page';
@@ -13,8 +13,9 @@ import { LoginEmailPage } from './login-email.page';
     CommonModule,
     FormsModule,
     IonicModule,
-    LoginEmailPageRoutingModule
+    LoginEmailPageRoutingModule,
+    MatProgressSpinnerModule,
   ],
-  declarations: [LoginEmailPage]
+  declarations: [LoginEmailPage],
 })
 export class LoginEmailPageModule {}

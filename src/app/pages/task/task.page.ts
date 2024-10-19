@@ -9,11 +9,17 @@ import { Router } from '@angular/router';
 })
 export class TaskPage implements OnInit {
   tasks: any[] = [];
-
   constructor(private firestore: FirestoreService, private router: Router) {}
 
   ngOnInit() {
     this.getTasks();
+  }
+  updateTask(taskId: string, currentStatus: boolean) {
+    const newStatus = !currentStatus;
+    const data = {
+      completed: newStatus,
+    };
+    this.firestore.updateTask(taskId, data);
   }
 
   getTasks() {

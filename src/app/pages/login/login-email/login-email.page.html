@@ -49,13 +49,13 @@
   <a routerLink="/restore-password" class="text-purple-400 font-montserrat"
     >¿Has olvidado tu contraseña?</a
   >
+  <mat-spinner *ngIf="loading"></mat-spinner>
   <button
     (click)="login()"
     color="success"
     class="float-end mr-5 bg-indigo-400 text-white h-10 mt-3 rounded-2xl w-32 text-md ion-activatable ripple-parent rounded-rectangle font-montserrat"
-    routerLink="/welcome"
   >
     <ion-ripple-effect></ion-ripple-effect>
-    Siguiente
+    Iniciar Sesion
   </button>
 </ion-content>

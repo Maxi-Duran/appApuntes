@@ -5,6 +5,7 @@ import {
   AfterViewInit,
   QueryList,
 } from '@angular/core';
+import { FirestoreService } from 'src/app/services/firestore.service';
 import { AnimationController, Animation } from '@ionic/angular';
 
 @Component({
@@ -19,8 +20,14 @@ export class HomePage implements AfterViewInit {
 
   private animation!: Animation;
 
-  constructor(private animationCtrl: AnimationController) {}
-
+  constructor(
+    private animationCtrl: AnimationController,
+    private notificationService: FirestoreService
+  ) {}
+  ngOnInit() {
+    // Inicia las notificaciones push al cargar la página
+    this.notificationService.initPushNotifications();
+  }
   ngAfterViewInit() {
     this.slides.forEach((slide) => {
       this.animation = this.animationCtrl

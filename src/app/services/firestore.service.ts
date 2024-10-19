@@ -3,9 +3,10 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { PushNotifications } from '@capacitor/push-notifications';
 import firebase from 'firebase/compat/app';
 import { Router } from '@angular/router';
-
+import { Capacitor } from '@capacitor/core';
 @Injectable({
   providedIn: 'root',
 })
@@ -22,7 +23,6 @@ export class FirestoreService {
   }
   Logout() {
     return this.auth.signOut().then(() => {
-      // Después de cerrar sesión, navegamos a la página de login y eliminamos los datos del usuario
       this.router.navigate(['/login']);
     });
   }
@@ -50,6 +50,32 @@ export class FirestoreService {
     } else {
       return new Observable<any[]>();
     }
+  }
+
+  loginWithGoogle() {
+    return this.auth
+      .signInWithPopup(new firebase.auth.GoogleAuthProvider())
+      .then((result) => {
+        // Si el inicio de sesión es exitoso, crea el usuario en Firestore
+        this.createUser(result.user);
+      });
+  }
+  private createUser(user: firebase.User | null) {
+    if (!user) return;
+
+    const userRef = this.firestore.collection('users').doc(user.uid);
+
+    userRef.get().subscribe((doc) => {
+      if (!doc.exists) {
+        userRef.set({
+          uid: user.uid,
+          email: user.email,
+          name: user.displayName,
+          photoURL: user.photoURL,
+          createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+        });
+      }
+    });
   }
 
   // TAREAS
@@ -204,6 +230,33 @@ export class FirestoreService {
         .update(data);
     } else {
       return new Observable<any[]>();
+    }
+  }
+
+  //NOTIFICACIONES
+  initPushNotifications() {
+    // Verifica si la plataforma es Android o iOS antes de inicializar
+    if (Capacitor.getPlatform() !== 'web') {
+      PushNotifications.requestPermissions().then((result) => {
+        if (result.receive === 'granted') {
+          PushNotifications.register();
+        } else {
+          console.log('Permisos no otorgados para recibir notificaciones.');
+        }
+      });
+
+      PushNotifications.addListener('registration', (token) => {
+        console.log('Token de registro:', token.value);
+      });
+
+      PushNotifications.addListener(
+        'pushNotificationReceived',
+        (notification) => {
+          console.log('Notificación recibida:', notification);
+        }
+      );
+    } else {
+      console.log('Las notificaciones push no están disponibles en la web.');
     }
   }
 }

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router, NavigationExtras } from '@angular/router';
 import { ToastController } from '@ionic/angular';
 import { FirestoreService } from 'src/app/services/firestore.service';
+
 @Component({
   selector: 'app-register',
   templateUrl: './register.page.html',
@@ -22,13 +23,16 @@ export class RegisterPage implements OnInit {
     public toastController: ToastController,
     private fireservice: FirestoreService
   ) {}
+  loading: boolean = false;
 
   showPassword: boolean = false;
   onChangeVisibility() {
     this.showPassword = !this.showPassword;
   }
   ngOnInit() {}
-  signup() {
+  onSubmit() {
+    this.loading = true;
+
     this.fireservice
       .signup({ email: this.register.email, password: this.register.password })
       .then((res) => {
@@ -44,64 +48,29 @@ export class RegisterPage implements OnInit {
           this.fireservice
             .saveDetails(data)
             .then(() => {
-              alert('Account Created!');
+              this.loading = false;
+              this.errorMessage = 'Cuenta Creada!';
+              this.presentToast('top', this.errorMessage, 3000, 'success');
+              this.router.navigate(['/welcome']);
             })
             .catch((err) => {
-              console.error('Error saving user details:', err);
+              this.loading = false;
+              this.errorMessage = 'Error al crear la cuenta';
+              this.presentToast('bottom', this.errorMessage, 3000, 'danger');
             });
         } else {
+          this.loading = false;
           console.error('Error: User object is null or undefined', res);
-          alert('Error creating account. Please try again.');
+          this.errorMessage = 'Error al crear la cuenta';
+          this.presentToast('bottom', this.errorMessage, 3000, 'danger');
         }
       })
       .catch((err) => {
+        this.loading = false;
         console.error('Error during signup:', err);
-        alert(
-          'Error creating account. Please check your details and try again.'
-        );
+        this.errorMessage = 'Error al crear la cuenta';
+        this.presentToast('bottom', this.errorMessage, 3000, 'danger');
       });
-  }
-
-  onSubmit() {
-    let navigationExtras: NavigationExtras = {
-      state: { user: this.register.user },
-    };
-
-    //validacion de espacio en blanco
-    if (
-      this.register.password == '' ||
-      this.register.repeatpassword == '' ||
-      this.register.user == '' ||
-      this.register.email == ''
-    ) {
-      this.errorMessage = 'Complete todos los campos';
-      this.presentToast('bottom', this.errorMessage, 3000, 'danger');
-
-      return;
-    }
-    //validacion de user
-    if (this.register.user.length < 4) {
-      this.errorMessage = 'Nombre incorrecto';
-      this.presentToast('bottom', this.errorMessage, 3000, 'danger');
-
-      return;
-    }
-    //validacion de contraseña
-    if (this.register.password.length < 8) {
-      this.errorMessage = 'Contraseña incorrecta';
-      this.presentToast('bottom', this.errorMessage, 3000, 'danger');
-
-      return;
-    }
-    //validacion de coincidencia de contraseña
-    if (this.register.repeatpassword != this.register.password) {
-      this.errorMessage = 'Las contraseñas no coinciden';
-      this.presentToast('bottom', this.errorMessage, 3000, 'danger');
-
-      return;
-    }
-
-    this.router.navigate(['/welcome'], navigationExtras);
   }
 
   async presentToast(

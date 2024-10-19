@@ -1,7 +1,8 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { UpdateTaskPageModule } from './pages/task/update-task/update-task.module';
-
+import { authGuard } from './guards/auth.guard';
+import { NotFoundComponent } from './components/not-found/not-found.component';
 const routes: Routes = [
   {
     path: 'home',
@@ -54,6 +55,7 @@ const routes: Routes = [
       import('../app/pages/home-2/home-2.module').then(
         (m) => m.Home2PageModule
       ),
+    canActivate: [authGuard],
   },
   {
     path: 'calendar',
@@ -110,6 +112,8 @@ const routes: Routes = [
     loadChildren: () =>
       import('./pages/notes/text/text.module').then((m) => m.TextPageModule),
   },
+
+  { path: '**', component: NotFoundComponent },
 ];
 
 @NgModule({

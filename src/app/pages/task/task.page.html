@@ -21,7 +21,11 @@
             ></mat-card-title
           >
           <mat-card-actions align="end">
-            <mat-checkbox class="example-margin"></mat-checkbox>
+            <mat-checkbox
+              (change)="updateTask(task.id, task.completed)"
+              class="example-margin"
+              >{{ task.completed ? 'Completada' : 'Pendiente' }}</mat-checkbox
+            >
           </mat-card-actions>
           <mat-card-actions align="end">
             <ion-button class="w-16" fill="clear" (click)="deleteTask(task.id)">
