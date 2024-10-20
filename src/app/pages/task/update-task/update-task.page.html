@@ -34,10 +34,13 @@
         <mat-option value="option1">Option 1</mat-option>
       </mat-select>
     </mat-form-field>
+    <mat-spinner *ngIf="loading"></mat-spinner>
     <button
-      class="float-end mr-5 rounded-2xl bg-emerald-400 h-12 w-40"
+      class="float-end mr-5 bg-indigo-400 text-white h-12 mt-3 rounded-2xl w-40 text-md ion-activatable ripple-parent rounded-rectangle font-montserrat"
       (click)="updateTask()"
+      [disabled]="loading"
     >
+      <ion-ripple-effect></ion-ripple-effect>
       Actualizar
     </button>
   </form>

@@ -60,7 +60,7 @@ export class FirestoreService {
         this.createUser(result.user);
       });
   }
-  private createUser(user: firebase.User | null) {
+  createUser(user: firebase.User | null) {
     if (!user) return;
 
     const userRef = this.firestore.collection('users').doc(user.uid);
@@ -76,6 +76,9 @@ export class FirestoreService {
         });
       }
     });
+  }
+  resetPassword(email: string) {
+    return this.auth.sendPasswordResetEmail(email);
   }
 
   // TAREAS

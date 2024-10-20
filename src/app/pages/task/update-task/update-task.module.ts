@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
-
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { UpdateTaskPageRoutingModule } from './update-task-routing.module';
 
 import { UpdateTaskPage } from './update-task.page';
@@ -30,7 +30,7 @@ import { provideNativeDateAdapter } from '@angular/material/core';
     FormsModule,
     UpdateTaskPageRoutingModule,
     MatSelectModule,
-
+    MatProgressSpinnerModule,
     MatMenuModule,
     CommonModule,
 

@@ -44,12 +44,16 @@
   <div class="w-[90%] m-auto text-center mt-10">
     <h1 class="text-2xl font-montserrat">Expiración de tareas más cercanas</h1>
     <ion-list
+      *ngFor="let task of expTasks"
       lines="none"
       class="w-[90%] m-auto h-[80%] flex flex-col items-center font-montserrat"
     >
       <ion-item class="flex w-[80%] font-montserrat">
-        <span class="w-[50%]">a</span>
-        <ion-label class="w-[50%] text-right">a</ion-label>
+        <span class="w-[50%]">holaa{{task.name}}</span>
+        <ion-label class="w-[50%] text-right">
+          {{ convertTimestampToDate(task.endDate) | date: 'dd-MM-yyyy'
+          }}</ion-label
+        >
       </ion-item>
     </ion-list>
   </div>

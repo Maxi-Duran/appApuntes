@@ -26,7 +26,7 @@
     email
   ></ion-input>
   <ion-input
-    class=""
+    class="w-[80%] m-auto mt-10 font-montserrat"
     [type]="showPassword ? 'text' : 'password'"
     fill="solid"
     label="Contraseña"
@@ -46,7 +46,7 @@
         aria-hidden="true"
       ></ion-icon> </ion-button
   ></ion-input>
-  <a routerLink="/restore-password" class="text-purple-400 font-montserrat"
+  <a routerLink="/restore-password" class="text-purple-400 font-montserrat m-10"
     >¿Has olvidado tu contraseña?</a
   >
   <mat-spinner *ngIf="loading"></mat-spinner>

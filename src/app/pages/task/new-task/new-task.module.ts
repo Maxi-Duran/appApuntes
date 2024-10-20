@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { MatMenuModule } from '@angular/material/menu';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSelectModule } from '@angular/material/select';
 
 import { MatCheckboxModule } from '@angular/material/checkbox';
@@ -27,6 +27,7 @@ provideNativeDateAdapter;
     MatCheckboxModule,
     FormsModule,
     ReactiveFormsModule,
+    MatProgressSpinnerModule,
 
     MatSelectModule,
 

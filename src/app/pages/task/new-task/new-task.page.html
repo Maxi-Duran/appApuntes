@@ -37,10 +37,13 @@
         </mat-option>
       </mat-select>
     </mat-form-field>
+    <mat-spinner></mat-spinner>
     <button
       (click)="createTask()"
-      class="float-end mr-5 rounded-2xl bg-emerald-400 h-12 w-40"
+      [disabled]="loading"
+      class="float-end mr-5 bg-indigo-400 text-white h-12 mt-3 rounded-2xl w-40 text-md ion-activatable ripple-parent rounded-rectangle font-montserrat"
     >
+      <ion-ripple-effect></ion-ripple-effect>
       Crear nueva Tarea
     </button>
   </form>
