@@ -11,6 +11,7 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import { AngularFireModule } from '@angular/fire/compat';
 import { environment } from '../environments/environment';
 import { AngularFireAuthModule } from '@angular/fire/compat/auth';
+
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 @NgModule({
   declarations: [AppComponent],
@@ -19,6 +20,8 @@ import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
     BrowserModule,
     IonicModule.forRoot(),
     AppRoutingModule,
+    AngularFireModule.initializeApp(environment.firebaseConfig),
+
     MatDatepickerModule,
     IonicStorageModule.forRoot(),
     AngularFireModule.initializeApp(environment.firebaseConfig),

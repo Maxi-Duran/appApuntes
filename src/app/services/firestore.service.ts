@@ -6,7 +6,7 @@ import { map } from 'rxjs/operators';
 import { PushNotifications } from '@capacitor/push-notifications';
 import firebase from 'firebase/compat/app';
 import { Router } from '@angular/router';
-import { Capacitor } from '@capacitor/core';
+
 @Injectable({
   providedIn: 'root',
 })
@@ -15,7 +15,9 @@ export class FirestoreService {
     private firestore: AngularFirestore,
     public auth: AngularFireAuth,
     private router: Router
-  ) {}
+  ) {
+    this.initializePushNotifications();
+  }
 
   // USUARIO
   loginWithEmail(data: any) {
@@ -237,29 +239,46 @@ export class FirestoreService {
   }
 
   //NOTIFICACIONES
-  initPushNotifications() {
-    // Verifica si la plataforma es Android o iOS antes de inicializar
-    if (Capacitor.getPlatform() !== 'web') {
-      PushNotifications.requestPermissions().then((result) => {
+  initializePushNotifications() {
+    // Solicitar permisos
+    PushNotifications.requestPermissions()
+      .then((result) => {
         if (result.receive === 'granted') {
           PushNotifications.register();
+          console.info('funcionacrack');
         } else {
-          console.log('Permisos no otorgados para recibir notificaciones.');
+          console.error('Permission not granted for push notifications');
         }
+      })
+      .catch((error) => {
+        console.error('Error requesting permissions:', error);
       });
 
-      PushNotifications.addListener('registration', (token) => {
-        console.log('Token de registro:', token.value);
-      });
+    // Escuchar el evento de registro de token
 
-      PushNotifications.addListener(
-        'pushNotificationReceived',
-        (notification) => {
-          console.log('Notificación recibida:', notification);
-        }
-      );
-    } else {
-      console.log('Las notificaciones push no están disponibles en la web.');
-    }
+    PushNotifications.addListener('registration', (token) => {
+      console.info('Registration token: ', token.value);
+    });
+    // Escuchar el evento de error de registro
+    PushNotifications.addListener('registrationError', (err) => {
+      console.error('Registration error: ', err.error);
+    });
+
+    // Escuchar el evento de recepción de notificaciones
+    PushNotifications.addListener(
+      'pushNotificationReceived',
+      (notification) => {
+        console.log('Push notification received: ', notification);
+      }
+    );
+
+    // Escuchar el evento de acción de la notificación
+    PushNotifications.addListener(
+      'pushNotificationActionPerformed',
+      (notification) => {
+        console.log('Push action performed: ' + JSON.stringify(notification));
+        // Manejar la acción realizada sobre la notificación
+      }
+    );
   }
 }

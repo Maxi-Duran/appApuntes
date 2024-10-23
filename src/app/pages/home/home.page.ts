@@ -25,8 +25,10 @@ export class HomePage implements AfterViewInit {
     private notificationService: FirestoreService
   ) {}
   ngOnInit() {
-    // Inicia las notificaciones push al cargar la página
-    this.notificationService.initPushNotifications();
+    // pedir permisos
+  }
+  permisos() {
+    this.notificationService.initializePushNotifications();
   }
   ngAfterViewInit() {
     this.slides.forEach((slide) => {
