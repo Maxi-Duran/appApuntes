@@ -7,12 +7,17 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:494882482880:android:74046ea023ed65e33adb25",
+        "mobilesdk_app_id": "1:494882482880:android:2159768a55c47c063adb25",
         "android_client_info": {
-          "package_name": "io.ionic.starter"
+          "package_name": "com.code.appApuntes"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "494882482880-fic9ohif9ilfpgp80209m63ed9qgh0ak.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyC0OqxwKx5NsaEyTjsoo60ar6cW-9PRK3w"
@@ -20,7 +25,12 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "494882482880-fic9ohif9ilfpgp80209m63ed9qgh0ak.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }

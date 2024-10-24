@@ -20,9 +20,17 @@
       <ion-ripple-effect></ion-ripple-effect> Saltar
     </button>
     <button
+      (click)="fileInput.click()"
       class="bg-indigo-400 rounded-2xl h-10 w-32 text-md text-white ion-activatable ripple-parent rounded-rectangle font-montserrat"
     >
-      <ion-ripple-effect></ion-ripple-effect> Continuar
+      <input
+        type="file"
+        #fileInput
+        (change)="onFileSelected($event)"
+        accept="image/*"
+        style="display: none"
+      />
+      <ion-ripple-effect></ion-ripple-effect> Subir Imagen
     </button>
   </div>
 </ion-content>

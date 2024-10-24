@@ -9,3 +9,7 @@ export interface Task {
   end_date: string;
   asignatura: string;
 }
+
+export interface User {
+  profileImageUrl?: string;
+}

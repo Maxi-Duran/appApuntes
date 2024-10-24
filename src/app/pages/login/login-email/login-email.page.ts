@@ -36,7 +36,6 @@ export class LoginEmailPage implements OnInit {
           this.loading = false;
           this.errorMessage = 'Inicio de sesion Exitoso';
           this.presentToast('top', this.errorMessage, 3000, 'success');
-          this.router.navigate(['/welcome']);
         },
         (err) => {
           this.loading = false;

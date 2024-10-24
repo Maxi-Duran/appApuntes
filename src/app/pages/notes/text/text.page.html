@@ -9,9 +9,10 @@
 <ion-content>
   <form class="flex flex-col gap-3 justify-center items-center h-full">
     <button
-    class="float-end mr-5 bg-indigo-400 text-white h-12 mt-3 rounded-2xl w-40 text-md ion-activatable ripple-parent rounded-rectangle font-montserrat"
+      class="float-end mr-5 bg-indigo-400 text-white h-12 mt-3 rounded-2xl w-40 text-md ion-activatable ripple-parent rounded-rectangle font-montserrat"
       (click)="updateNote()"
-    ><ion-ripple-effect></ion-ripple-effect>
+    >
+      <ion-ripple-effect></ion-ripple-effect>
       Guardar
     </button>
     <textarea
@@ -19,5 +20,6 @@
       class="w-[95%] bg-white border-2 border-blue-400 h-[90%]"
       name="noteText"
     ></textarea>
+    <button (click)="foto()">Tomar foto</button>
   </form>
 </ion-content>

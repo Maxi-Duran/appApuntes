@@ -24,7 +24,7 @@ import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 
     MatDatepickerModule,
     IonicStorageModule.forRoot(),
-    AngularFireModule.initializeApp(environment.firebaseConfig),
+
     AngularFireAuthModule,
     AngularFirestoreModule,
   ],

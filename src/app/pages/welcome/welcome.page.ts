@@ -13,4 +13,19 @@ export class WelcomePage implements OnInit {
     image: '',
   };
   ngOnInit() {}
+
+  profileImageUrl: string | null = null;
+  async onFileSelected(event: any) {
+    const file: File = event.target.files[0];
+    const uid = this.firestore.getUserId();
+
+    if (file) {
+      try {
+        this.profileImageUrl = await this.firestore.uploadImage(file, uid);
+        console.log('Image URL:', this.profileImageUrl);
+      } catch (error) {
+        console.error('Error uploading image:', error);
+      }
+    }
+  }
 }

@@ -17,23 +17,6 @@ export class LoginPage implements OnInit {
   loading: boolean = false;
   ngOnInit() {}
 
-  loginWithGoogle() {
-    this.loading = true;
-    this.firestore
-      .loginWithGoogle()
-      .then((res) => {
-        this.loading = false;
-        this.errorMessage = 'Inicio de sesion Exitoso';
-        this.presentToast('top', this.errorMessage, 3000, 'success');
-        this.router.navigate(['/welcome']);
-      })
-      .catch((error) => {
-        this.loading = false;
-        this.errorMessage = 'Error al iniciar Sesion';
-        this.presentToast('bottom', this.errorMessage, 3000, 'danger');
-      });
-  }
-
   async presentToast(
     position: 'top' | 'middle' | 'bottom',
     msg: string,

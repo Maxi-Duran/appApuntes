@@ -19,6 +19,9 @@ export class TextPage implements OnInit {
     private firestore: FirestoreService
   ) {}
 
+  foto() {
+    this.firestore.takePicture();
+  }
   ngOnInit() {
     const noteId = this.route.snapshot.paramMap.get('id');
     if (noteId) {

@@ -2,11 +2,17 @@ import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 import { PushNotifications } from '@capacitor/push-notifications';
 import firebase from 'firebase/compat/app';
 import { Router } from '@angular/router';
-
+import { Capacitor, Plugins } from '@capacitor/core';
+import { Camera, CameraResultType } from '@capacitor/camera';
+import { GoogleAuthProvider } from 'firebase/auth';
+import { finalize } from 'rxjs/operators';
+import { AngularFireStorage } from '@angular/fire/compat/storage';
+import { switchMap } from 'rxjs/operators';
+import { User } from '../interfaces/diccionario';
 @Injectable({
   providedIn: 'root',
 })
@@ -14,9 +20,20 @@ export class FirestoreService {
   constructor(
     private firestore: AngularFirestore,
     public auth: AngularFireAuth,
-    private router: Router
+    private router: Router,
+    private storage: AngularFireStorage
   ) {
-    this.initializePushNotifications();
+    this.persistencia();
+  }
+  persistencia() {
+    this.auth
+      .setPersistence('local')
+      .then(() => {
+        console.log('Persistencia local');
+      })
+      .catch((error) => {
+        console.error('Error al configurar la persistencia', error);
+      });
   }
 
   // USUARIO
@@ -24,9 +41,7 @@ export class FirestoreService {
     return this.auth.signInWithEmailAndPassword(data.email, data.password);
   }
   Logout() {
-    return this.auth.signOut().then(() => {
-      this.router.navigate(['/login']);
-    });
+    return this.auth.signOut();
   }
   getUser(): Observable<any> {
     return this.auth.authState;
@@ -54,14 +69,6 @@ export class FirestoreService {
     }
   }
 
-  loginWithGoogle() {
-    return this.auth
-      .signInWithPopup(new firebase.auth.GoogleAuthProvider())
-      .then((result) => {
-        // Si el inicio de sesión es exitoso, crea el usuario en Firestore
-        this.createUser(result.user);
-      });
-  }
   createUser(user: firebase.User | null) {
     if (!user) return;
 
@@ -73,7 +80,7 @@ export class FirestoreService {
           uid: user.uid,
           email: user.email,
           name: user.displayName,
-          photoURL: user.photoURL,
+
           createdAt: firebase.firestore.FieldValue.serverTimestamp(),
         });
       }
@@ -238,47 +245,90 @@ export class FirestoreService {
     }
   }
 
-  //NOTIFICACIONES
-  initializePushNotifications() {
-    // Solicitar permisos
-    PushNotifications.requestPermissions()
-      .then((result) => {
-        if (result.receive === 'granted') {
-          PushNotifications.register();
-          console.info('funcionacrack');
-        } else {
-          console.error('Permission not granted for push notifications');
-        }
-      })
-      .catch((error) => {
-        console.error('Error requesting permissions:', error);
-      });
-
-    // Escuchar el evento de registro de token
-
-    PushNotifications.addListener('registration', (token) => {
-      console.info('Registration token: ', token.value);
-    });
-    // Escuchar el evento de error de registro
-    PushNotifications.addListener('registrationError', (err) => {
-      console.error('Registration error: ', err.error);
+  //Camara o imagenes
+  takePicture = async () => {
+    const image = await Camera.getPhoto({
+      quality: 90,
+      allowEditing: true,
+      resultType: CameraResultType.Uri,
     });
 
-    // Escuchar el evento de recepción de notificaciones
-    PushNotifications.addListener(
-      'pushNotificationReceived',
-      (notification) => {
-        console.log('Push notification received: ', notification);
-      }
-    );
+    // image.webPath will contain a path that can be set as an image src.
+    // You can access the original file using image.path, which can be
+    // passed to the Filesystem API to read the raw data of the image,
+    // if desired (or pass resultType: CameraResultType.Base64 to getPhoto)
+    var imageUrl = image.webPath;
 
-    // Escuchar el evento de acción de la notificación
-    PushNotifications.addListener(
-      'pushNotificationActionPerformed',
-      (notification) => {
-        console.log('Push action performed: ' + JSON.stringify(notification));
-        // Manejar la acción realizada sobre la notificación
+    // Can be set to the src of an image now
+  };
+
+  async uploadImage(file: File, uid: string): Promise<string> {
+    const filePath = `profile_images/${new Date().getTime()}_${file.name}`;
+    const task = this.storage.upload(filePath, file);
+
+    // Esperar a que la tarea de carga se complete
+    await task
+      .snapshotChanges()
+      .pipe(
+        finalize(() => {
+          return this.storage.ref(filePath).getDownloadURL().toPromise();
+        })
+      )
+      .toPromise();
+
+    // Obtener la URL de descarga
+    const url = await this.storage.ref(filePath).getDownloadURL().toPromise();
+
+    // Guardar la URL en Firestore según el UID
+    await this.saveImageUrl(url, uid);
+
+    return url;
+  }
+  private saveImageUrl(url: string, uid: string): Promise<void> {
+    // Actualiza el documento correspondiente al UID del usuario en Firestore
+    return this.firestore
+      .collection('users')
+      .doc(uid)
+      .update({ profileImageUrl: url });
+  }
+  getUserId(): string {
+    const user = firebase.auth().currentUser;
+    return user ? user.uid : '';
+  }
+  user: any = {
+    profileImageUrl: '',
+  };
+
+  async updateProfileImage(file: File, uid: string): Promise<void> {
+    try {
+      const userDocRef = this.firestore.collection('users').doc(uid);
+
+      const userData = await userDocRef.get().toPromise();
+      const user = userData?.data() as User;
+
+      const currentImageUrl = user?.profileImageUrl || '';
+
+      if (currentImageUrl) {
+        const storageRef = this.storage.storage.refFromURL(currentImageUrl);
+        await storageRef.delete();
+        console.log('Imagen anterior eliminada:', currentImageUrl);
       }
-    );
+
+      const filePath = `profile_images/${new Date().getTime()}_${file.name}`;
+      const task = this.storage.upload(filePath, file);
+
+      await task.snapshotChanges().toPromise();
+
+      const newImageUrl = await this.storage
+        .ref(filePath)
+        .getDownloadURL()
+        .toPromise();
+
+      await userDocRef.update({ profileImageUrl: newImageUrl });
+
+      console.log('URL de la nueva imagen guardada:', newImageUrl);
+    } catch (error) {
+      console.error('Error actualizando la imagen de perfil:', error);
+    }
   }
 }

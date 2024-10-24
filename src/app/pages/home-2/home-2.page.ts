@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FirestoreService } from 'src/app/services/firestore.service';
 import { MenuController } from '@ionic/angular';
 import { Router } from '@angular/router';
+
 @Component({
   selector: 'app-home-2',
   templateUrl: './home-2.page.html',
@@ -25,30 +26,30 @@ export class Home2Page implements OnInit {
       this.filterTasks();
     });
   }
+  //filtramos tareas que tienen fecha limite de 3 dias al dia actual
   filterTasks() {
     const today = new Date();
-    today.setHours(0, 0, 0, 0); // Establecer la hora a medianoche
+    today.setHours(0, 0, 0, 0);
 
     this.completedTasks = this.tasks.filter((task) => task.completed);
     this.pendingTasks = this.tasks.filter((task) => !task.completed);
 
     this.expTasks = this.tasks.filter((task) => {
       if (task.endDate) {
-        // Convertir el endDate (Timestamp) a un objeto Date
         const taskDate = new Date(
           task.endDate.seconds * 1000 +
             Math.floor(task.endDate.nanoseconds / 1000000)
-        ); // Convertir a milisegundos
-        taskDate.setHours(0, 0, 0, 0); // Establecer la hora a medianoche
+        ); // convertir a milisegundos
+        taskDate.setHours(0, 0, 0, 0);
 
         const diffDays =
           (taskDate.getTime() - today.getTime()) / (1000 * 60 * 60 * 24);
-        return diffDays >= 0 && diffDays <= 5; // Tareas con una fecha de finalización dentro de 5 días
+        return diffDays >= 0 && diffDays <= 5;
       }
       return false;
     });
 
-    console.log(this.expTasks); // Para verificar el resultado
+    console.log(this.expTasks);
   }
   convertTimestampToDate(timestamp: any): Date | null {
     if (timestamp) {
@@ -56,7 +57,7 @@ export class Home2Page implements OnInit {
         timestamp.seconds * 1000 + Math.floor(timestamp.nanoseconds / 1000000)
       );
     }
-    return null; // Retorna null si no hay un timestamp
+    return null;
   }
 
   constructor(
@@ -87,10 +88,28 @@ export class Home2Page implements OnInit {
       .Logout()
       .then(() => {
         console.log('Usuario cerrado sesión');
-        this.router.navigate(['/login']);
       })
       .catch((error) => {
         console.error('Error al cerrar sesión:', error);
       });
+  }
+
+  //cambiar imagen
+  async onFileSelected(event: any) {
+    const file: File = event.target.files[0];
+    const uid = this.firestore.getUserId();
+
+    if (file && uid) {
+      try {
+        await this.firestore.updateProfileImage(file, uid);
+        console.log('Imagen de perfil actualizada correctamente.');
+      } catch (error) {
+        console.error('Error actualizando la imagen de perfil:', error);
+      }
+    } else {
+      console.error(
+        'No se ha seleccionado un archivo o no se ha encontrado el UID.'
+      );
+    }
   }
 }

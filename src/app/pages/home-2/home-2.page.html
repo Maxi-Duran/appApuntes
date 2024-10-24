@@ -4,9 +4,27 @@
       <ion-title>Configuracion</ion-title>
     </ion-toolbar>
   </ion-header>
-  <ion-content class="ion-padding"
-    ><button (click)="logoutUser()">Cerrar sesion</button></ion-content
-  >
+  <ion-content class="ion-padding flex flex-col"
+    ><button
+      class="bg-indigo-400 text-white h-12 rounded-2xl w-32 text-md ion-activatable ripple-parent rounded-rectangle font-montserrat"
+      (click)="logoutUser()"
+    >
+      Cerrar sesion
+    </button>
+    <button
+      (click)="fileInput.click()"
+      class="bg-indigo-400 text-white h-12 rounded-2xl w-32 text-md ion-activatable ripple-parent rounded-rectangle font-montserrat"
+    >
+      <input
+        type="file"
+        #fileInput
+        (change)="onFileSelected($event)"
+        accept="image/*"
+        style="display: none"
+      />
+      Cambiar Imagen de perfil
+    </button>
+  </ion-content>
 </ion-menu>
 
 <ion-header> </ion-header>
@@ -17,7 +35,11 @@
   </button>
 
   <div class="flex gap-2 items-center w-[90%] m-auto h-[5%] font-montserrat">
-    <img class="rounded-full w-24 h-24" src="" />
+    <img
+      [src]="users.profileImageUrl"
+      alt="Profile Image"
+      class="rounded-full w-24 h-24"
+    />
 
     <h2 class="text-2xl mt-3">{{ users.name }}</h2>
   </div>

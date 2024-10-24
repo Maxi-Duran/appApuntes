@@ -24,12 +24,8 @@ export class HomePage implements AfterViewInit {
     private animationCtrl: AnimationController,
     private notificationService: FirestoreService
   ) {}
-  ngOnInit() {
-    // pedir permisos
-  }
-  permisos() {
-    this.notificationService.initializePushNotifications();
-  }
+  ngOnInit() {}
+
   ngAfterViewInit() {
     this.slides.forEach((slide) => {
       this.animation = this.animationCtrl

@@ -14,7 +14,6 @@ export class RegisterPage implements OnInit {
     email: '',
     password: '',
     repeatpassword: '',
-    image: '',
   };
   errorMessage: string = '';
 
@@ -42,7 +41,6 @@ export class RegisterPage implements OnInit {
             password: this.register.password,
             name: this.register.user,
             uid: res.user.uid,
-            image: this.register.image,
           };
 
           this.fireservice
