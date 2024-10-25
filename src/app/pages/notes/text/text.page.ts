@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { FirestoreService } from 'src/app/services/firestore.service';
 import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 import { Platform } from '@ionic/angular';
+import { SpeechRecognition } from '@capacitor-community/speech-recognition';
 
 @Component({
   selector: 'app-text',
@@ -99,5 +100,32 @@ export class TextPage implements OnInit {
     };
     this.firestore.updateNote(this.note.id, data);
     console.log('actualizando');
+  }
+
+  //speech to text
+  //permisos
+  async spechPerm() {
+    try {
+      const permissionStatus = await SpeechRecognition.requestPermissions();
+
+      if (permissionStatus.speechRecognition) {
+        SpeechRecognition.start({
+          language: 'en-US',
+          maxResults: 2,
+          prompt: 'Say something',
+          partialResults: true,
+          popup: true,
+        });
+
+        SpeechRecognition.addListener('partialResults', (data: any) => {
+          console.log('partialResults was fired', data.matches);
+          this.note.text = data.matches;
+        });
+      } else {
+        console.log('Permission not granted');
+      }
+    } catch (error) {
+      console.error('Error al solicitar permiso:', error);
+    }
   }
 }
