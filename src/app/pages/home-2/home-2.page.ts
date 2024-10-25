@@ -101,7 +101,7 @@ export class Home2Page implements OnInit {
 
     if (file && uid) {
       try {
-        await this.firestore.updateProfileImage(file, uid);
+        await this.firestore.uploadImage(file, uid);
         console.log('Imagen de perfil actualizada correctamente.');
       } catch (error) {
         console.error('Error actualizando la imagen de perfil:', error);

@@ -5,20 +5,14 @@
     <h1 class="text-2xl">Bienvenido a nuestra App</h1>
     <a href="">
       <img
+        [src]="users.profileImageUrl"
+        alt="Profile Image"
         class="rounded-full w-72 h-72"
-        alt="Silhouette of a person's head"
-        src=""
     /></a>
 
     <h1 class="text-xl">Empezemos con tu foto de perfil</h1>
   </div>
   <div class="flex justify-center gap-10">
-    <button
-      class="bg-indigo-400 rounded-2xl h-10 w-32 text-md text-white ion-activatable ripple-parent rounded-rectangle font-montserrat"
-      routerLink="/home-2"
-    >
-      <ion-ripple-effect></ion-ripple-effect> Saltar
-    </button>
     <button
       (click)="fileInput.click()"
       class="bg-indigo-400 rounded-2xl h-10 w-32 text-md text-white ion-activatable ripple-parent rounded-rectangle font-montserrat"
@@ -31,6 +25,12 @@
         style="display: none"
       />
       <ion-ripple-effect></ion-ripple-effect> Subir Imagen
+    </button>
+    <button
+      class="bg-indigo-400 rounded-2xl h-10 w-32 text-md text-white ion-activatable ripple-parent rounded-rectangle font-montserrat"
+      routerLink="/home-2"
+    >
+      <ion-ripple-effect></ion-ripple-effect> Continuar
     </button>
   </div>
 </ion-content>

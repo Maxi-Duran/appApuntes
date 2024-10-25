@@ -1,25 +1,31 @@
-<ion-header
-  ><ion-toolbar
-    ><ion-buttons slot="start">
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
       <ion-back-button default-href="/"></ion-back-button>
     </ion-buttons>
     <ion-title>Texto</ion-title>
   </ion-toolbar>
 </ion-header>
+
 <ion-content>
-  <form class="flex flex-col gap-3 justify-center items-center h-full">
+  <form
+    class="flex flex-col gap-3 justify-center items-center h-full"
+    (ngSubmit)="updateNote()"
+  >
     <button
       class="float-end mr-5 bg-indigo-400 text-white h-12 mt-3 rounded-2xl w-40 text-md ion-activatable ripple-parent rounded-rectangle font-montserrat"
+      type="button"
       (click)="updateNote()"
     >
       <ion-ripple-effect></ion-ripple-effect>
       Guardar
     </button>
-    <textarea
-      [(ngModel)]="note.text"
-      class="w-[95%] bg-white border-2 border-blue-400 h-[90%]"
-      name="noteText"
-    ></textarea>
-    <button (click)="foto()">Tomar foto</button>
+    <div
+      class="text-editor w-[95%] bg-white border-2 border-blue-400 h-[90%] overflow-auto"
+      contenteditable="true"
+      (input)="onInput($event)"
+      #editableDiv
+    ></div>
+    <button (click)="foto()" type="button">Tomar foto</button>
   </form>
 </ion-content>

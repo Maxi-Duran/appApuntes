@@ -7,12 +7,13 @@ import { PushNotifications } from '@capacitor/push-notifications';
 import firebase from 'firebase/compat/app';
 import { Router } from '@angular/router';
 import { Capacitor, Plugins } from '@capacitor/core';
-import { Camera, CameraResultType } from '@capacitor/camera';
+import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 import { GoogleAuthProvider } from 'firebase/auth';
 import { finalize } from 'rxjs/operators';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { switchMap } from 'rxjs/operators';
 import { User } from '../interfaces/diccionario';
+import { Platform } from '@ionic/angular';
 @Injectable({
   providedIn: 'root',
 })
@@ -21,7 +22,8 @@ export class FirestoreService {
     private firestore: AngularFirestore,
     public auth: AngularFireAuth,
     private router: Router,
-    private storage: AngularFireStorage
+    private storage: AngularFireStorage,
+    private platform: Platform
   ) {
     this.persistencia();
   }
@@ -251,22 +253,19 @@ export class FirestoreService {
       quality: 90,
       allowEditing: true,
       resultType: CameraResultType.Uri,
+      source: this.platform.is('hybrid')
+        ? CameraSource.Camera
+        : CameraSource.Prompt,
     });
 
-    // image.webPath will contain a path that can be set as an image src.
-    // You can access the original file using image.path, which can be
-    // passed to the Filesystem API to read the raw data of the image,
-    // if desired (or pass resultType: CameraResultType.Base64 to getPhoto)
-    var imageUrl = image.webPath;
-
-    // Can be set to the src of an image now
+    return image.webPath || '';
   };
 
   async uploadImage(file: File, uid: string): Promise<string> {
     const filePath = `profile_images/${new Date().getTime()}_${file.name}`;
     const task = this.storage.upload(filePath, file);
 
-    // Esperar a que la tarea de carga se complete
+    // tarea de carga se complete
     await task
       .snapshotChanges()
       .pipe(
@@ -276,21 +275,22 @@ export class FirestoreService {
       )
       .toPromise();
 
-    // Obtener la URL de descarga
+    // bbtener la url de descarga
     const url = await this.storage.ref(filePath).getDownloadURL().toPromise();
 
-    // Guardar la URL en Firestore según el UID
+    // guardar la url en Firestore según el UID
     await this.saveImageUrl(url, uid);
 
     return url;
   }
-  private saveImageUrl(url: string, uid: string): Promise<void> {
-    // Actualiza el documento correspondiente al UID del usuario en Firestore
+  //guarda la url de la imagen
+  saveImageUrl(url: string, uid: string): Promise<void> {
     return this.firestore
       .collection('users')
       .doc(uid)
       .update({ profileImageUrl: url });
   }
+  //obtener id del usuario actual
   getUserId(): string {
     const user = firebase.auth().currentUser;
     return user ? user.uid : '';
@@ -298,37 +298,4 @@ export class FirestoreService {
   user: any = {
     profileImageUrl: '',
   };
-
-  async updateProfileImage(file: File, uid: string): Promise<void> {
-    try {
-      const userDocRef = this.firestore.collection('users').doc(uid);
-
-      const userData = await userDocRef.get().toPromise();
-      const user = userData?.data() as User;
-
-      const currentImageUrl = user?.profileImageUrl || '';
-
-      if (currentImageUrl) {
-        const storageRef = this.storage.storage.refFromURL(currentImageUrl);
-        await storageRef.delete();
-        console.log('Imagen anterior eliminada:', currentImageUrl);
-      }
-
-      const filePath = `profile_images/${new Date().getTime()}_${file.name}`;
-      const task = this.storage.upload(filePath, file);
-
-      await task.snapshotChanges().toPromise();
-
-      const newImageUrl = await this.storage
-        .ref(filePath)
-        .getDownloadURL()
-        .toPromise();
-
-      await userDocRef.update({ profileImageUrl: newImageUrl });
-
-      console.log('URL de la nueva imagen guardada:', newImageUrl);
-    } catch (error) {
-      console.error('Error actualizando la imagen de perfil:', error);
-    }
-  }
 }
