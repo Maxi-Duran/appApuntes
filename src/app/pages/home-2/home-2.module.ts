@@ -7,6 +7,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { Home2PageRoutingModule } from './home-2-routing.module';
 import { ChartComponent } from 'src/app/components/chart/chart.component';
 import { Home2Page } from './home-2.page';
+import { FileUploadModule } from 'primeng/fileupload';
 
 @NgModule({
   imports: [
@@ -16,6 +17,7 @@ import { Home2Page } from './home-2.page';
     Home2PageRoutingModule,
     MatIconModule,
     MatSlideToggleModule,
+    FileUploadModule,
   ],
   declarations: [Home2Page, ChartComponent],
 })

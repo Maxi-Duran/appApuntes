@@ -8,6 +8,8 @@
 </ion-header>
 
 <ion-content>
+  <p-toast></p-toast>>
+
   <form class="flex items-center h-[80%] flex-col">
     <ion-input
       class="w-[80%] m-auto font-montserrat"
@@ -78,7 +80,7 @@
     <mat-spinner *ngIf="loading"></mat-spinner>
   </form>
   <button
-    class="float-end mr-5 bg-indigo-400 text-white h-12 rounded-2xl w-32 text-md ion-activatable ripple-parent rounded-rectangle font-montserrat"
+    class="float-end mr-5 bg-indigo-600 text-white h-12 rounded-2xl w-32 text-md ion-activatable ripple-parent rounded-rectangle font-montserrat"
     (click)="onSubmit()"
     [disabled]="loading"
   >

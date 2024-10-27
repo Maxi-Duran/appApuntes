@@ -2,11 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { Router, NavigationExtras } from '@angular/router';
 import { ToastController } from '@ionic/angular';
 import { FirestoreService } from 'src/app/services/firestore.service';
-
+import { MessageService } from 'primeng/api';
 @Component({
   selector: 'app-register',
   templateUrl: './register.page.html',
   styleUrls: ['./register.page.scss'],
+  providers: [MessageService],
 })
 export class RegisterPage implements OnInit {
   register: any = {
@@ -16,11 +17,10 @@ export class RegisterPage implements OnInit {
     repeatpassword: '',
     profileImageUrl: '',
   };
-  errorMessage: string = '';
 
   constructor(
     public router: Router,
-    public toastController: ToastController,
+    private messageService: MessageService,
     private fireservice: FirestoreService
   ) {}
   loading: boolean = false;
@@ -49,49 +49,44 @@ export class RegisterPage implements OnInit {
             .saveDetails(data)
             .then(() => {
               this.loading = false;
-              this.errorMessage = 'Cuenta Creada!';
-              this.presentToast('top', this.errorMessage, 3000, 'success');
+
+              this.showSuccess();
               this.router.navigate(['/welcome']);
             })
             .catch((err) => {
               this.loading = false;
-              this.errorMessage = 'Error al crear la cuenta';
-              this.presentToast('bottom', this.errorMessage, 3000, 'danger');
+
+              this.showError();
             });
         } else {
           this.loading = false;
           console.error('Error: User object is null or undefined', res);
-          this.errorMessage = 'Error al crear la cuenta';
-          this.presentToast('bottom', this.errorMessage, 3000, 'danger');
+
+          this.showError();
         }
       })
       .catch((err) => {
         this.loading = false;
         console.error('Error during signup:', err);
-        this.errorMessage = 'Error al crear la cuenta';
-        this.presentToast('bottom', this.errorMessage, 3000, 'danger');
+
+        this.showError();
       });
   }
-
-  async presentToast(
-    position: 'top' | 'middle' | 'bottom',
-    msg: string,
-    duration?: number,
-    color?: string
-  ) {
-    const toast = await this.toastController.create({
-      message: msg,
-      duration: duration ? duration : 2500,
-      position: position,
-      color: color,
-      buttons: [
-        {
-          text: 'Cerrar',
-          role: 'cancel',
-        },
-      ],
+  showSuccess() {
+    this.messageService.add({
+      severity: 'success',
+      summary: 'Cuenta Creada',
+      detail: 'Tu cuenta se ha creado exitosamente',
+      life: 3000,
     });
+  }
 
-    await toast.present();
+  showError() {
+    this.messageService.add({
+      severity: 'error',
+      summary: 'Error',
+      detail: 'Hubo un problema al crear la cuenta',
+      life: 3000,
+    });
   }
 }
