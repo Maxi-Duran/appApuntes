@@ -2,10 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FirestoreService } from 'src/app/services/firestore.service';
 import { ToastController } from '@ionic/angular';
+import { MessageService } from 'primeng/api';
 @Component({
   selector: 'app-login-email',
   templateUrl: './login-email.page.html',
   styleUrls: ['./login-email.page.scss'],
+  providers: [MessageService],
 })
 export class LoginEmailPage implements OnInit {
   data: any = {
@@ -16,7 +18,8 @@ export class LoginEmailPage implements OnInit {
   constructor(
     private router: Router,
     public toastController: ToastController,
-    private fireService: FirestoreService
+    private fireService: FirestoreService,
+    private messageService: MessageService
   ) {}
   showPassword: boolean = false;
   onChangeVisibility() {
@@ -32,15 +35,12 @@ export class LoginEmailPage implements OnInit {
       .loginWithEmail({ email: this.data.email, password: this.data.password })
       .then(
         (res) => {
-          console.log(res);
           this.loading = false;
-          this.errorMessage = 'Inicio de sesion Exitoso';
-          this.presentToast('top', this.errorMessage, 3000, 'success');
+          this.showSuccess();
         },
         (err) => {
           this.loading = false;
-          this.errorMessage = 'Error al iniciar Sesion';
-          this.presentToast('bottom', this.errorMessage, 3000, 'danger');
+          this.showError();
         }
       );
   }
@@ -48,25 +48,21 @@ export class LoginEmailPage implements OnInit {
   signup() {
     this.router.navigateByUrl('signup');
   }
-  async presentToast(
-    position: 'top' | 'middle' | 'bottom',
-    msg: string,
-    duration?: number,
-    color?: string
-  ) {
-    const toast = await this.toastController.create({
-      message: msg,
-      duration: duration ? duration : 2500,
-      position: position,
-      color: color,
-      buttons: [
-        {
-          text: 'Cerrar',
-          role: 'cancel',
-        },
-      ],
+  showSuccess() {
+    this.messageService.add({
+      severity: 'success',
+      summary: 'Cuenta Creada',
+      detail: 'Inicio de sesion exitoso',
+      life: 3000,
     });
+  }
 
-    await toast.present();
+  showError() {
+    this.messageService.add({
+      severity: 'error',
+      summary: 'Error',
+      detail: 'Hubo un problema al iniciar sesion',
+      life: 3000,
+    });
   }
 }

@@ -7,7 +7,7 @@ import { MatCardModule } from '@angular/material/card';
 import { IonicModule } from '@ionic/angular';
 import { MatIconModule } from '@angular/material/icon';
 import { TaskPageRoutingModule } from './task-routing.module';
-
+import { OrderListModule } from 'primeng/orderlist';
 import { TaskPage } from './task.page';
 
 @NgModule({
@@ -19,6 +19,7 @@ import { TaskPage } from './task.page';
     MatIconModule,
     MatCardModule,
     MatCheckboxModule,
+    OrderListModule,
   ],
   declarations: [TaskPage],
 })

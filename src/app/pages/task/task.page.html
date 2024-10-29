@@ -1,64 +1,47 @@
-<ion-content>
-  <div class="mt-20 w-[90%] m-auto font-montserrat">
-    <h1 class="text-3xl">Tareas</h1>
-    <button
-      routerLink="/new-task"
-      shape="round"
-      size="small"
-      class="mt-5 bg-indigo-400 h-10 w-40 rounded-2xl text-white"
-    >
-      Agregar Tareas
-    </button>
-  </div>
+<ion-header>
+  <ion-toolbar class="h-20 flex items-center">
+    <ion-buttons slot="start">
+      <ion-back-button default-href="/"></ion-back-button>
+    </ion-buttons>
+    <ion-title class="font-montserrat mx-auto">Tareas</ion-title>
+  </ion-toolbar>
+</ion-header>
 
+<ion-content>
   <div class="w-[90%] m-auto mt-10 gap-5 flex flex-col">
-    <mat-card appearance="outlined" *ngFor="let task of tasks">
-      <mat-card-header class="flex items-center justify-between w-full">
-        <div class="flex items-center w-full">
-          <mat-card-title class="flex-grow"
-            ><a [routerLink]="['/update-task', task.id]"
-              >{{ task.name }}</a
-            ></mat-card-title
-          >
-          <mat-card-actions align="end">
+    <p-orderList
+      [value]="tasks"
+      [listStyle]="{ height: '25rem' }"
+      header="Lista de Tareas"
+    >
+      <ng-template let-task pTemplate="item">
+        <div class="flex flex-wrap p-2 align-items-center gap-3">
+          <div class="flex-1 flex flex-column gap-2">
+            <span class="font-bold">{{ task.name }}</span>
+            <div class="flex align-items-center gap-2">
+              <span>{{ task.completed ? 'Completada' : 'Pendiente' }}</span>
+            </div>
+          </div>
+          <div class="flex align-items-center gap-3">
             <mat-checkbox
               (change)="updateTask(task.id, task.completed)"
-              class="example-margin"
-              >{{ task.completed ? 'Completada' : 'Pendiente' }}</mat-checkbox
+              [checked]="task.completed"
             >
-          </mat-card-actions>
-          <mat-card-actions align="end">
-            <ion-button class="w-16" fill="clear" (click)="deleteTask(task.id)">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                <polyline points="3 7 5 7 21 7" fill="none" stroke="#000" />
-                <path
-                  d="M18.5,7l-1,14H6.5L5.5,7M8,7l.5-3.5h7L16,7"
-                  fill="none"
-                  stroke="#000"
-                />
-                <line
-                  x1="13.5"
-                  y1="16.5"
-                  x2="13.5"
-                  y2="11.5"
-                  fill="none"
-                  stroke="#000"
-                />
-                <line
-                  x1="10.5"
-                  y1="16.5"
-                  x2="10.5"
-                  y2="11.5"
-                  fill="none"
-                  stroke="#000"
-                />
-              </svg>
+              {{ task.completed ? 'Completada' : 'Pendiente' }}
+            </mat-checkbox>
+            <ion-button fill="clear" (click)="deleteTask(task.id)">
+              <ion-icon name="trash-outline"></ion-icon>
             </ion-button>
-          </mat-card-actions>
+          </div>
         </div>
-      </mat-card-header>
-    </mat-card>
+      </ng-template>
+    </p-orderList>
   </div>
+  <i
+    routerLink="/new-task"
+    class="pi pi-plus float-end mr-10 p-5 shadow-2xl rounded-full"
+    style="font-size: 2rem"
+  ></i>
 </ion-content>
 
 <ion-footer class="flex items-center h-16 font-montserrat">
