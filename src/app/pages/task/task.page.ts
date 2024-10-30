@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FirestoreService } from 'src/app/services/firestore.service';
 import { Router } from '@angular/router';
-
+import { ToastController } from '@ionic/angular';
 @Component({
   selector: 'app-task',
   templateUrl: './task.page.html',
@@ -9,8 +9,13 @@ import { Router } from '@angular/router';
 })
 export class TaskPage implements OnInit {
   tasks: any[] = [];
-  constructor(private firestore: FirestoreService, private router: Router) {}
-
+  errorMessage: string = '';
+  constructor(
+    private firestore: FirestoreService,
+    private router: Router,
+    private toastController: ToastController
+  ) {}
+  loading: boolean = false;
   ngOnInit() {
     this.getTasks();
   }
@@ -23,9 +28,11 @@ export class TaskPage implements OnInit {
   }
 
   getTasks() {
+    this.loading = true;
     this.firestore.getTask().subscribe((res) => {
       this.tasks = res; // Guardar las tareas en la variable
       console.log(this.tasks);
+      this.loading = false;
       console.log('hola');
     });
   }
@@ -33,12 +40,35 @@ export class TaskPage implements OnInit {
   deleteTask(id: string) {
     console.log('eliminando');
     this.firestore.deleteTask(id).then(() => {
-      console.log('eliminado');
+      this.errorMessage = 'Eliminado';
+      this.presentToast('top', this.errorMessage, 3000, 'success');
+
       this.getTasks();
     });
   }
   navigateToUpdateTask(id: string) {
     this.router.navigate(['/update-task', id]);
     console.log('navegando');
+  }
+  async presentToast(
+    position: 'top' | 'middle' | 'bottom',
+    msg: string,
+    duration?: number,
+    color?: string
+  ) {
+    const toast = await this.toastController.create({
+      message: msg,
+      duration: duration ? duration : 2500,
+      position: position,
+      color: color,
+      buttons: [
+        {
+          text: 'Cerrar',
+          role: 'cancel',
+        },
+      ],
+    });
+
+    await toast.present();
   }
 }

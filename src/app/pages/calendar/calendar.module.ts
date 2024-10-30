@@ -10,7 +10,7 @@ import { IonicModule } from '@ionic/angular';
 import { CalendarPageRoutingModule } from './calendar-routing.module';
 
 import { CalendarPage } from './calendar.page';
-
+import { CalendarModule } from 'primeng/calendar';
 @NgModule({
   providers: [provideNativeDateAdapter()],
   imports: [
@@ -18,9 +18,8 @@ import { CalendarPage } from './calendar.page';
     FormsModule,
     IonicModule,
     CalendarPageRoutingModule,
-    MatDatepickerModule,
 
-    MatCardModule,
+    CalendarModule,
   ],
 
   declarations: [CalendarPage],

@@ -36,6 +36,7 @@ export class LoginEmailPage implements OnInit {
       .then(
         (res) => {
           this.loading = false;
+          this.router.navigate(['/home-2']);
           this.showSuccess();
         },
         (err) => {
@@ -51,7 +52,7 @@ export class LoginEmailPage implements OnInit {
   showSuccess() {
     this.messageService.add({
       severity: 'success',
-      summary: 'Cuenta Creada',
+      summary: 'Inicio de sesion',
       detail: 'Inicio de sesion exitoso',
       life: 3000,
     });

@@ -8,7 +8,7 @@ import { NotesPageRoutingModule } from './notes-routing.module';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatCardModule } from '@angular/material/card';
 import { NotesPage } from './notes.page';
-
+import { ListboxModule } from 'primeng/listbox';
 @NgModule({
   imports: [
     RouterModule,
@@ -18,6 +18,7 @@ import { NotesPage } from './notes.page';
     FormsModule,
     IonicModule,
     NotesPageRoutingModule,
+    ListboxModule,
   ],
   declarations: [NotesPage],
 })

@@ -1,56 +1,43 @@
+<ion-header class="">
+  <ion-toolbar class="h-16 flex items-center text-white">
+    <ion-title class="font-montserrat mx-auto text-center"
+      >Apuntes</ion-title
+    > </ion-toolbar
+  ><ion-progress-bar
+    type="indeterminate"
+    class=""
+    *ngIf="loading"
+  ></ion-progress-bar>
+</ion-header>
+
 <ion-content>
-  <div class="mt-20 w-[90%] m-auto font-montserrat">
-    <h1 class="text-3xl">Apuntes</h1>
-    <button
-      shape="round"
-      size="small"
-      class="mt-5 bg-indigo-400 h-10 w-44 rounded-2xl text-white"
-      routerLink="/new-asignature"
+  <div class="h-full flex items-center justify-center font-montserrat">
+    <p-listbox
+      [options]="notes"
+      [(ngModel)]="selectedNote"
+      optionLabel="name"
+      (onChange)="onNoteSelect($event.value)"
+      [style]="{'width':'100%', 'max-height': 'none'}"
+      class="h-full w-full"
     >
-      Agregar Asignatura
-    </button>
+      <ng-template let-note pTemplate="item">
+        <div class="flex flex-col w-full border-b-2 border-black">
+          <div class="flex justify-between items-center py-2">
+            <span>{{ note.name }}</span>
+            <ion-button fill="clear" (click)="deleteNote(note.id, $event)">
+              <i class="pi pi-trash"></i>
+            </ion-button>
+          </div>
+        </div>
+      </ng-template>
+    </p-listbox>
   </div>
-  <div
-    class="w-[90%] flex flex-col gap-5 rounded-2xl m-auto text-center mt-10 ion-activatable ripple-parent rounded-rectangle font-montserrat"
-    *ngFor="let note of notes"
-  >
-    <ion-ripple-effect></ion-ripple-effect>
-    <button
-      [routerLink]="['/text', note.id]"
-      class="bg-slate-200 rounded-2xl text-xl h-16 flex items-center justify-between px-4"
-      shape="large"
-    >
-      {{note.name}}
-      <mat-card-actions align="end">
-        <ion-button class="w-16" fill="clear" (click)="deleteNote(note.id)">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-            <polyline points="3 7 5 7 21 7" fill="none" stroke="#000" />
-            <path
-              d="M18.5,7l-1,14H6.5L5.5,7M8,7l.5-3.5h7L16,7"
-              fill="none"
-              stroke="#000"
-            />
-            <line
-              x1="13.5"
-              y1="16.5"
-              x2="13.5"
-              y2="11.5"
-              fill="none"
-              stroke="#000"
-            />
-            <line
-              x1="10.5"
-              y1="16.5"
-              x2="10.5"
-              y2="11.5"
-              fill="none"
-              stroke="#000"
-            />
-          </svg>
-        </ion-button>
-      </mat-card-actions>
-    </button>
-  </div>
+
+  <i
+    routerLink="/new-asignature"
+    class="pi pi-plus bg-indigo-600 text-white fixed bottom-16 right-0 mr-2 mb-2 p-5 z-50 shadow-2xl rounded-full"
+    style="font-size: 22px"
+  ></i>
 </ion-content>
 
 <ion-footer class="flex items-center h-16 font-montserrat">

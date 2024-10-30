@@ -6,6 +6,6 @@ import { Component } from '@angular/core';
   styleUrls: ['./calendar.page.scss'],
 })
 export class CalendarPage {
-  selected: Date | null = null;
+  date: Date[] | undefined;
   constructor() {}
 }

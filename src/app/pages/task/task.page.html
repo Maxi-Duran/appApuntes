@@ -1,26 +1,24 @@
-<ion-header>
-  <ion-toolbar class="h-20 flex items-center">
-    <ion-buttons slot="start">
-      <ion-back-button default-href="/"></ion-back-button>
-    </ion-buttons>
-    <ion-title class="font-montserrat mx-auto">Tareas</ion-title>
-  </ion-toolbar>
+<ion-header class="">
+  <ion-toolbar class="h-16 flex items-center text-white">
+    <ion-title class="font-montserrat mx-auto text-center"
+      >Tareas</ion-title
+    > </ion-toolbar
+  ><ion-progress-bar
+    type="indeterminate"
+    class=""
+    *ngIf="loading"
+  ></ion-progress-bar>
 </ion-header>
 
 <ion-content>
-  <div class="w-[90%] m-auto mt-10 gap-5 flex flex-col">
-    <p-orderList
-      [value]="tasks"
-      [listStyle]="{ height: '25rem' }"
-      header="Lista de Tareas"
-    >
+  <div class="gap-5 flex flex-col">
+    <p-orderList [value]="tasks" class="h-[90%]">
       <ng-template let-task pTemplate="item">
-        <div class="flex flex-wrap p-2 align-items-center gap-3">
+        <div
+          class="flex flex-wrap p-2 align-items-center gap-3 border-b-2 border-black"
+        >
           <div class="flex-1 flex flex-column gap-2">
             <span class="font-bold">{{ task.name }}</span>
-            <div class="flex align-items-center gap-2">
-              <span>{{ task.completed ? 'Completada' : 'Pendiente' }}</span>
-            </div>
           </div>
           <div class="flex align-items-center gap-3">
             <mat-checkbox
@@ -30,7 +28,10 @@
               {{ task.completed ? 'Completada' : 'Pendiente' }}
             </mat-checkbox>
             <ion-button fill="clear" (click)="deleteTask(task.id)">
-              <ion-icon name="trash-outline"></ion-icon>
+              <i class="pi pi-trash"></i>
+            </ion-button>
+            <ion-button fill="clear" (click)="navigateToUpdateTask(task.id )">
+              <i class="pi pi-pencil"></i>
             </ion-button>
           </div>
         </div>
@@ -39,12 +40,12 @@
   </div>
   <i
     routerLink="/new-task"
-    class="pi pi-plus float-end mr-10 p-5 shadow-2xl rounded-full"
-    style="font-size: 2rem"
+    class="pi pi-plus bg-indigo-600 text-white fixed bottom-16 right-0 mr-2 mb-2 p-5 z-50 shadow-2xl rounded-full"
+    style="font-size: 22px"
   ></i>
 </ion-content>
 
-<ion-footer class="flex items-center h-16 font-montserrat">
+<ion-footer class="flex items-center h-16 font-montserrat bg-white">
   <ion-tabs class="">
     <ion-tab-bar class="border-t-[1px] border-black h-20">
       <ion-tab-button class="text-lg" routerLink="/home-2">

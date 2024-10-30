@@ -1,29 +1,44 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ViewChild,
+  ElementRef,
+  ChangeDetectorRef,
+} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { FirestoreService } from 'src/app/services/firestore.service';
 import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 import { Platform } from '@ionic/angular';
 import { SpeechRecognition } from '@capacitor-community/speech-recognition';
-
+import { TextToSpeech } from '@capacitor-community/text-to-speech';
 @Component({
   selector: 'app-text',
   templateUrl: './text.page.html',
   styleUrls: ['./text.page.scss'],
 })
 export class TextPage implements OnInit {
+  newText = '';
   note: any = {
     name: '',
     text: '',
     teacher: '',
   };
 
+  mytext = 'hola';
+  recording = false;
+
+  loading: boolean = false;
+
   @ViewChild('editableDiv', { static: false }) editableDiv!: ElementRef;
 
   constructor(
     private route: ActivatedRoute,
     private firestore: FirestoreService,
-    private platform: Platform
-  ) {}
+    private platform: Platform,
+    private changeDetector: ChangeDetectorRef
+  ) {
+    SpeechRecognition.requestPermissions();
+  }
 
   ngOnInit() {
     const noteId = this.route.snapshot.paramMap.get('id');
@@ -48,30 +63,27 @@ export class TextPage implements OnInit {
   }
 
   insertImage(imageUrl: string) {
-    const img = `<img src="${imageUrl}" class="image-thumb" style="display: block; margin: 10px 0;" />`;
+    const img = `<img src="${imageUrl}" class="image-thumb" style="display: block; margin: 10px auto; width: 200px; height: auto;" />`;
+
     const editableDiv = this.editableDiv.nativeElement;
 
     const selection = window.getSelection();
     if (selection && selection.rangeCount > 0) {
       const range = selection.getRangeAt(0);
-      range.deleteContents(); // Elimina el contenido seleccionado si hay alguno
+      range.deleteContents();
 
-      // Crea un nuevo div para la imagen
       const div = document.createElement('div');
       div.innerHTML = img;
       range.insertNode(div);
 
-      // Inserta un nuevo elemento <br> para crear un espacio entre la imagen y el siguiente texto
       const br = document.createElement('br');
       range.insertNode(br);
 
-      // Mueve el cursor después de la imagen
       range.setStartAfter(br);
       range.collapse(true);
       selection.removeAllRanges();
       selection.addRange(range);
 
-      // Asegúrate de que el contenido de la nota se actualice
       this.onInput({} as Event);
     } else {
       console.error('No hay selección activa para insertar la imagen.');
@@ -103,29 +115,40 @@ export class TextPage implements OnInit {
   }
 
   //speech to text
-  //permisos
-  async spechPerm() {
-    try {
-      const permissionStatus = await SpeechRecognition.requestPermissions();
 
-      if (permissionStatus.speechRecognition) {
-        SpeechRecognition.start({
-          language: 'en-US',
-          maxResults: 2,
-          prompt: 'Say something',
-          partialResults: true,
-          popup: true,
-        });
+  async startRecording() {
+    this.recording = true;
+    const { available } = await SpeechRecognition.available();
+    if (available) {
+      console.log('IS AVAILABLE');
 
-        SpeechRecognition.addListener('partialResults', (data: any) => {
-          console.log('partialResults was fired', data.matches);
-          this.note.text = data.matches;
-        });
-      } else {
-        console.log('Permission not granted');
-      }
-    } catch (error) {
-      console.error('Error al solicitar permiso:', error);
+      await SpeechRecognition.removeAllListeners();
+
+      SpeechRecognition.start({
+        language: 'es-MX',
+        prompt: 'Di Algo',
+        partialResults: true,
+        popup: false,
+      });
+
+      SpeechRecognition.addListener('partialResults', (data: any) => {
+        console.log('RESULTADOS', data.matches);
+        if (data.matches && data.matches.length > 0) {
+          this.newText = data.matches[0];
+          this.changeDetector.detectChanges();
+
+          this.editableDiv.nativeElement.innerHTML =
+            this.note.text + ' ' + this.newText;
+        }
+      });
     }
+  }
+
+  async stopRecording() {
+    this.recording = false;
+    SpeechRecognition.stop();
+
+    this.note.text += ' ' + this.newText;
+    this.changeDetector.detectChanges();
   }
 }

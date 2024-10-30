@@ -8,7 +8,7 @@
 </ion-header>
 
 <ion-content>
-  <p-toast class="absolute top-20" position="bottom-center"></p-toast>>
+  <p-toast class="absolute top-20" position="bottom-center"></p-toast>
 
   <form class="flex items-center h-[80%] flex-col">
     <ion-input
@@ -77,7 +77,7 @@
       [(ngModel)]="register.repeatpassword"
     >
     </ion-input>
-    <mat-spinner *ngIf="loading"></mat-spinner>
+    <mat-spinner [diameter]="50" *ngIf="loading"></mat-spinner>
   </form>
   <button
     class="float-end mr-5 bg-indigo-600 text-white h-12 rounded-2xl w-32 text-md ion-activatable ripple-parent rounded-rectangle font-montserrat"

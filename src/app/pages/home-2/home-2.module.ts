@@ -8,7 +8,9 @@ import { Home2PageRoutingModule } from './home-2-routing.module';
 import { ChartComponent } from 'src/app/components/chart/chart.component';
 import { Home2Page } from './home-2.page';
 import { FileUploadModule } from 'primeng/fileupload';
-
+import { ButtonModule } from 'primeng/button';
+import { AvatarModule } from 'primeng/avatar';
+import { AvatarGroupModule } from 'primeng/avatargroup';
 @NgModule({
   imports: [
     CommonModule,
@@ -18,6 +20,9 @@ import { FileUploadModule } from 'primeng/fileupload';
     MatIconModule,
     MatSlideToggleModule,
     FileUploadModule,
+    ButtonModule,
+    AvatarGroupModule,
+    AvatarModule,
   ],
   declarations: [Home2Page, ChartComponent],
 })

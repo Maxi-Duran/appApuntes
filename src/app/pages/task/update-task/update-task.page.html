@@ -1,9 +1,9 @@
-<ion-header
-  ><ion-toolbar
+<ion-header class="h-16"
+  ><ion-toolbar class="h-16 flex items-center text-white"
     ><ion-buttons slot="start">
-      <ion-back-button default-href="/"></ion-back-button>
+      <ion-back-button default-href="/" color="light"></ion-back-button>
     </ion-buttons>
-    <ion-title>Actualizar Tarea</ion-title>
+    <ion-title class="font-montserrat text-center">Actualizar Tarea</ion-title>
   </ion-toolbar>
 </ion-header>
 <ion-content>
@@ -34,9 +34,9 @@
         <mat-option value="option1">Option 1</mat-option>
       </mat-select>
     </mat-form-field>
-    <mat-spinner *ngIf="loading"></mat-spinner>
+    <mat-spinner *ngIf="loading" [diameter]="50"></mat-spinner>
     <button
-      class="float-end mr-5 bg-indigo-400 text-white h-12 mt-3 rounded-2xl w-40 text-md ion-activatable ripple-parent rounded-rectangle font-montserrat"
+      class="float-end mr-5 bg-indigo-600 text-white h-12 mt-3 rounded-2xl w-40 text-md ion-activatable ripple-parent rounded-rectangle font-montserrat"
       (click)="updateTask()"
       [disabled]="loading"
     >

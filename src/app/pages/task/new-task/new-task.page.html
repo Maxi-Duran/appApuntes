@@ -1,13 +1,13 @@
-<ion-header
-  ><ion-toolbar
+<ion-header class="h-16"
+  ><ion-toolbar class="h-16 flex items-center text-white"
     ><ion-buttons slot="start">
-      <ion-back-button default-href="/"></ion-back-button>
+      <ion-back-button default-href="/" color="light"></ion-back-button>
     </ion-buttons>
-    <ion-title>Nueva Tarea</ion-title>
+    <ion-title class="font-montserrat text-center">Nueva Tarea</ion-title>
   </ion-toolbar>
 </ion-header>
 <ion-content>
-  <form class="flex flex-col gap-10 justify-center items-center h-[80%]">
+  <form class="flex flex-col gap-10 justify-center items-center h-full">
     <mat-form-field class="example-form-field">
       <mat-label>Nombre</mat-label>
       <input [(ngModel)]="task.name" name="taskName" matInput type="text" />
@@ -37,11 +37,12 @@
         </mat-option>
       </mat-select>
     </mat-form-field>
-    <mat-spinner></mat-spinner>
+    <mat-spinner *ngIf="loading" [diameter]="50"></mat-spinner>
+
     <button
       (click)="createTask()"
       [disabled]="loading"
-      class="float-end mr-5 bg-indigo-400 text-white h-12 mt-3 rounded-2xl w-40 text-md ion-activatable ripple-parent rounded-rectangle font-montserrat"
+      class="float-end mr-5 bg-indigo-600 text-white h-12 mt-3 rounded-2xl w-40 text-md ion-activatable ripple-parent rounded-rectangle font-montserrat"
     >
       <ion-ripple-effect></ion-ripple-effect>
       Crear nueva Tarea

@@ -9,7 +9,7 @@ import { MatInputModule } from '@angular/material/input';
 import { NewAsignaturePageRoutingModule } from './new-asignature-routing.module';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { NewAsignaturePage } from './new-asignature.page';
-
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 @NgModule({
   imports: [
     CommonModule,
@@ -18,6 +18,7 @@ import { NewAsignaturePage } from './new-asignature.page';
     NewAsignaturePageRoutingModule,
     MatFormFieldModule,
     MatInputModule,
+    MatProgressSpinnerModule,
   ],
   declarations: [NewAsignaturePage],
 })

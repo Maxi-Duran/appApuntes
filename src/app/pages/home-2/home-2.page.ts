@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FirestoreService } from 'src/app/services/firestore.service';
 import { MenuController } from '@ionic/angular';
 import { Router } from '@angular/router';
-
+import { ToastController } from '@ionic/angular';
+import { Toast } from 'primeng/toast';
 @Component({
   selector: 'app-home-2',
   templateUrl: './home-2.page.html',
@@ -63,8 +64,10 @@ export class Home2Page implements OnInit {
   constructor(
     private firestore: FirestoreService,
     private menuCtrl: MenuController,
-    private router: Router
+    private router: Router,
+    private toastController: ToastController
   ) {}
+  errorMessage = '';
   users: any = {};
   ngOnInit() {
     this.getName();
@@ -102,8 +105,12 @@ export class Home2Page implements OnInit {
     if (file && uid) {
       try {
         await this.firestore.uploadImage(file, uid);
+        this.errorMessage = 'Imagen Actualizada';
+        this.presentToast('top', this.errorMessage, 3000, 'success');
         console.log('Imagen de perfil actualizada correctamente.');
       } catch (error) {
+        this.errorMessage = 'Error al actualizar imagen';
+        this.presentToast('top', this.errorMessage, 3000, 'error');
         console.error('Error actualizando la imagen de perfil:', error);
       }
     } else {
@@ -111,5 +118,26 @@ export class Home2Page implements OnInit {
         'No se ha seleccionado un archivo o no se ha encontrado el UID.'
       );
     }
+  }
+  async presentToast(
+    position: 'top' | 'middle' | 'bottom',
+    msg: string,
+    duration?: number,
+    color?: string
+  ) {
+    const toast = await this.toastController.create({
+      message: msg,
+      duration: duration ? duration : 2500,
+      position: position,
+      color: color,
+      buttons: [
+        {
+          text: 'Cerrar',
+          role: 'cancel',
+        },
+      ],
+    });
+
+    await toast.present();
   }
 }

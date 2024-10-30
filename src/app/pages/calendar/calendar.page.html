@@ -1,8 +1,12 @@
-<ion-content [fullscreen]="true" class="">
-  <mat-card class="demo-inline-calendar-card w-[90%] m-auto bg-blue-500">
-    <mat-calendar [(selected)]="selected"></mat-calendar>
-  </mat-card>
-  <p>Selected date: {{selected}}</p>
+<ion-content [fullscreen]="true">
+  <div class="flex items-center justify-center h-full">
+    <p-calendar
+      class="max-w-full"
+      [(ngModel)]="date"
+      [inline]="true"
+      [showWeek]="true"
+    />
+  </div>
 </ion-content>
 
 <ion-footer class="flex items-center h-16 font-montserrat">

@@ -1,62 +1,76 @@
 <ion-menu side="end" contentId="main-content">
-  <ion-header>
+  <ion-header class="">
     <ion-toolbar>
-      <ion-title>Configuracion</ion-title>
+      <ion-title class="font-montserrat text-white">Configuracion</ion-title>
     </ion-toolbar>
   </ion-header>
-  <ion-content class="ion-padding flex flex-col"
-    ><button
-      class="bg-indigo-400 text-white h-12 rounded-2xl w-32 text-md ion-activatable ripple-parent rounded-rectangle font-montserrat"
-      (click)="logoutUser()"
-    >
-      Cerrar sesion
-    </button>
+  <ion-content class="ion-padding"
+    ><div class="flex flex-col-reverse h-[20%]">
+      <p-button
+        size="large"
+        class="font-montserrat w-[50%] m-auto p-1 bg-indigo-600 text-white rounded-2xl"
+        (click)="logoutUser()"
+      >
+        Cerrar sesion
+      </p-button>
 
-    <button
-      (click)="fileInput.click()"
-      class="bg-indigo-400 text-white h-12 rounded-2xl w-32 text-md ion-activatable ripple-parent rounded-rectangle font-montserrat"
-    >
-      <input
-        type="file"
-        #fileInput
-        (change)="onFileSelected($event)"
-        accept="image/*"
-        style="display: none"
-      />
-      Cambiar Imagen de perfil
-    </button>
+      <p-button
+        (click)="fileInput.click()"
+        size="large"
+        class="font-montserrat w-[50%] m-auto p-1 bg-indigo-600 text-white rounded-2xl"
+      >
+        <input
+          type="file"
+          #fileInput
+          (change)="onFileSelected($event)"
+          accept="image/*"
+          style="display: none"
+        />
+        Cambiar Imagen de perfil
+      </p-button>
+    </div>
   </ion-content>
 </ion-menu>
 
-<ion-header> </ion-header>
+<ion-header class="h-32">
+  <ion-toolbar class="h-32 flex items-center text-white">
+    <button
+      class="float-end mr-5 mt-5 h-full"
+      expand="block"
+      (click)="openMenu()"
+    >
+      <i class="pi pi-spin pi-cog" style="font-size: 2rem"></i>
+    </button>
+
+    <div class="flex gap-2 items-center w-[80%] m-auto h-32 font-montserrat">
+      <p-avatar
+        pBadge
+        value="4"
+        [image]="users.profileImageUrl"
+        badgeSize="large"
+        shape="circle"
+        size="xlarge"
+      />
+
+      <h2 class="text-xl mt-3 text-white">Hola {{ users.name }}!</h2>
+    </div>
+  </ion-toolbar>
+</ion-header>
 
 <ion-content id="main-content">
-  <button class="float-end mr-5 mt-5" expand="block" (click)="openMenu()">
-    <ion-icon name="settings-outline" size="large"></ion-icon>
-  </button>
-
-  <div class="flex gap-2 items-center w-[90%] m-auto h-[5%] font-montserrat">
-    <img
-      [src]="users.profileImageUrl"
-      alt="Profile Image"
-      class="rounded-full w-24 h-24"
-    />
-
-    <h2 class="text-2xl mt-3">{{ users.name }}</h2>
-  </div>
   <div class="flex items-center m-auto mt-10 h-[5%] w-[90%] font-montserrat">
     <h2 class="text-3xl">Resumen de tareas</h2>
   </div>
   <div
-    class="flex justify-center items-center w-[90%] h-[8%] m-auto text-center mt-5 font-montserrat"
+    class="flex justify-center bg-indigo-500 rounded-2xl items-center w-[90%] h-[12%] m-auto text-center mt-5 font-montserrat shadow-xl"
   >
     <div
-      class="w-[50%] border-r-2 bg-slate-100 h-full border-black text-2xl flex items-center justify-center font-montserrat"
+      class="w-[50%] text-white border-r-2 h-full border-black text-2xl flex items-center justify-center font-montserrat"
     >
       {{completedTasks.length}} Tareas Completadas
     </div>
     <div
-      class="w-[50%] h-full text-2xl bg-slate-100 flex items-center justify-center font-montserrat"
+      class="w-[50%] text-white h-full text-2xl flex items-center justify-center font-montserrat"
     >
       {{pendingTasks.length}} Tareas Pendientes
     </div>
@@ -66,14 +80,14 @@
     <app-chart></app-chart>
   </div>
   <div class="w-[90%] m-auto text-center mt-10">
-    <h1 class="text-2xl font-montserrat">Expiración de tareas más cercanas</h1>
+    <h1 class="text-xl font-montserrat">Expiración de tareas más cercanas</h1>
     <ion-list
       *ngFor="let task of expTasks"
       lines="none"
       class="w-[90%] m-auto h-[80%] flex flex-col items-center font-montserrat"
     >
       <ion-item class="flex w-[80%] font-montserrat">
-        <span class="w-[50%]">holaa{{task.name}}</span>
+        <span class="w-[50%]">{{task.name}}</span>
         <ion-label class="w-[50%] text-right">
           {{ convertTimestampToDate(task.endDate) | date: 'dd-MM-yyyy'
           }}</ion-label

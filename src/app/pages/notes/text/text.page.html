@@ -1,19 +1,18 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-back-button default-href="/"></ion-back-button>
+<ion-header class="h-16"
+  ><ion-toolbar class="h-16 flex items-center justify-center text-white"
+    ><ion-buttons slot="start">
+      <ion-back-button default-href="/" color="light"></ion-back-button>
     </ion-buttons>
-    <ion-title>Texto</ion-title>
+    <ion-title class="font-montserrat text-center">Apuntes</ion-title>
   </ion-toolbar>
 </ion-header>
-
 <ion-content>
   <form
     class="flex flex-col gap-3 justify-center items-center h-full"
     (ngSubmit)="updateNote()"
   >
     <button
-      class="float-end mr-5 bg-indigo-400 text-white h-12 mt-3 rounded-2xl w-40 text-md ion-activatable ripple-parent rounded-rectangle font-montserrat"
+      class="float-end mr-5 bg-indigo-600 text-white h-12 mt-3 rounded-2xl w-40 text-md ion-activatable ripple-parent rounded-rectangle font-montserrat"
       type="button"
       (click)="updateNote()"
     >
@@ -26,7 +25,27 @@
       (input)="onInput($event)"
       #editableDiv
     ></div>
-    <button (click)="foto()" type="button">Tomar foto</button>
-    <button (click)="spechPerm()">escucha</button>
+    <div class="flex flex-row gap-5">
+      <i
+        (click)="foto()"
+        class="pi pi-camera border-indigo-600 p-3"
+        style="font-size: 30px"
+      ></i>
+
+      <i
+        (click)="startRecording()"
+        *ngIf="!recording"
+        class="pi pi-microphone p-3"
+        style="font-size: 30px"
+      ></i>
+
+      <!-- Botón de detener grabación -->
+      <i
+        (click)="stopRecording()"
+        *ngIf="recording"
+        class="pi pi-stop-circle p-3 text-red-500"
+        style="font-size: 30px"
+      ></i>
+    </div>
   </form>
 </ion-content>
