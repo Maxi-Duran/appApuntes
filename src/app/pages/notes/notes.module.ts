@@ -9,6 +9,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatCardModule } from '@angular/material/card';
 import { NotesPage } from './notes.page';
 import { ListboxModule } from 'primeng/listbox';
+import { SharedModule } from 'src/app/modules/shared/shared.module';
 @NgModule({
   imports: [
     RouterModule,
@@ -19,6 +20,7 @@ import { ListboxModule } from 'primeng/listbox';
     IonicModule,
     NotesPageRoutingModule,
     ListboxModule,
+    SharedModule,
   ],
   declarations: [NotesPage],
 })

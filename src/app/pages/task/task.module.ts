@@ -9,7 +9,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { TaskPageRoutingModule } from './task-routing.module';
 import { OrderListModule } from 'primeng/orderlist';
 import { TaskPage } from './task.page';
-
+import { SharedModule } from 'src/app/modules/shared/shared.module';
 @NgModule({
   imports: [
     CommonModule,
@@ -20,6 +20,7 @@ import { TaskPage } from './task.page';
     MatCardModule,
     MatCheckboxModule,
     OrderListModule,
+    SharedModule,
   ],
   declarations: [TaskPage],
 })
