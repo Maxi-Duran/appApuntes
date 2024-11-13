@@ -19,6 +19,7 @@ export class TaskPage implements OnInit {
   ngOnInit() {
     this.getTasks();
   }
+
   updateTask(taskId: string, currentStatus: boolean) {
     const newStatus = !currentStatus;
     const data = {

@@ -1,29 +1,27 @@
-<ion-header class="h-16"
-  ><ion-toolbar class="h-16 flex items-center justify-center text-white"
-    ><ion-buttons slot="start">
-      <ion-back-button default-href="/" color="light"></ion-back-button>
+<ion-header class="h-16">
+  <ion-toolbar class="h-16 flex items-center justify-between text-white">
+    <ion-buttons slot="start">
+      <ion-back-button default-href="/" color="light" text=""></ion-back-button>
     </ion-buttons>
-    <ion-title class="font-montserrat text-center">Apuntes</ion-title>
+    <ion-title class="font-montserrat text-start">Apuntes</ion-title>
+    <ion-buttons slot="end">
+      <ion-icon name="text-outline" class="text-3xl"></ion-icon>
+      <ion-ripple-effect></ion-ripple-effect>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
+
 <ion-content>
   <form
     class="flex flex-col gap-3 justify-center items-center h-full"
     (ngSubmit)="updateNote()"
   >
-    <button
-      class="float-end mr-5 bg-indigo-600 text-white h-12 mt-3 rounded-2xl w-40 text-md ion-activatable ripple-parent rounded-rectangle font-montserrat"
-      type="button"
-      (click)="updateNote()"
-    >
-      <ion-ripple-effect></ion-ripple-effect>
-      Guardar
-    </button>
     <div
-      class="text-editor w-[95%] bg-white border-2 border-blue-400 h-[90%] overflow-auto"
+      class="text-editor w-[95%] bg-white h-[90%] overflow-auto"
       contenteditable="true"
       (input)="onInput($event)"
       #editableDiv
+      (blur)="updateNote()"
     ></div>
     <div class="flex flex-row gap-5">
       <i

@@ -4,6 +4,7 @@ import { MenuController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { ToastController } from '@ionic/angular';
 import { Toast } from 'primeng/toast';
+
 @Component({
   selector: 'app-home-2',
   templateUrl: './home-2.page.html',
@@ -67,12 +68,15 @@ export class Home2Page implements OnInit {
     private router: Router,
     private toastController: ToastController
   ) {}
+
   errorMessage = '';
   users: any = {};
   ngOnInit() {
     this.getName();
     this.getTasks();
+    console.log('router: ', this.router.url);
   }
+
   getName() {
     this.firestore.getUser().subscribe((user) => {
       if (user) {
