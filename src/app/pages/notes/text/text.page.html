@@ -4,10 +4,6 @@
       <ion-back-button default-href="/" color="light" text=""></ion-back-button>
     </ion-buttons>
     <ion-title class="font-montserrat text-start">Apuntes</ion-title>
-    <ion-buttons slot="end">
-      <ion-icon name="text-outline" class="text-3xl"></ion-icon>
-      <ion-ripple-effect></ion-ripple-effect>
-    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
@@ -23,18 +19,25 @@
       #editableDiv
       (blur)="updateNote()"
     ></div>
-    <div class="flex flex-row gap-5">
+    <div class="flex flex-row gap-5" *ngIf="activeKeyboard">
+      <i
+        class="pi pi-plus p-3"
+        (click)="optionsDiv()"
+        style="font-size: 20px"
+      ></i>
+      <!-- div de opciones -->
+
       <i
         (click)="foto()"
-        class="pi pi-camera border-indigo-600 p-3"
-        style="font-size: 30px"
+        class="pi pi-image border-indigo-600 p-3"
+        style="font-size: 20px"
       ></i>
 
       <i
         (click)="startRecording()"
         *ngIf="!recording"
         class="pi pi-microphone p-3"
-        style="font-size: 30px"
+        style="font-size: 20px"
       ></i>
 
       <!-- Botón de detener grabación -->
@@ -42,8 +45,56 @@
         (click)="stopRecording()"
         *ngIf="recording"
         class="pi pi-stop-circle p-3 text-red-500"
-        style="font-size: 30px"
+        style="font-size: 20px"
       ></i>
+
+      <i
+        ><ion-icon
+          name="text-outline"
+          style="font-size: 20px"
+          (click)="optionsDiv2()"
+          class="p-3"
+        ></ion-icon
+      ></i>
+    </div>
+    <!-- div de opciones 2 -->
+    <div class="flex flex-row gap-5" *ngIf="showOptions">
+      <button>
+        <i
+          style="font-size: 20px"
+          class="pi pi-times"
+          (click)="closeOptionsDiv()"
+        ></i>
+      </button>
+      <button>
+        <ng-icon style="font-size: 20px" name="bootstrapTypeH1"></ng-icon>
+      </button>
+      <button>
+        <ng-icon style="font-size: 20px" name="bootstrapTypeH2"></ng-icon>
+      </button>
+      <button>
+        <ng-icon style="font-size: 20px" name="bootstrapTypeH3"></ng-icon>
+      </button>
+    </div>
+    <!-- div de opciones 3 -->
+    <div class="flex flex-row gap-5" *ngIf="showOptions2">
+      <button>
+        <i
+          style="font-size: 20px"
+          class="pi pi-times"
+          (click)="closeOptionsDiv2()"
+        ></i>
+      </button>
+      <button>
+        <ng-icon g-icon style="font-size: 20px" name="radixFontBold"></ng-icon>
+      </button>
+      <button>
+        <ng-icon
+          g-icon
+          style="font-size: 20px"
+          name="radixFontItalic"
+        ></ng-icon>
+      </button>
     </div>
   </form>
 </ion-content>

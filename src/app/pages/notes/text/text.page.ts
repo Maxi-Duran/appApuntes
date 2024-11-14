@@ -1,3 +1,5 @@
+import { Keyboard } from '@capacitor/keyboard';
+
 import {
   Component,
   OnInit,
@@ -45,6 +47,7 @@ export class TextPage implements OnInit {
     if (noteId) {
       this.getNote(noteId);
     }
+    this.keyboard();
   }
 
   async foto() {
@@ -64,8 +67,6 @@ export class TextPage implements OnInit {
 
   insertImage(imageUrl: string) {
     const img = `<img src="${imageUrl}" class="image-thumb" style="display: block; margin: 10px auto; width: 200px; height: auto;" />`;
-
-    const editableDiv = this.editableDiv.nativeElement;
 
     const selection = window.getSelection();
     if (selection && selection.rangeCount > 0) {
@@ -107,7 +108,7 @@ export class TextPage implements OnInit {
   updateNote() {
     const data = {
       name: this.note.name,
-      text: this.note.text, // Guardar el contenido completo
+      text: this.note.text,
       teacher: this.note.teacher,
     };
     this.firestore.updateNote(this.note.id, data);
@@ -118,6 +119,7 @@ export class TextPage implements OnInit {
 
   async startRecording() {
     this.recording = true;
+    this.editableDiv.nativeElement.focus();
     const { available } = await SpeechRecognition.available();
     if (available) {
       console.log('IS AVAILABLE');
@@ -146,9 +148,50 @@ export class TextPage implements OnInit {
 
   async stopRecording() {
     this.recording = false;
+    this.editableDiv.nativeElement.focus();
     SpeechRecognition.stop();
 
     this.note.text += ' ' + this.newText;
     this.changeDetector.detectChanges();
+  }
+
+  //control del keyboard
+  activeKeyboard = false;
+  showOptions = false;
+  showOptions2 = false;
+  keyboard() {
+    Keyboard.addListener('keyboardDidShow', () => {
+      this.activeKeyboard = true;
+    });
+
+    Keyboard.addListener('keyboardDidHide', () => {
+      this.activeKeyboard = false;
+      this.showOptions2 = false;
+      this.showOptions = false;
+    });
+  }
+  //abrir div de opciones
+  optionsDiv() {
+    this.activeKeyboard = false;
+    this.showOptions = true;
+    this.editableDiv.nativeElement.focus();
+  }
+  //cerrar div de opciones
+  closeOptionsDiv() {
+    this.showOptions = false;
+    this.activeKeyboard = true;
+    this.editableDiv.nativeElement.focus();
+  }
+  //abrir div de opciones
+  optionsDiv2() {
+    this.activeKeyboard = false;
+    this.showOptions2 = true;
+    this.editableDiv.nativeElement.focus();
+  }
+  //cerrar div de opciones
+  closeOptionsDiv2() {
+    this.showOptions2 = false;
+    this.activeKeyboard = true;
+    this.editableDiv.nativeElement.focus();
   }
 }
