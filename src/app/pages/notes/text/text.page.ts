@@ -194,4 +194,7 @@ export class TextPage implements OnInit {
     this.activeKeyboard = true;
     this.editableDiv.nativeElement.focus();
   }
+  //convertir texto a h1
+
+  //convertir texto a negrita
 }
