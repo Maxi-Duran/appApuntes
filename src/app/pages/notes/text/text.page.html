@@ -16,7 +16,7 @@
       #editableDiv
       (blur)="updateNote()"
     ></div>
-    <div class="flex flex-row gap-5" *ngIf="activeKeyboard">
+    <div class="flex flex-row gap-5" >
       <i
         class="pi pi-plus p-3"
         (click)="optionsDiv()"
@@ -53,6 +53,15 @@
           class="p-3"
         ></ion-icon
       ></i>
+      <button>
+        <ng-icon
+          g-icon
+          style="font-size: 20px"
+          name="bootstrapShare
+          "
+          (click)="sendEmail()"
+        ></ng-icon>
+      </button>
     </div>
     <!-- div de opciones 2 -->
     <div class="flex flex-row gap-5" *ngIf="showOptions">

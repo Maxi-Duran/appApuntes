@@ -25,7 +25,20 @@ export class TextPage implements OnInit {
     text: '',
     teacher: '',
   };
-
+  sendEmail() {
+    const textoApunte = this.note.text;  
+    
+    const email = '';  
+    const asunto = 'Apuntes'+' '+this.note.name;
+    const cuerpo = encodeURIComponent(textoApunte);  
+    
+  
+    const mailtoLink = `mailto:${email}?subject=${asunto}&body=${cuerpo}`;
+    
+    
+    window.location.href = mailtoLink;
+  }
+  
   mytext = 'hola';
   recording = false;
 

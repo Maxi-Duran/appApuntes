@@ -6,6 +6,7 @@ import {
   bootstrapTypeH1,
   bootstrapTypeH2,
   bootstrapTypeH3,
+  bootstrapShare
 } from '@ng-icons/bootstrap-icons';
 import { radixFontBold, radixFontItalic } from '@ng-icons/radix-icons';
 import { IonicModule } from '@ionic/angular';
@@ -25,7 +26,7 @@ import { TextPage } from './text.page';
       bootstrapTypeH2,
       bootstrapTypeH3,
       radixFontBold,
-      radixFontItalic,
+      radixFontItalic,bootstrapShare
     }),
   ],
   declarations: [TextPage],
