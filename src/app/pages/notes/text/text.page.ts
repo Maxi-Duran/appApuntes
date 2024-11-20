@@ -61,33 +61,47 @@ export class TextPage implements OnInit {
     });
 
     if (image.webPath) {
-      this.insertImage(image.webPath);
+      const response = await fetch(image.webPath);
+      const blob = await response.blob();
+      const file = new File([blob], 'photo.jpg', { type: 'image/jpeg' });
+      this.insertImage(file);
     }
   }
 
-  insertImage(imageUrl: string) {
-    const img = `<img src="${imageUrl}" class="image-thumb" style="display: block; margin: 10px auto; width: 200px; height: auto;" />`;
+  async insertImage(file: File) {
+    const uid = this.firestore.getUserId();
+    if (!uid) {
+      console.error('No se encontró el id del usuario.');
+      return;
+    }
+    try {
+      const imageUrl = await this.firestore.uploadImageToStorage(file, uid);
 
-    const selection = window.getSelection();
-    if (selection && selection.rangeCount > 0) {
-      const range = selection.getRangeAt(0);
-      range.deleteContents();
+      const img = `<img src="${imageUrl}" class="image-thumb" style="display: block; margin: 10px auto; width: 200px; height: auto;" />`;
 
-      const div = document.createElement('div');
-      div.innerHTML = img;
-      range.insertNode(div);
+      const selection = window.getSelection();
+      if (selection && selection.rangeCount > 0) {
+        const range = selection.getRangeAt(0);
+        range.deleteContents();
 
-      const br = document.createElement('br');
-      range.insertNode(br);
+        const div = document.createElement('div');
+        div.innerHTML = img;
+        range.insertNode(div);
 
-      range.setStartAfter(br);
-      range.collapse(true);
-      selection.removeAllRanges();
-      selection.addRange(range);
+        const br = document.createElement('br');
+        range.insertNode(br);
 
-      this.onInput({} as Event);
-    } else {
-      console.error('No hay selección activa para insertar la imagen.');
+        range.setStartAfter(br);
+        range.collapse(true);
+        selection.removeAllRanges();
+        selection.addRange(range);
+
+        this.onInput({} as Event);
+      } else {
+        console.error('no hay selección activa para insertar la imagen.');
+      }
+    } catch (error) {
+      console.error('error al cargar e insertar la imagen:', error);
     }
   }
 
@@ -197,4 +211,54 @@ export class TextPage implements OnInit {
   //convertir texto a h1
 
   //convertir texto a negrita
+
+  //redireccion a correo mailto
+  async sendEmail() {
+    const uid = this.firestore.getUserId();
+    if (!uid) {
+      console.error('No se encontró el UID del usuario.');
+      return;
+    }
+
+    try {
+      const imageUrls = await this.getImagesFromEditableDiv();
+
+      if (imageUrls.length > 0) {
+        const email = '';
+        const subject = 'Apuntes de: ' + this.note.name;
+        const bodyText = this.removeHtmlTags(this.note.text);
+        const body = `${bodyText} \n\nImágenes: ${imageUrls.join('\n')}`;
+
+        const mailtoLink = `mailto:${email}?subject=${encodeURIComponent(
+          subject
+        )}&body=${encodeURIComponent(body)}`;
+
+        window.location.href = mailtoLink;
+      } else {
+        console.error('No se encontraron imágenes dentro del contenido.');
+      }
+    } catch (error) {
+      console.error('Error al intentar enviar el correo:', error);
+    }
+  }
+
+  getImagesFromEditableDiv(): string[] {
+    const editableDiv = this.editableDiv.nativeElement;
+    const images = editableDiv.querySelectorAll('img');
+    const imageUrls: string[] = [];
+
+    images.forEach((img: HTMLImageElement) => {
+      if (img.src) {
+        imageUrls.push(img.src);
+      }
+    });
+
+    return imageUrls;
+  }
+
+  //quitar html
+  removeHtmlTags(text: string): string {
+    const doc = new DOMParser().parseFromString(text, 'text/html');
+    return doc.body.textContent || '';
+  }
 }

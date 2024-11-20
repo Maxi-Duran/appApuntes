@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Observable } from 'rxjs';
-import { map, tap } from 'rxjs/operators';
+import { map, tap, timestamp } from 'rxjs/operators';
 import { PushNotifications } from '@capacitor/push-notifications';
 import firebase from 'firebase/compat/app';
 import { Router } from '@angular/router';
@@ -262,7 +262,8 @@ export class FirestoreService {
   };
 
   async uploadImage(file: File, uid: string): Promise<string> {
-    const filePath = `profile_images/${new Date().getTime()}_${file.name}`;
+    const timestamp = new Date().getTime();
+    const filePath = `${uid}/profile_images/${timestamp}_${file.name}`;
     const task = this.storage.upload(filePath, file);
 
     // tarea de carga se complete
@@ -283,6 +284,53 @@ export class FirestoreService {
 
     return url;
   }
+  //eliminar imagen
+  async deleteImage(imageUrl: string): Promise<void> {
+    try {
+      const fileRef = this.storage.refFromURL(imageUrl);
+      await fileRef.delete().toPromise();
+      console.log('Imagen eliminada de Firebase Storage:', imageUrl);
+    } catch (error) {
+      console.error('Error al eliminar la imagen:', error);
+      throw error;
+    }
+  }
+
+  //obtener url de la imagen de perfil
+
+  async getCurrentImageUrl(uid: string): Promise<string | null> {
+    const userDoc = await this.firestore
+      .collection<User>('users')
+      .doc(uid)
+      .get()
+      .toPromise();
+    const userData = userDoc?.data();
+    return userData?.profileImageUrl || null;
+  }
+  //obtener urls de las imagenes de los apuntes
+  async getImagesUrls(uid: string): Promise<string[]> {
+    const filePath = `${uid}/notes-images/`;
+    const fileRef = this.storage.ref(filePath);
+    const imageUrls: string[] = [];
+
+    try {
+      // Obtener todos los archivos en la carpeta
+      const result = await fileRef.listAll().toPromise(); // Asegúrate de convertir a Promesa
+
+      // Asegúrate de que result tiene la propiedad items (tipo ListResult)
+      if (result && result.items) {
+        for (const item of result.items) {
+          const url = await item.getDownloadURL();
+          imageUrls.push(url);
+        }
+      }
+
+      return imageUrls;
+    } catch (error) {
+      console.error('Error obteniendo las URLs de las imágenes:', error);
+      return [];
+    }
+  }
   //guarda la url de la imagen
   saveImageUrl(url: string, uid: string): Promise<void> {
     return this.firestore
@@ -290,6 +338,17 @@ export class FirestoreService {
       .doc(uid)
       .update({ profileImageUrl: url });
   }
+  //subir imagen a firebase storage de los apuntes
+  async uploadImageToStorage(file: File, uid: string): Promise<string> {
+    const timestamp = new Date().getTime();
+    const filePath = `${uid}/notes-images/${timestamp}-${file.name}`;
+    const fileRef = this.storage.ref(filePath);
+
+    await this.storage.upload(filePath, file);
+
+    return await fileRef.getDownloadURL().toPromise();
+  }
+
   //obtener id del usuario actual
   getUserId(): string {
     const user = firebase.auth().currentUser;

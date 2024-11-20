@@ -105,6 +105,13 @@ export class Home2Page implements OnInit {
   async onFileSelected(event: any) {
     const file: File = event.target.files[0];
     const uid = this.firestore.getUserId();
+    const currentImageUrl = await this.firestore.getCurrentImageUrl(uid);
+
+    // Eliminar la imagen actual si existe
+    if (currentImageUrl) {
+      await this.firestore.deleteImage(currentImageUrl);
+      console.log('Imagen anterior eliminada correctamente.');
+    }
 
     if (file && uid) {
       try {
