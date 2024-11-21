@@ -1,0 +1,93 @@
+<ion-header class="">
+  <ion-toolbar class="h-16 flex items-center text-white">
+    <ion-title class="font-montserrat mx-auto text-center">Amigos</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="w-full flex flex-row text-center font-montserrat">
+    <button
+      class="w-[50%] h-10 ion-activatable ripple-parent"
+      (click)="activeSection = 'chats'"
+    >
+      <ion-ripple-effect></ion-ripple-effect> Chats
+    </button>
+    <button
+      class="w-[50%] ion-activatable ripple-parent"
+      (click)="activeSection = 'solicitudes'"
+    >
+      <ion-ripple-effect></ion-ripple-effect> Solicitudes
+    </button>
+  </div>
+  <!-- seccion de chats -->
+  <div *ngIf="activeSection === 'chats'" class="flex flex-wrap gap-3">
+    <div class="w-full h-20">
+      <p-chip styleClass="w-full h-full bg-white pl-5 ">
+        <span
+          class="bg-primary border-circle w-2rem h-2rem flex align-items-center justify-content-center"
+        >
+          <img
+            src="https://primefaces.org/cdn/primeng/images/demo/avatar/amyelsner.png"
+            alt="Avatar de Amy Elsner"
+            class="w-16"
+          />
+        </span>
+        <span class="ml-2 font-medium"> PRIME </span>
+      </p-chip>
+    </div>
+  </div>
+  <!-- seccion de solicitudes -->
+  <div *ngIf="activeSection === 'solicitudes'" class="flex flex-wrap gap-3">
+    <div class="w-full h-20">
+      <p-chip styleClass="w-full h-full bg-white pl-5 ">
+        <span
+          class="bg-primary border-circle w-2rem h-2rem flex align-items-center justify-content-center"
+        >
+          <img
+            src="https://primefaces.org/cdn/primeng/images/demo/avatar/amyelsner.png"
+            alt="Avatar de Amy Elsner"
+            class="w-16"
+          />
+        </span>
+        <span class="ml-2 font-medium"> Solicitudes </span>
+      </p-chip>
+    </div>
+  </div>
+  <!-- modal para agregar amigo -->
+  <ion-modal trigger="open-modal" (willDismiss)="onWillDismiss($event)">
+    <ng-template>
+      <ion-header>
+        <ion-toolbar class="h-16 flex items-center text-white">
+          <ion-title class="text-white font-montserrat"
+            >Agregar Amigos</ion-title
+          >
+          <ion-buttons slot="end">
+            <ion-button (click)="cancel()">Cerrar</ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content class="ion-padding">
+        <div class="text-center">
+          <ion-item>
+            <ion-label position="stacked">Ingrese ID único</ion-label>
+            <ion-input
+              [(ngModel)]="friendId"
+              placeholder="Escribe el ID"
+            ></ion-input>
+          </ion-item>
+          <ion-button class="bg-indigo-600" (click)="confirm()"
+            >Agregar</ion-button
+          >
+        </div>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
+</ion-content>
+<app-nav></app-nav>
+<ion-icon
+  id="open-modal"
+  expand="block"
+  name="person-add-outline"
+  class="bg-indigo-600 text-white fixed bottom-16 right-0 mr-2 mb-2 p-5 z-50 shadow-2xl rounded-full"
+  style="font-size: 30px"
+></ion-icon>

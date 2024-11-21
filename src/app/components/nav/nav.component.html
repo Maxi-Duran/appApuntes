@@ -33,6 +33,12 @@
           name="calendar-number-outline"
         ></ion-icon>
       </ion-tab-button>
+      <ion-tab-button class="text-lg" routerLink="/friends">
+        <ion-icon
+          [class.active-icon]="isActive('/friends')"
+          name="person-outline"
+        ></ion-icon>
+      </ion-tab-button>
     </ion-tab-bar>
   </ion-tabs>
 </ion-footer>

@@ -112,7 +112,13 @@ const routes: Routes = [
     loadChildren: () =>
       import('./pages/notes/text/text.module').then((m) => m.TextPageModule),
   },
-
+  {
+    path: 'friends',
+    loadChildren: () =>
+      import('../app/pages/friends/friends.module').then(
+        (m) => m.FriendsPageModule
+      ),
+  },
   { path: '**', component: NotFoundComponent },
 ];
 
