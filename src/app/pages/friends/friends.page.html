@@ -23,19 +23,23 @@
   <div *ngIf="activeSection === 'chats'" class="flex flex-wrap gap-3">
     <div class="w-full h-20">
       <p-chip
-        styleClass="w-full h-full bg-white pl-5 "
+        styleClass="w-full h-full bg-white pl-5 flex justify-between items-center"
         *ngFor="let friend of friendsList"
       >
-        <span
-          class="bg-primary border-circle w-2rem h-2rem flex align-items-center justify-content-center"
-        >
-          <img
-            src="https://primefaces.org/cdn/primeng/images/demo/avatar/amyelsner.png"
-            alt="Avatar de Amy Elsner"
-            class="w-16"
-          />
-        </span>
-        <span class="ml-2 font-medium"> {{friend.name}} </span>
+        <div class="flex items-center">
+          <span
+            class="bg-primary border-circle w-2rem h-2rem flex align-items-center justify-content-center"
+          >
+            <img
+              src="https://primefaces.org/cdn/primeng/images/demo/avatar/amyelsner.png"
+              alt="Avatar de Amy Elsner"
+              class="w-16"
+            />
+          </span>
+          <span class="ml-2 font-medium"> {{ friend.name }} </span>
+        </div>
+
+        <i (click)="deleteFriend(friend.friendId)" class="pi pi-trash"></i>
       </p-chip>
     </div>
   </div>
@@ -63,7 +67,12 @@
           >
             Aceptar
           </button>
-          <button class="p-1 rounded-2xl bg-red-300">Denegar</button>
+          <button
+            (click)="rejectRequest(request.id, request.sender, request.receiver)"
+            class="p-1 rounded-2xl bg-red-300"
+          >
+            Denegar
+          </button>
         </div>
       </p-chip>
     </div>

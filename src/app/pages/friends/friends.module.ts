@@ -10,7 +10,7 @@ import { FriendsPage } from './friends.page';
 import { ChipModule } from 'primeng/chip';
 import { OrderListModule } from 'primeng/orderlist';
 import { MenubarModule } from 'primeng/menubar';
-
+import { SpeedDialModule } from 'primeng/speeddial';
 @NgModule({
   imports: [
     CommonModule,
@@ -21,6 +21,7 @@ import { MenubarModule } from 'primeng/menubar';
     ChipModule,
     OrderListModule,
     MenubarModule,
+    SpeedDialModule,
   ],
   declarations: [FriendsPage],
 })

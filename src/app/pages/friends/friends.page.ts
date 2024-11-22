@@ -4,6 +4,9 @@ import { IonModal } from '@ionic/angular';
 import { OverlayEventDetail } from '@ionic/core/components';
 import { FriendsService } from 'src/app/services/friends.service';
 import { FirestoreService } from 'src/app/services/firestore.service';
+
+import { ToastController } from '@ionic/angular';
+
 @Component({
   selector: 'app-friends',
   templateUrl: './friends.page.html',
@@ -12,12 +15,15 @@ import { FirestoreService } from 'src/app/services/firestore.service';
 export class FriendsPage implements OnInit {
   constructor(
     private friendsservice: FriendsService,
-    private firestore: FirestoreService
+    private firestore: FirestoreService,
+    private toastController: ToastController
   ) {}
   @ViewChild(IonModal) modal!: IonModal;
   message: string = '';
   activeSection: string = 'chats';
   items: MenuItem[] | undefined;
+  items2: MenuItem[] | undefined;
+
   friendId: string = '';
   ngOnInit() {
     this.items = [
@@ -28,6 +34,11 @@ export class FriendsPage implements OnInit {
       {
         label: 'Features',
         icon: 'pi pi-star',
+      },
+    ];
+    this.items2 = [
+      {
+        icon: 'pi pi-trash',
       },
     ];
     this.getFriendRequests();
@@ -46,13 +57,18 @@ export class FriendsPage implements OnInit {
         .sendFriendRequest(userId, this.friendId)
         .then(() => {
           this.modal.dismiss('Amigo agregado con éxito', 'confirm');
+          this.message = 'Solicitud enviada con éxito';
+          this.presentToast('top', this.message, 3000, 'success');
         })
         .catch((error) => {
           console.error('Error al enviar la solicitud:', error);
           this.message = 'Error al agregar amigo.';
+
+          this.presentToast('bottom', this.message, 3000, 'error');
         });
     } else {
       this.message = 'El ID del amigo no puede estar vacío.';
+      this.presentToast('bottom', this.message, 3000, 'error');
     }
   }
 
@@ -85,7 +101,17 @@ export class FriendsPage implements OnInit {
     this.friendsservice
       .acceptFriendRequest(requestId, senderId, receiverId)
       .then(() => {
-        console.log('Solicitud aceptada');
+        this.message = 'Amigo agregado con éxito';
+        this.presentToast('top', this.message, 3000, 'success');
+      });
+  }
+  //rechazar solicitud
+  rejectRequest(requestId: string, senderId: string, receiverId: string) {
+    this.friendsservice
+      .rejectFriendRequest(requestId, senderId, receiverId)
+      .then(() => {
+        this.message = 'Solicitud rechazada con éxito';
+        this.presentToast('top', this.message, 3000, 'error');
       });
   }
 
@@ -98,8 +124,42 @@ export class FriendsPage implements OnInit {
         this.friendsList = res.map((friend) => ({
           name: friend.name,
 
-          friendId: friend.id,
+          friendId: friend.friendId,
         }));
       });
+  }
+  //eliminar amigo
+  deleteFriend(friendId: string) {
+    this.friendsservice
+      .deleteFriend(friendId, this.firestore.getUserId())
+      .then(() => {
+        console.log(friendId);
+        this.message = 'Amigo eliminado con éxito';
+        this.presentToast('top', this.message, 3000, 'success');
+      });
+  }
+
+  //confirmaciones
+
+  async presentToast(
+    position: 'top' | 'middle' | 'bottom',
+    msg: string,
+    duration?: number,
+    color?: string
+  ) {
+    const toast = await this.toastController.create({
+      message: msg,
+      duration: duration ? duration : 2500,
+      position: position,
+      color: color,
+      buttons: [
+        {
+          text: 'Cerrar',
+          role: 'cancel',
+        },
+      ],
+    });
+
+    await toast.present();
   }
 }
