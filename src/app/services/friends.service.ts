@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
-
+import { User } from '../interfaces/diccionario';
 import { Observable } from 'rxjs';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 @Injectable({
@@ -12,47 +12,81 @@ export class FriendsService {
 
     public firestore: AngularFirestore
   ) {}
+
   //enviar solicitud
   sendFriendRequest(senderId: string, receiverId: string) {
-    const request = {
-      sender: senderId,
-      receiver: receiverId,
-      status: 'pending',
-      date: new Date(),
-    };
-
     return this.firestore
       .collection('users')
-      .doc(receiverId)
-      .collection('requests')
       .doc(senderId)
-      .set(request);
+      .get()
+      .toPromise()
+      .then((doc) => {
+        if (doc?.exists) {
+          const data = doc.data() as User;
+          const name = data.name || 'sin datos';
+
+          const request = {
+            sender: senderId,
+            receiver: receiverId,
+            status: 'pending',
+            date: new Date(),
+            name: name,
+          };
+
+          return this.firestore
+            .collection('users')
+            .doc(receiverId)
+            .collection('requests')
+            .doc(senderId)
+            .set(request);
+        } else {
+          throw new Error(`El usuario con ID ${senderId} no existe.`);
+        }
+      });
   }
+
   //aceptar solicitud
   acceptFriendRequest(requestId: string, senderId: string, receiverId: string) {
-    const receiverFriends = this.firestore
-      .collection('users')
-      .doc(receiverId)
-      .collection('friends')
-      .doc(senderId);
-    const senderFriends = this.firestore
+    return this.firestore
       .collection('users')
       .doc(senderId)
-      .collection('friends')
-      .doc(receiverId);
+      .get()
+      .toPromise()
+      .then((doc) => {
+        if (doc?.exists) {
+          const data = doc.data() as User;
 
-    return receiverFriends
-      .set({ friendId: senderId })
-      .then(() => {
-        return senderFriends.set({ friendId: receiverId });
-      })
-      .then(() => {
-        return this.firestore
-          .collection('users')
-          .doc(receiverId)
-          .collection('requests')
-          .doc(requestId)
-          .delete();
+          const name = data.name || 'sin datos';
+          const receiverFriends = this.firestore
+            .collection('users')
+            .doc(receiverId)
+            .collection('friends')
+            .doc(senderId);
+          const senderFriends = this.firestore
+            .collection('users')
+            .doc(senderId)
+            .collection('friends')
+            .doc(receiverId);
+
+          return receiverFriends
+            .set({ friendId: senderId, name: name })
+            .then(() => {
+              return senderFriends.set({
+                friendId: receiverId,
+                name: data?.name,
+              });
+            })
+            .then(() => {
+              return this.firestore
+                .collection('users')
+                .doc(receiverId)
+                .collection('requests')
+                .doc(requestId)
+                .delete();
+            });
+        } else {
+          throw new Error(`El usuario con ID ${senderId} no existe.`);
+        }
       });
   }
 
@@ -70,6 +104,6 @@ export class FriendsService {
       .collection('users')
       .doc(userId)
       .collection('requests')
-      .valueChanges();
+      .valueChanges({ idField: 'id' });
   }
 }

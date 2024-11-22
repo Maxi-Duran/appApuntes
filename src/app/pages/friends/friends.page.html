@@ -22,7 +22,10 @@
   <!-- seccion de chats -->
   <div *ngIf="activeSection === 'chats'" class="flex flex-wrap gap-3">
     <div class="w-full h-20">
-      <p-chip styleClass="w-full h-full bg-white pl-5 ">
+      <p-chip
+        styleClass="w-full h-full bg-white pl-5 "
+        *ngFor="let friend of friendsList"
+      >
         <span
           class="bg-primary border-circle w-2rem h-2rem flex align-items-center justify-content-center"
         >
@@ -32,14 +35,17 @@
             class="w-16"
           />
         </span>
-        <span class="ml-2 font-medium"> PRIME </span>
+        <span class="ml-2 font-medium"> {{friend.name}} </span>
       </p-chip>
     </div>
   </div>
   <!-- seccion de solicitudes -->
   <div *ngIf="activeSection === 'solicitudes'" class="flex flex-wrap gap-3">
     <div class="w-full h-20">
-      <p-chip styleClass="w-full h-full bg-white pl-5 ">
+      <p-chip
+        styleClass="w-full h-full bg-white pl-5 "
+        *ngFor="let request of requestList"
+      >
         <span
           class="bg-primary border-circle w-2rem h-2rem flex align-items-center justify-content-center"
         >
@@ -49,7 +55,16 @@
             class="w-16"
           />
         </span>
-        <span class="ml-2 font-medium"> Solicitudes </span>
+        <span class="ml-2 font-medium"> {{request.name}} </span>
+        <div class="flex gap-5 w-full justify-end">
+          <button
+            class="p-1 rounded-2xl bg-green-300"
+            (click)="acceptRequest(request.id, request.sender, request.receiver)"
+          >
+            Aceptar
+          </button>
+          <button class="p-1 rounded-2xl bg-red-300">Denegar</button>
+        </div>
       </p-chip>
     </div>
   </div>

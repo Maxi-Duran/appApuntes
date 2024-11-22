@@ -30,15 +30,17 @@ export class FriendsPage implements OnInit {
         icon: 'pi pi-star',
       },
     ];
+    this.getFriendRequests();
+    this.getFriends();
   }
 
   //modal
   cancel() {
     this.modal.dismiss(null, 'cancel');
   }
-
+  //boton para enviar solicitud de de amistad
   confirm() {
-    const userId = this.firestore.getUserId(); // ID del usuario actual
+    const userId = this.firestore.getUserId();
     if (this.friendId.trim()) {
       this.friendsservice
         .sendFriendRequest(userId, this.friendId)
@@ -61,5 +63,43 @@ export class FriendsPage implements OnInit {
     } else {
       this.message = 'Modal cerrado sin guardar.';
     }
+  }
+  //listar solicitudes de amistad
+  requestList: any[] = [];
+  getFriendRequests() {
+    const userId = this.firestore.getUserId();
+    this.friendsservice
+      .getFriendRequests(this.firestore.getUserId())
+      .subscribe((res) => {
+        this.requestList = res.map((request) => ({
+          name: request.name,
+          status: request.status,
+          id: request.id,
+          sender: request.sender,
+          receiver: userId,
+        }));
+      });
+  }
+  //aceptar solicitud
+  acceptRequest(requestId: string, senderId: string, receiverId: string) {
+    this.friendsservice
+      .acceptFriendRequest(requestId, senderId, receiverId)
+      .then(() => {
+        console.log('Solicitud aceptada');
+      });
+  }
+
+  //listar amigos
+  friendsList: any[] = [];
+  getFriends() {
+    this.friendsservice
+      .getFriends(this.firestore.getUserId())
+      .subscribe((res) => {
+        this.friendsList = res.map((friend) => ({
+          name: friend.name,
+
+          friendId: friend.id,
+        }));
+      });
   }
 }

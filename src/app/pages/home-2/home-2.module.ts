@@ -12,6 +12,7 @@ import { ButtonModule } from 'primeng/button';
 import { AvatarModule } from 'primeng/avatar';
 import { AvatarGroupModule } from 'primeng/avatargroup';
 import { SharedModule } from 'src/app/modules/shared/shared.module';
+
 @NgModule({
   imports: [
     CommonModule,

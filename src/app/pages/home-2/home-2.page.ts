@@ -71,10 +71,31 @@ export class Home2Page implements OnInit {
 
   errorMessage = '';
   users: any = {};
+
+  copied = false;
+
   ngOnInit() {
     this.getName();
     this.getTasks();
     console.log('router: ', this.router.url);
+    console.log(navigator.clipboard); // Debe mostrar un objeto válido.
+  }
+  //copiar texto
+  copyText() {
+    this.copied = true;
+    setTimeout(() => {
+      this.copied = false;
+    }, 2000);
+  }
+  copyToClipboard() {
+    navigator.clipboard
+      .writeText(this.users.uid)
+      .then(() => {
+        console.log('Texto copiado:', this.users.uid);
+      })
+      .catch((error) => {
+        console.error('Error al copiar:', error);
+      });
   }
 
   getName() {

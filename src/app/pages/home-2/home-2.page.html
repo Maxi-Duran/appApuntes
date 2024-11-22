@@ -28,6 +28,18 @@
         />
         Cambiar Imagen de perfil
       </p-button>
+
+      <p class="text-sm text-center">
+        Id de usuario: {{ users.uid }}
+        <span
+          ><button (click)="copyText()" (click)="copyToClipboard()">
+            <ion-icon class="size-[25px]" name="copy-outline"></ion-icon>
+          </button>
+        </span>
+      </p>
+      <div *ngIf="copied" class="text-center text-green-500">
+        ¡Copiado al portapapeles!
+      </div>
     </div>
   </ion-content>
 </ion-menu>
