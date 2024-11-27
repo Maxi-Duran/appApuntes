@@ -14,6 +14,7 @@ import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { switchMap } from 'rxjs/operators';
 import { User } from '../interfaces/diccionario';
 import { Platform } from '@ionic/angular';
+
 @Injectable({
   providedIn: 'root',
 })

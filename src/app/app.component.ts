@@ -12,7 +12,7 @@ export class AppComponent {
   constructor(private router: Router, private firestore: FirestoreService) {}
 
   ngOnInit() {
-    /** this.firestore.getUser().subscribe((user) => {
+    this.firestore.getUser().subscribe((user) => {
       if (user) {
         //autenticado redirige a home-2
         if (this.router.url !== '/home-2') {
@@ -24,6 +24,6 @@ export class AppComponent {
           this.router.navigate(['/home']);
         }
       }
-    }); */
+    });
   }
 }
