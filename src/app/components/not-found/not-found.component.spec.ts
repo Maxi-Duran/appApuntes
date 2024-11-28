@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
-
+import { ArrayDataSource } from '@angular/cdk/collections';
 import { NotFoundComponent } from './not-found.component';
 
 describe('NotFoundComponent', () => {
@@ -9,8 +9,7 @@ describe('NotFoundComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ NotFoundComponent ],
-      imports: [IonicModule.forRoot()]
+      imports: [IonicModule.forRoot(), NotFoundComponent],
     }).compileComponents();
 
     fixture = TestBed.createComponent(NotFoundComponent);
