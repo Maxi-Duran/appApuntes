@@ -3,6 +3,7 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { User } from '../interfaces/diccionario';
 import { Observable } from 'rxjs';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { switchMap } from 'rxjs';
 @Injectable({
   providedIn: 'root',
 })
@@ -76,50 +77,75 @@ export class FriendsService {
       });
   }
 
-  //aceptar solicitud
   acceptFriendRequest(requestId: string, senderId: string, receiverId: string) {
     return this.firestore
       .collection('users')
       .doc(senderId)
       .get()
       .toPromise()
-      .then((doc) => {
-        if (doc?.exists) {
-          const data = doc.data() as User;
+      .then((senderDoc) => {
+        if (senderDoc?.exists) {
+          const senderData = senderDoc.data() as User;
+          const senderName = senderData.name || 'sin datos';
 
-          const name = data.name || 'sin datos';
-          const receiverFriends = this.firestore
+          return this.firestore
             .collection('users')
             .doc(receiverId)
-            .collection('friends')
-            .doc(senderId);
-          const senderFriends = this.firestore
-            .collection('users')
-            .doc(senderId)
-            .collection('friends')
-            .doc(receiverId);
+            .get()
+            .toPromise()
+            .then((receiverDoc) => {
+              if (receiverDoc?.exists) {
+                const receiverData = receiverDoc.data() as User;
+                const receiverName = receiverData.name || 'sin datos';
 
-          return receiverFriends
-            .set({ friendId: senderId, name: name })
-            .then(() => {
-              return senderFriends.set({
-                friendId: receiverId,
-                name: data?.name,
-              });
-            })
-            .then(() => {
-              return this.firestore
-                .collection('users')
-                .doc(receiverId)
-                .collection('requests')
-                .doc(requestId)
-                .delete();
+                const chatId = this.firestore.createId(); // ID único compartido
+
+                const senderFriendRef = this.firestore
+                  .collection('users')
+                  .doc(senderId)
+                  .collection('friends')
+                  .doc(receiverId);
+                const receiverFriendRef = this.firestore
+                  .collection('users')
+                  .doc(receiverId)
+                  .collection('friends')
+                  .doc(senderId);
+
+                const chatRef = this.firestore.collection('chats').doc(chatId);
+
+                return senderFriendRef
+                  .set({ friendId: receiverId, name: receiverName, chatId })
+                  .then(() => {
+                    return receiverFriendRef.set({
+                      friendId: senderId,
+                      name: senderName,
+                      chatId,
+                    });
+                  })
+                  .then(() => {
+                    return chatRef.collection('messages').doc().set({
+                      msg: 'Chat iniciado',
+                      timestamp: new Date(),
+                    });
+                  })
+                  .then(() => {
+                    return this.firestore
+                      .collection('users')
+                      .doc(receiverId)
+                      .collection('requests')
+                      .doc(requestId)
+                      .delete();
+                  });
+              } else {
+                throw new Error(`El usuario con ID ${receiverId} no existe.`);
+              }
             });
         } else {
           throw new Error(`El usuario con ID ${senderId} no existe.`);
         }
       });
   }
+
   //rechazar solicitud
   rejectFriendRequest(requestId: string, senderId: string, receiverId: string) {
     return this.firestore
@@ -190,4 +216,58 @@ export class FriendsService {
         throw error;
       });
   }
+  //chats
+  //obtner id friend
+
+  //mostrar chat user
+  listChats(userId: string, friendId: string): Observable<any[]> {
+    return this.firestore
+      .collection('users')
+      .doc(userId)
+      .collection('friends')
+      .doc(friendId)
+      .get()
+      .pipe(
+        switchMap((doc) => {
+          if (doc.exists) {
+            const data = doc.data();
+            const chatId = data?.['chatId'];
+            if (chatId) {
+              console.log(chatId, 'holamxi');
+              return this.firestore
+                .collection('chats')
+                .doc(chatId)
+                .collection('messages')
+                .valueChanges();
+            } else {
+              throw new Error('El chatId no existe en el documento de amigos.');
+            }
+          } else {
+            throw new Error('El documento de amigos no existe.');
+          }
+        })
+      );
+  }
+
+  //enviar mensaje
+  sendMessage(
+    chatId: string,
+    senderId: string,
+    message: string
+  ): Promise<void> {
+    const messageId = this.firestore.createId();
+    const timestamp = new Date();
+
+    return this.firestore
+      .collection('chats')
+      .doc(chatId)
+      .collection('messages')
+      .doc(messageId)
+      .set({
+        msg: message,
+        senderId: senderId,
+        timestamp: timestamp,
+      });
+  }
+  //obtener idchat
 }

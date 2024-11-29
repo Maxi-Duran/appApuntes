@@ -119,6 +119,7 @@ const routes: Routes = [
         (m) => m.FriendsPageModule
       ),
   },
+
   { path: '**', component: NotFoundComponent },
 ];
 

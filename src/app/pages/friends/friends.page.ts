@@ -6,7 +6,8 @@ import { FriendsService } from 'src/app/services/friends.service';
 import { FirestoreService } from 'src/app/services/firestore.service';
 
 import { ToastController } from '@ionic/angular';
-
+import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { switchMap, take } from 'rxjs';
 @Component({
   selector: 'app-friends',
   templateUrl: './friends.page.html',
@@ -16,15 +17,20 @@ export class FriendsPage implements OnInit {
   constructor(
     private friendsservice: FriendsService,
     private firestore: FirestoreService,
+    private angularfirestore: AngularFirestore,
     private toastController: ToastController
-  ) {}
+  ) {
+    this.currentUserId = this.firestore.getUserId();
+  }
   @ViewChild(IonModal) modal!: IonModal;
   message: string = '';
   activeSection: string = 'chats';
   items: MenuItem[] | undefined;
   items2: MenuItem[] | undefined;
-
+  chatList: any[] = [];
   friendId: string = '';
+  newMessage: string = '';
+  currentUserId: string = '';
   ngOnInit() {
     this.items = [
       {
@@ -43,6 +49,22 @@ export class FriendsPage implements OnInit {
     ];
     this.getFriendRequests();
     this.getFriends();
+  }
+  //modal de chat
+  chatModalOpen: boolean = false;
+  combinedChatList: { msg: string }[] = [];
+
+  openChatModal(friendId: string) {
+    this.chatModalOpen = true;
+    this.loadChats(friendId);
+  }
+
+  closeChatModal() {
+    this.chatModalOpen = false;
+  }
+
+  onChatModalDismiss(event: Event) {
+    this.chatModalOpen = false;
   }
 
   //modal
@@ -98,6 +120,8 @@ export class FriendsPage implements OnInit {
   }
   //aceptar solicitud
   acceptRequest(requestId: string, senderId: string, receiverId: string) {
+    const newID = this.angularfirestore.createId();
+    const newID2 = this.angularfirestore.createId();
     this.friendsservice
       .acceptFriendRequest(requestId, senderId, receiverId)
       .then(() => {
@@ -161,5 +185,26 @@ export class FriendsPage implements OnInit {
     });
 
     await toast.present();
+  }
+  //mostrar chats
+  loadChats(friendId: string) {
+    const userId = this.firestore.getUserId();
+    this.friendsservice.listChats(userId, friendId).subscribe({
+      next: (messages) => {
+        this.chatList = messages.map((message) => ({
+          msg: message.msg,
+
+          timestamp: message.timestamp ? message.timestamp.toDate() : null,
+        }));
+      },
+      error: (err) => {
+        console.error('Error al listar los mensajes del chat:', err);
+      },
+    });
+  }
+
+  //enviar mensaje
+  sendMessage() {
+    console.log(this.newMessage);
   }
 }

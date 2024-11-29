@@ -25,6 +25,7 @@
       <p-chip
         styleClass="w-full h-full bg-white pl-5 flex justify-between items-center"
         *ngFor="let friend of friendsList"
+        (click)="openChatModal(friend.friendId)"
       >
         <div class="flex items-center">
           <span
@@ -104,6 +105,44 @@
           >
         </div>
       </ion-content>
+    </ng-template>
+  </ion-modal>
+  <!-- modal para chats -->
+
+  <ion-modal
+    id="chatModal"
+    [isOpen]="chatModalOpen"
+    (willDismiss)="onChatModalDismiss($event)"
+  >
+    <ng-template>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Chat</ion-title>
+          <ion-buttons slot="end">
+            <ion-button (click)="closeChatModal()">Cerrar</ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content>
+        <div *ngFor="let message of chatList">
+          <p
+            [class.sent]="message.senderId === currentUserId"
+            [class.received]="message.senderId !== currentUserId"
+          >
+            {{ message.msg }}
+            <span>{{ message.timestamp | date: 'short' }}</span>
+          </p>
+        </div>
+      </ion-content>
+      <ion-footer>
+        <ion-item>
+          <ion-input
+            placeholder="Escribe un mensaje..."
+            [(ngModel)]="newMessage"
+          ></ion-input>
+          <ion-button (click)="sendMessage()">Enviar</ion-button>
+        </ion-item>
+      </ion-footer>
     </ng-template>
   </ion-modal>
 </ion-content>
