@@ -4,6 +4,7 @@ import { User } from '../interfaces/diccionario';
 import { Observable } from 'rxjs';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { switchMap } from 'rxjs';
+import { lastValueFrom } from 'rxjs';
 @Injectable({
   providedIn: 'root',
 })
@@ -87,6 +88,7 @@ export class FriendsService {
         if (senderDoc?.exists) {
           const senderData = senderDoc.data() as User;
           const senderName = senderData.name || 'sin datos';
+          const friendImage = senderData.profileImageUrl || 'sin datos';
 
           return this.firestore
             .collection('users')
@@ -114,12 +116,18 @@ export class FriendsService {
                 const chatRef = this.firestore.collection('chats').doc(chatId);
 
                 return senderFriendRef
-                  .set({ friendId: receiverId, name: receiverName, chatId })
+                  .set({
+                    friendId: receiverId,
+                    name: receiverName,
+                    chatId,
+                    friendImage: friendImage,
+                  })
                   .then(() => {
                     return receiverFriendRef.set({
                       friendId: senderId,
                       name: senderName,
                       chatId,
+                      friendImage: friendImage,
                     });
                   })
                   .then(() => {
@@ -220,6 +228,7 @@ export class FriendsService {
   //obtner id friend
 
   //mostrar chat user
+
   listChats(userId: string, friendId: string): Observable<any[]> {
     return this.firestore
       .collection('users')
@@ -233,7 +242,6 @@ export class FriendsService {
             const data = doc.data();
             const chatId = data?.['chatId'];
             if (chatId) {
-              console.log(chatId, 'holamxi');
               return this.firestore
                 .collection('chats')
                 .doc(chatId)
@@ -270,4 +278,24 @@ export class FriendsService {
       });
   }
   //obtener idchat
+  async getChatId(
+    userId: string,
+    friendId: string
+  ): Promise<string | undefined> {
+    const docSnapshot = await lastValueFrom(
+      this.firestore
+        .collection('users')
+        .doc(userId)
+        .collection('friends')
+        .doc(friendId)
+        .get()
+    );
+
+    if (docSnapshot.exists) {
+      const data = docSnapshot.data();
+      return data?.['chatId'];
+    }
+
+    return undefined;
+  }
 }

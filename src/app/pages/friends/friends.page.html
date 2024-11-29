@@ -31,11 +31,7 @@
           <span
             class="bg-primary border-circle w-2rem h-2rem flex align-items-center justify-content-center"
           >
-            <img
-              src="https://primefaces.org/cdn/primeng/images/demo/avatar/amyelsner.png"
-              alt="Avatar de Amy Elsner"
-              class="w-16"
-            />
+            <img src="{{friend.friendImage}}" class="w-16" />
           </span>
           <span class="ml-2 font-medium"> {{ friend.name }} </span>
         </div>
@@ -124,23 +120,41 @@
         </ion-toolbar>
       </ion-header>
       <ion-content>
-        <div *ngFor="let message of chatList">
+        <div
+          *ngFor="let message of chatList"
+          [ngClass]="{
+            'flex justify-end': message.senderId === this.currentUserId, 
+           
+          }"
+        >
           <p
-            [class.sent]="message.senderId === currentUserId"
-            [class.received]="message.senderId !== currentUserId"
+            *ngIf="message.senderId === this.currentUserId"
+            class="p-4 rounded-lg inline-block"
           >
             {{ message.msg }}
-            <span>{{ message.timestamp | date: 'short' }}</span>
+            <span class="block text-xs text-gray-500"
+              >{{ message.timestamp | date: 'short' }}</span
+            >
+          </p>
+
+          <p
+            *ngIf="message.senderId !== this.currentUserId"
+            class="p-4 rounded-lg inline-block"
+          >
+            {{ message.msg }}
+            <span class="block text-xs text-gray-500"
+              >{{ message.timestamp | date: 'short' }}</span
+            >
           </p>
         </div>
       </ion-content>
       <ion-footer>
-        <ion-item>
+        <ion-item *ngFor="let friend of friendsList">
           <ion-input
             placeholder="Escribe un mensaje..."
             [(ngModel)]="newMessage"
           ></ion-input>
-          <ion-button (click)="sendMessage()">Enviar</ion-button>
+          <ion-button (click)="sendMessage(friend.friendId)">Enviar</ion-button>
         </ion-item>
       </ion-footer>
     </ng-template>

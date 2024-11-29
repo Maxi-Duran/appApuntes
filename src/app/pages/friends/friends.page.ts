@@ -31,6 +31,7 @@ export class FriendsPage implements OnInit {
   friendId: string = '';
   newMessage: string = '';
   currentUserId: string = '';
+
   ngOnInit() {
     this.items = [
       {
@@ -120,8 +121,6 @@ export class FriendsPage implements OnInit {
   }
   //aceptar solicitud
   acceptRequest(requestId: string, senderId: string, receiverId: string) {
-    const newID = this.angularfirestore.createId();
-    const newID2 = this.angularfirestore.createId();
     this.friendsservice
       .acceptFriendRequest(requestId, senderId, receiverId)
       .then(() => {
@@ -191,11 +190,13 @@ export class FriendsPage implements OnInit {
     const userId = this.firestore.getUserId();
     this.friendsservice.listChats(userId, friendId).subscribe({
       next: (messages) => {
-        this.chatList = messages.map((message) => ({
-          msg: message.msg,
-
-          timestamp: message.timestamp ? message.timestamp.toDate() : null,
-        }));
+        this.chatList = messages
+          .map((message) => ({
+            msg: message.msg,
+            timestamp: message.timestamp ? message.timestamp.toDate() : null,
+            senderId: message.senderId,
+          }))
+          .sort((a, b) => a.timestamp - b.timestamp);
       },
       error: (err) => {
         console.error('Error al listar los mensajes del chat:', err);
@@ -204,7 +205,21 @@ export class FriendsPage implements OnInit {
   }
 
   //enviar mensaje
-  sendMessage() {
-    console.log(this.newMessage);
+  async sendMessage(friendId: string) {
+    const chatId = await this.friendsservice.getChatId(
+      this.currentUserId,
+      friendId
+    );
+    if (!chatId) {
+      console.error(
+        'Error: chatId es undefined. No se puede enviar el mensaje.'
+      );
+      return;
+    }
+    this.friendsservice.sendMessage(
+      chatId,
+      this.currentUserId,
+      this.newMessage
+    );
   }
 }
