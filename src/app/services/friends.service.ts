@@ -290,12 +290,10 @@ export class FriendsService {
         .doc(friendId)
         .get()
     );
-
     if (docSnapshot.exists) {
       const data = docSnapshot.data();
       return data?.['chatId'];
     }
-
     return undefined;
   }
 }

@@ -96,9 +96,12 @@
               placeholder="Escribe el ID"
             ></ion-input>
           </ion-item>
-          <ion-button class="bg-indigo-600" (click)="confirm()"
-            >Agregar</ion-button
+          <button
+            class="bg-indigo-600 text-white rounded-xl w-20 h-10 ion-activatable ripple-parent rounded-rectangle font-montserrat"
+            (click)="confirm()"
           >
+            Agregar
+          </button>
         </div>
       </ion-content>
     </ng-template>
@@ -149,12 +152,13 @@
         </div>
       </ion-content>
       <ion-footer>
-        <ion-item>
+        <ion-item *ngFor="let friend of friendsList">
           <ion-input
             placeholder="Escribe un mensaje..."
             [(ngModel)]="newMessage"
           ></ion-input>
-          <ion-button (click)="sendMessage(friendId)">Enviar</ion-button>
+
+          <ion-button (click)="sendMessage(friend.friendId)">Enviar</ion-button>
         </ion-item>
       </ion-footer>
     </ng-template>

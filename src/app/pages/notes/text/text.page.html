@@ -16,7 +16,7 @@
       #editableDiv
       (blur)="updateNote()"
     ></div>
-    <div class="flex flex-row gap-5">
+    <div class="flex flex-row gap-5" *ngIf="activeKeyboard">
       <i
         class="pi pi-plus p-3"
         (click)="optionsDiv()"

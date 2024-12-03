@@ -33,6 +33,7 @@ export class FriendsPage implements OnInit {
   currentUserId: string = '';
 
   ngOnInit() {
+    console.log(this.friendId, 'holaasdasdasda');
     this.items = [
       {
         label: 'Home',
@@ -210,6 +211,7 @@ export class FriendsPage implements OnInit {
       this.currentUserId,
       friendId
     );
+
     if (!chatId) {
       console.error(
         'Error: chatId es undefined. No se puede enviar el mensaje.'

@@ -5,7 +5,7 @@ describe('Apuntes App', () => {
   it('Deberia iniciar sesion y crear una tarea', () => {
     Cypress.on('uncaught:exception', (err) => {
       console.error('Excepción no capturada:', err.message);
-      return false; // Ignora el error
+      return false;
     });
     cy.contains('Iniciar Sesion').click();
     cy.contains('Correo').click();
