@@ -112,7 +112,7 @@
   >
     <ng-template>
       <ion-header>
-        <ion-toolbar>
+        <ion-toolbar class="text-white">
           <ion-title>Chat</ion-title>
           <ion-buttons slot="end">
             <ion-button (click)="closeChatModal()">Cerrar</ion-button>
@@ -149,12 +149,12 @@
         </div>
       </ion-content>
       <ion-footer>
-        <ion-item *ngFor="let friend of friendsList">
+        <ion-item>
           <ion-input
             placeholder="Escribe un mensaje..."
             [(ngModel)]="newMessage"
           ></ion-input>
-          <ion-button (click)="sendMessage(friend.friendId)">Enviar</ion-button>
+          <ion-button (click)="sendMessage(friendId)">Enviar</ion-button>
         </ion-item>
       </ion-footer>
     </ng-template>

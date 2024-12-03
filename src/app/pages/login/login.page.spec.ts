@@ -22,4 +22,7 @@ describe('LoginPage', () => {
     const component = fixture.componentInstance;
     expect(component).toBeTruthy();
   });
+
+  //comprobar la funcion de login
+  it('Deberia iniciar sesion', () => {});
 });

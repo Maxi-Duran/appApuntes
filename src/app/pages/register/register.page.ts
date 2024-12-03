@@ -21,7 +21,7 @@ export class RegisterPage implements OnInit {
   constructor(
     public router: Router,
     private messageService: MessageService,
-    private fireservice: FirestoreService
+    public fireservice: FirestoreService
   ) {}
   loading: boolean = false;
 
@@ -60,14 +60,12 @@ export class RegisterPage implements OnInit {
             });
         } else {
           this.loading = false;
-          console.error('Error: User object is null or undefined', res);
 
           this.showError();
         }
       })
       .catch((err) => {
         this.loading = false;
-        console.error('Error during signup:', err);
 
         this.showError();
       });

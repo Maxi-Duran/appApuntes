@@ -20,6 +20,7 @@
         [matDatepicker]="picker"
         [(ngModel)]="task.endDate"
         name="taskDate"
+        id="taskDate"
       />
       <mat-hint>MM/DD/YYYY</mat-hint>
       <mat-datepicker-toggle
@@ -37,7 +38,11 @@
         </mat-option>
       </mat-select>
     </mat-form-field>
-    <mat-spinner *ngIf="loading" [diameter]="50"></mat-spinner>
+    <mat-spinner
+      *ngIf="loading"
+      id="task-spinner"
+      [diameter]="50"
+    ></mat-spinner>
 
     <button
       (click)="createTask()"

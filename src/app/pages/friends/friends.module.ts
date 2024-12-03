@@ -11,6 +11,8 @@ import { ChipModule } from 'primeng/chip';
 import { OrderListModule } from 'primeng/orderlist';
 import { MenubarModule } from 'primeng/menubar';
 import { SpeedDialModule } from 'primeng/speeddial';
+import { AvatarModule } from 'primeng/avatar';
+import { AvatarGroupModule } from 'primeng/avatargroup';
 @NgModule({
   imports: [
     CommonModule,
@@ -22,6 +24,8 @@ import { SpeedDialModule } from 'primeng/speeddial';
     OrderListModule,
     MenubarModule,
     SpeedDialModule,
+    AvatarGroupModule,
+    AvatarModule,
   ],
   declarations: [FriendsPage],
 })

@@ -24,4 +24,13 @@ describe('LoginEmailPage', () => {
     component = fixture.componentInstance;
     expect(component).toBeTruthy();
   });
+  it('deberia iniciar sesion con el usuario', async () => {
+    component.data = {
+      email: 'test@test.com',
+      password: '12345678',
+    };
+    spyOn(component, 'login').and.callThrough();
+    component.login();
+    expect(component.login).toHaveBeenCalled();
+  });
 });

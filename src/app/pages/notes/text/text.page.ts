@@ -223,20 +223,16 @@ export class TextPage implements OnInit {
     try {
       const imageUrls = await this.getImagesFromEditableDiv();
 
-      if (imageUrls.length > 0) {
-        const email = '';
-        const subject = 'Apuntes de: ' + this.note.name;
-        const bodyText = this.removeHtmlTags(this.note.text);
-        const body = `${bodyText} \n\nImágenes: ${imageUrls.join('\n')}`;
+      const email = '';
+      const subject = 'Apuntes de: ' + this.note.name;
+      const bodyText = this.removeHtmlTags(this.note.text);
+      const body = `${bodyText} \n\nImágenes: ${imageUrls.join('\n')}`;
 
-        const mailtoLink = `mailto:${email}?subject=${encodeURIComponent(
-          subject
-        )}&body=${encodeURIComponent(body)}`;
+      const mailtoLink = `mailto:${email}?subject=${encodeURIComponent(
+        subject
+      )}&body=${encodeURIComponent(body)}`;
 
-        window.location.href = mailtoLink;
-      } else {
-        console.error('No se encontraron imágenes dentro del contenido.');
-      }
+      window.location.href = mailtoLink;
     } catch (error) {
       console.error('Error al intentar enviar el correo:', error);
     }

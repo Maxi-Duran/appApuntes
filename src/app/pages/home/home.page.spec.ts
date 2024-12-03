@@ -27,4 +27,6 @@ describe('HomePage', () => {
     component = fixture.componentInstance;
     expect(component).toBeTruthy();
   });
+
+  //verificar la funcionalida de las animaciones
 });

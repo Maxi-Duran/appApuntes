@@ -1,6 +1,5 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
-import { ArrayDataSource } from '@angular/cdk/collections';
 import { NotFoundComponent } from './not-found.component';
 
 describe('NotFoundComponent', () => {

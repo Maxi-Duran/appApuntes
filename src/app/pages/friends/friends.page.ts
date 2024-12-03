@@ -7,7 +7,7 @@ import { FirestoreService } from 'src/app/services/firestore.service';
 
 import { ToastController } from '@ionic/angular';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { switchMap, take } from 'rxjs';
+
 @Component({
   selector: 'app-friends',
   templateUrl: './friends.page.html',
@@ -146,7 +146,7 @@ export class FriendsPage implements OnInit {
       .subscribe((res) => {
         this.friendsList = res.map((friend) => ({
           name: friend.name,
-
+          friendImage: friend.friendImage,
           friendId: friend.friendId,
         }));
       });
