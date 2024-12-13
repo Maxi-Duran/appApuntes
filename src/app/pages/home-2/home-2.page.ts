@@ -16,6 +16,9 @@ export class Home2Page implements OnInit {
   completedTasks: any[] = [];
   pendingTasks: any[] = [];
   expTasks: any[] = [];
+  isPicture = false;
+
+  //cerrar modal configuracion
 
   openMenu() {
     this.menuCtrl.open('end');

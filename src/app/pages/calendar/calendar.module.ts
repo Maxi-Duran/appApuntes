@@ -11,6 +11,7 @@ import { CalendarPageRoutingModule } from './calendar-routing.module';
 import { SharedModule } from 'src/app/modules/shared/shared.module';
 import { CalendarPage } from './calendar.page';
 import { CalendarModule } from 'primeng/calendar';
+
 @NgModule({
   providers: [provideNativeDateAdapter()],
   imports: [

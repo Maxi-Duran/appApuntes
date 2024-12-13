@@ -14,3 +14,6 @@ export interface User {
   profileImageUrl?: string;
   name: string;
 }
+export interface ChatData {
+  friendId: string;
+}

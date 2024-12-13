@@ -33,7 +33,6 @@ export class FriendsPage implements OnInit {
   currentUserId: string = '';
 
   ngOnInit() {
-    console.log(this.friendId, 'holaasdasdasda');
     this.items = [
       {
         label: 'Home',
@@ -54,10 +53,10 @@ export class FriendsPage implements OnInit {
   }
   //modal de chat
   chatModalOpen: boolean = false;
-  combinedChatList: { msg: string }[] = [];
 
   openChatModal(friendId: string) {
     this.chatModalOpen = true;
+    this.friendId = friendId;
     this.loadChats(friendId);
   }
 
@@ -223,5 +222,6 @@ export class FriendsPage implements OnInit {
       this.currentUserId,
       this.newMessage
     );
+    this.newMessage = '';
   }
 }

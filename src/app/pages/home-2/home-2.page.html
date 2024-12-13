@@ -5,19 +5,20 @@
     </ion-toolbar>
   </ion-header>
   <ion-content class="ion-padding"
-    ><div class="flex flex-col-reverse h-[20%]">
+    ><div class="flex flex-col-reverse gap-5">
       <p-button
         size="large"
-        class="font-montserrat w-[50%] m-auto p-1 text-center bg-indigo-600 text-white rounded-2xl"
+        class="font-montserrat p-1 text-center"
         (click)="logoutUser()"
       >
+        <i class="pi pi-sign-out mr-2"></i>
         Cerrar sesion
       </p-button>
 
       <p-button
         (click)="fileInput.click()"
         size="large"
-        class="font-montserrat w-[50%] m-auto p-1 bg-indigo-600 text-white rounded-2xl"
+        class="font-montserrat p-1 text-center"
       >
         <input
           type="file"
@@ -26,16 +27,19 @@
           accept="image/*"
           style="display: none"
         />
+        <i class="pi pi-image mr-2"></i>
         Cambiar Imagen de perfil
       </p-button>
 
-      <p class="text-sm text-center">
-        Id de usuario: {{ users.uid }}
-        <span
-          ><button (click)="copyText()" (click)="copyToClipboard()">
-            <ion-icon class="size-[25px]" name="copy-outline"></ion-icon>
-          </button>
-        </span>
+      <p class="text-center">
+        ID de usuario:
+        <span>
+          <p>
+            {{ users.uid }}
+            <button (click)="copyText()" (click)="copyToClipboard()">
+              <ion-icon class="size-[25px]" name="copy-outline"></ion-icon>
+            </button></p
+        ></span>
       </p>
       <div *ngIf="copied" class="text-center text-green-500">
         ¡Copiado al portapapeles!
@@ -56,13 +60,19 @@
 
     <div class="flex gap-2 items-center w-[80%] m-auto h-32 font-montserrat">
       <p-avatar
-        pBadge
-        value="4"
+        *ngIf="users.profileImageUrl"
         [image]="users.profileImageUrl"
-        badgeSize="large"
         shape="circle"
         size="xlarge"
-      />
+      ></p-avatar>
+
+      <p-avatar
+        class="text-black"
+        *ngIf="!users.profileImageUrl"
+        [label]="users.name ? users.name[0].toUpperCase() : ''"
+        shape="circle"
+        size="xlarge"
+      ></p-avatar>
 
       <h2 class="text-xl mt-3 text-white">Hola {{ users.name }}!</h2>
     </div>

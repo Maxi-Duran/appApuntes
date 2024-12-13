@@ -1,6 +1,6 @@
 import { Component, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import Chart from 'chart.js/auto';
-
+import { FirestoreService } from 'src/app/services/firestore.service';
 @Component({
   selector: 'app-chart',
   templateUrl: './chart.component.html',
@@ -10,18 +10,71 @@ export class ChartComponent implements AfterViewInit {
   @ViewChild('chartCanvas', { static: true }) chartCanvas!: ElementRef;
 
   chart: any;
+  tasks: any[] = [];
 
-  constructor() {}
+  constructor(public firestore: FirestoreService) {}
+
+  getTasks() {
+    this.firestore.getTask().subscribe((res) => {
+      this.tasks = res;
+      this.updateChartData();
+    });
+  }
+
+  updateChartData() {
+    const now = new Date();
+    const labels: string[] = [];
+    const taskCounts: number[] = [0, 0, 0, 0];
+
+    for (let i = 3; i >= 0; i--) {
+      const date = new Date(now.getFullYear(), now.getMonth() - i);
+      const monthName = date.toLocaleString('default', { month: 'long' });
+      labels.push(monthName);
+    }
+
+    this.tasks.forEach((task) => {
+      if (task.endDate) {
+        let endDate: Date;
+
+        if (task.endDate.seconds) {
+          endDate = new Date(task.endDate.seconds * 1000);
+        } else {
+          endDate = new Date(task.endDate);
+        }
+
+        const diffMonths =
+          now.getMonth() -
+          endDate.getMonth() +
+          12 * (now.getFullYear() - endDate.getFullYear());
+        if (diffMonths >= 0 && diffMonths < 4) {
+          taskCounts[3 - diffMonths]++;
+        }
+      }
+    });
+
+    this.chart.data.labels = labels;
+    this.chart.data.datasets[0].data = taskCounts;
+    this.chart.update();
+  }
 
   ngAfterViewInit() {
+    const now = new Date();
+    const labels: string[] = [];
+
+    for (let i = 3; i >= 0; i--) {
+      const date = new Date(now.getFullYear(), now.getMonth() - i);
+      const monthName = date.toLocaleString('default', { month: 'long' });
+      labels.push(monthName);
+    }
+
     this.chart = new Chart(this.chartCanvas.nativeElement, {
       type: 'bar',
       data: {
-        labels: ['January', 'February', 'March', 'April'],
+        labels,
         datasets: [
           {
-            label: '',
-            data: [20, 59, 80, 81],
+            label: `Tareas Asignadas en los últimos meses`,
+            data: [0, 0, 0, 0],
             backgroundColor: [
               'rgba(255, 99, 132, 0.2)',
               'rgba(54, 162, 235, 0.2)',
@@ -38,6 +91,12 @@ export class ChartComponent implements AfterViewInit {
           },
         ],
       },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+      },
     });
+
+    this.getTasks();
   }
 }

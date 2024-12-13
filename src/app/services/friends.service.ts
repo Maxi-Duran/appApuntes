@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { switchMap } from 'rxjs';
 import { lastValueFrom } from 'rxjs';
+import { ChatData } from '../interfaces/diccionario';
 @Injectable({
   providedIn: 'root',
 })
